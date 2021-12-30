@@ -1,1 +1,2 @@
-# finalproject-team4
+# Final Project Intern SMD
+## Project ecommerce

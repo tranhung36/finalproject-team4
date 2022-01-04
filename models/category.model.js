@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 const {
     Schema
 } = mongoose
+const slugify = require('slugify')
 
 const categorySchema = new Schema({
     name: {
@@ -11,12 +12,23 @@ const categorySchema = new Schema({
     },
     slug: {
         type: String,
-        require: true,
         unique: true
     },
 }, {
     timestamps: true
 })
+
+categorySchema.pre('save', async function (next) {
+    let count = 1
+    const slug = slugify(this.name, {
+        lower: true
+    })
+
+    this.slug = slug
+
+    next();
+});
+
 
 const Category = mongoose.model('Category', categorySchema)
 

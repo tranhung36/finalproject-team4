@@ -99,15 +99,15 @@ document.addEventListener('DOMContentLoaded', function () {
       =============================================================== */
 	document.querySelectorAll('.dec-btn').forEach((el) => {
 		el.addEventListener('click', () => {
-			var siblings = el.parentElement.querySelector('input');
-			if (parseInt(siblings.value, 10) >= 1) {
+			let siblings = el.parentElement.querySelector('input');
+			if (parseInt(siblings.value, 10) > 1) {
 				siblings.value = parseInt(siblings.value, 10) - 1;
 			}
 		});
 	});
 	document.querySelectorAll('.inc-btn').forEach((el) => {
 		el.addEventListener('click', () => {
-			var siblings = el.parentElement.querySelector('input');
+			let siblings = el.parentElement.querySelector('input');
 			siblings.value = parseInt(siblings.value, 10) + 1;
 		});
 	});

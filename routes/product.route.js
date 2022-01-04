@@ -1,11 +1,14 @@
 const express = require('express');
 const router = express.Router();
+const {
+    index,
+    show,
+    cart
+} = require('../controllers/product.controller')
 
-/* GET home page. */
-router.get('/', function (req, res, next) {
-    res.render('products/shop', {
-        title: 'Shop',
-    });
-});
+/* GET product page. */
+router.get('/cart', cart);
+router.get('/:slug', show);
+router.get('/', index);
 
 module.exports = router;

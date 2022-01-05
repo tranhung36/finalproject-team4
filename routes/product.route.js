@@ -8,7 +8,10 @@ const {
 
 /* GET product page. */
 router.get('/cart', cart);
-router.get('/:slug', show);
+router.get('/:slug', show, (err) => {
+    console.error(err.message)
+    res.status(500).send('Server error')
+});
 router.get('/', index);
 
 module.exports = router;

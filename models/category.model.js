@@ -2,7 +2,6 @@ const mongoose = require('mongoose')
 const {
     Schema
 } = mongoose
-const slugify = require('slugify')
 
 const categorySchema = new Schema({
     name: {
@@ -18,11 +17,10 @@ const categorySchema = new Schema({
     timestamps: true
 })
 
-categorySchema.pre('save', async function (next) {
-    let count = 1
-    const slug = slugify(this.name, {
-        lower: true
-    })
+categorySchema.pre('save', (next) => {
+    const slug = this.name.toLowerCase()
+        .replace(/[^\w ]+/g, '')
+        .replace(/ +/g, '-')
 
     this.slug = slug
 

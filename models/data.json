@@ -1,0 +1,24 @@
+{
+    "sanpham" :[
+        {
+            "id": 1,
+            "title":"Đây là tiêu đề 1",
+            "image":"./images/4logo.jpg"
+        },
+        {
+            "id": 2,
+            "title":"Đây là tiêu đề 2",
+            "image":"./images/4logo.jpg"
+        },
+        {
+            "id": 3,
+            "title":"Đây là tiêu đề 3",
+            "image":"./images/4logo.jpg"
+        },
+        {
+            "id": 4,
+            "title":"Đây là tiêu đề 4",
+            "image":"./images/4logo.jpg"
+        }
+    ]
+}

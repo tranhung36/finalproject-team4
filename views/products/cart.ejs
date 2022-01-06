@@ -34,60 +34,37 @@
               </tr>
             </thead>
             <tbody class="border-0">
-              <tr>
-                <th class="ps-0 py-3 border-light" scope="row">
-                  <div class="d-flex align-items-center"><a class="reset-anchor d-block animsition-link"
-                      href="detail.html"><img src="img/product-detail-3.jpg" alt="..." width="70" /></a>
-                    <div class="ms-3"><strong class="h6"><a class="reset-anchor animsition-link" href="detail.html">Red
-                          digital smartwatch</a></strong></div>
-                  </div>
-                </th>
-                <td class="p-3 align-middle border-light">
-                  <p class="mb-0 small">$250</p>
-                </td>
-                <td class="p-3 align-middle border-light">
-                  <div class="border d-flex align-items-center justify-content-between px-3"><span
-                      class="small text-uppercase text-gray headings-font-family">Quantity</span>
-                    <div class="quantity">
-                      <button class="dec-btn p-0"><i class="fas fa-caret-left"></i></button>
-                      <input class="form-control form-control-sm border-0 shadow-0 p-0" type="text" value="1" />
-                      <button class="inc-btn p-0"><i class="fas fa-caret-right"></i></button>
+              <% orderItems.forEach(item => { %>
+                <tr>
+                  <th class="ps-0 py-3 border-light" scope="row">
+                    <div class="d-flex align-items-center"><a class="reset-anchor d-block animsition-link"
+                        href="detail.html"><img src="<%= item.productId.thumbnail %>" alt="..." width="70" /></a>
+                      <div class="ms-3"><strong class="h6">
+                        <a class="reset-anchor animsition-link" href="detail.html"><%= item.productId.name %> </a></strong></div>
                     </div>
-                  </div>
-                </td>
-                <td class="p-3 align-middle border-light">
-                  <p class="mb-0 small">$250</p>
-                </td>
-                <td class="p-3 align-middle border-light"><a class="reset-anchor" href="#!"><i
-                      class="fas fa-trash-alt small text-muted"></i></a></td>
-              </tr>
-              <tr>
-                <th class="ps-0 py-3 border-0" scope="row">
-                  <div class="d-flex align-items-center"><a class="reset-anchor d-block animsition-link"
-                      href="detail.html"><img src="img/product-detail-2.jpg" alt="..." width="70" /></a>
-                    <div class="ms-3"><strong class="h6"><a class="reset-anchor animsition-link"
-                          href="detail.html">Apple watch</a></strong></div>
-                  </div>
-                </th>
-                <td class="p-3 align-middle border-0">
-                  <p class="mb-0 small">$250</p>
-                </td>
-                <td class="p-3 align-middle border-0">
-                  <div class="border d-flex align-items-center justify-content-between px-3"><span
-                      class="small text-uppercase text-gray headings-font-family">Quantity</span>
-                    <div class="quantity">
-                      <button class="dec-btn p-0"><i class="fas fa-caret-left"></i></button>
-                      <input class="form-control form-control-sm border-0 shadow-0 p-0" type="text" value="1" />
-                      <button class="inc-btn p-0"><i class="fas fa-caret-right"></i></button>
+                  </th>
+                  <td class="p-3 align-middle border-light">
+                    <p class="mb-0 small">$<%= item.productId.price %> </p>
+                  </td>
+                  <td class="p-3 align-middle border-light">
+                    <div class="selectbtn quantity">
+                      <select class=" form-control d-flex align-items-center justify-content-between px-3" id="productId" name="productItem"> 
+                        <option>1</option> 
+                        <option>2</option> 
+                        <option>3</option> 
+                        <option>4</option> 
+                        <option>5</option> 
+                    </select>
                     </div>
-                  </div>
-                </td>
-                <td class="p-3 align-middle border-0">
-                  <p class="mb-0 small">$250</p>
-                </td>
-                <td class="p-3 align-middle border-0"><a class="reset-anchor" href="#!"><i
-                      class="fas fa-trash-alt small text-muted"></i></a></td>
-              </tr>
+                  </td>
+                  <td class="p-3 align-middle border-light">
+                    <p class="mb-0 small">$<%= item.quantity * item.productId.price %></p>
+                  </td>
+                  <td class="p-3 align-middle border-light"><a class="reset-anchor" href="#!"><i
+                        class="fas fa-trash-alt small text-muted"></i></a></td>
+                </tr>
+              <% }) %> 
+              
             </tbody>
           </table>
         </div>
@@ -109,10 +86,10 @@
             <ul class="list-unstyled mb-0">
               <li class="d-flex align-items-center justify-content-between"><strong
                   class="text-uppercase small font-weight-bold">Subtotal</strong><span
-                  class="text-muted small">$250</span></li>
+                  class="text-muted small">$<%= totalItem %></span></li>
               <li class="border-bottom my-2"></li>
               <li class="d-flex align-items-center justify-content-between mb-4"><strong
-                  class="text-uppercase small font-weight-bold">Total</strong><span>$250</span></li>
+                  class="text-uppercase small font-weight-bold">Total</strong><span>$<%= totalItem %></span></li>
               <li>
                 <form action="#">
                   <div class="input-group mb-0">

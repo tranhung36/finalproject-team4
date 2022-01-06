@@ -1,14 +1,6 @@
-const express = require('express');
-const router = express.Router();
 const {register, login} = require('../controllers/auth.controller')
-
-/* GET home page. */
-router.get('/', function (req, res, next) {
-    res.render('products/index', {
-        title: 'Home'
-    });
-});
-
+const express = require('express')
+const router = express.Router();
 //register
 router.post("/register", register);
 

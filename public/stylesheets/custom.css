@@ -1,1 +1,14 @@
 /* your styles go here */
+#login .form {
+    background-color: #FCF4ED;
+    border-radius: 12px;
+}
+
+#login .left {
+    background-color: white;
+}
+
+#login .right {
+    background-image: url("../images/clothes_login.jpeg");
+    max-height: 100%;
+}

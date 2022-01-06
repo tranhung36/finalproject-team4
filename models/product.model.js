@@ -26,26 +26,31 @@ const productSchema = new Schema({
         type: String,
         require: true
     },
-    images: {
-        type: Array,
-        require: true
-    },
+    images: [{
+        type: String,
+        // require: true
+    }],
     stock: {
         type: Number,
-        require: true
+        // require: true
     },
     size: {
         type: Array,
-        require: true
+        // require: true
     },
     categoryId: {
         type: Schema.Types.ObjectId,
-        ref: 'Category'
+        ref: 'category'
+
+    },
+    userID: {
+        type: String,
+
     }
 }, {
     timestamps: true
 })
 
-const Product = mongoose.model('Product', productSchema)
+const Product = mongoose.model('Products', productSchema)
 
 module.exports = Product

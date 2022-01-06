@@ -6,11 +6,12 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const expressLayouts = require('express-ejs-layouts')
 const db = require('./config/database/db')
-
+const fileupload = require('express-fileupload');
+const methodOverride = require('method-override')
 const routes = require('./routes');
 
 const app = express();
-const port = 8080
+const port = 3000
 require('dotenv').config()
 
 db.connect()
@@ -21,8 +22,10 @@ app.set('view engine', 'ejs');
 app.set('layout', 'layouts/layout')
 
 app.use(expressLayouts)
-app.use(logger('dev'));
-app.use(morgan('combined'))
+app.use(fileupload());
+app.use(methodOverride('_method'));
+// app.use(logger('dev'));
+// app.use(morgan('combined'))
 app.use(express.json());
 app.use(express.urlencoded({
   extended: false
@@ -32,6 +35,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // routes
 app.use('/', routes);
+
+// const router = require('./routes/seller.route.js');
+// app.use('/', router);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

@@ -26,17 +26,18 @@ const productSchema = new Schema({
         type: String,
         require: true
     },
-    images: {
-        type: Array,
-        require: true
-    },
+    images: [{
+        type: String,
+    }],
     stock: {
         type: Number,
-        require: true
     },
     categoryId: {
         type: Schema.Types.ObjectId,
-        ref: 'Category'
+        ref: 'category'
+    },
+    userID: {
+        type: String,
     }
 }, {
     timestamps: true

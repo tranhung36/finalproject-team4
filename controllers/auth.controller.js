@@ -33,8 +33,8 @@ async function register(req, res) {
 
     //Create user in database
     const user = await User.create({
-      first_name,
-      last_name,
+      first_name: first_name.trim(),
+      last_name: last_name.trim(),
       email: email.toLowerCase(),
       password: encryptedPassword,
     });

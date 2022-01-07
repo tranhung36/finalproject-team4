@@ -1,4 +1,26 @@
 /* your styles go here */
+.selectform {
+    border: none;
+    font-size: 12px;
+    padding-left: 3px;
+}
+.selectbtn {
+    text-align: center;
+    margin-left: 20px;
+    height: 30px;
+    font-size: 0.875em;
+    border: none;
+}
+#productId {
+    border: none;
+    background: transparent;
+}
+.form-control:focus {
+    box-shadow: none;
+}
+option {
+    text-align: left;
+}
 * {
     -webkit-box-sizing: border-box;
     box-sizing: border-box;

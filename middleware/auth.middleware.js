@@ -3,19 +3,18 @@ const {
 } = require('../utils/jwt.util');
 
 const verifyToken = (req, res, next) => {
-  const token =
-    req.body.token || req.query.token || req.headers["x-access-token"];
+  const token = req.cookies['access_token']
 
   if (!token) {
-    return res.status(403).send("A token is required for authentication");
+    return res.status(403).redirect('/login')
   }
-  try {
-    const decoded = verifyJWT(token);
-    req.user = decoded;
-  } catch (err) {
-    return res.status(401).send("Invalid Token");
+
+  const decoded = verifyJWT(token)
+
+  if (!decoded) {
+    return res.status(401).redirect('/login')
   }
-  return next();
+  next()
 };
 
 module.exports = verifyToken;

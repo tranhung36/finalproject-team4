@@ -5,8 +5,9 @@ const {
     addToCart
 } = require('../controllers/orderItem.controller')
 const fake = require('../config/seeds/orderItem.seed')
+const auth = require('../middleware/auth.middleware')
 
 router.get('/fake', fake)
-router.get('/', cart);
+router.get('/', auth, cart);
 
 module.exports = router;

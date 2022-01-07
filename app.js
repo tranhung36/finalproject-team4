@@ -8,16 +8,11 @@ const expressLayouts = require('express-ejs-layouts')
 const db = require('./config/database/db')
 const fileupload = require('express-fileupload');
 const methodOverride = require('method-override')
-const auth = require("./middleware/auth.middleware");
 
 const routes = require('./routes');
-const {
-  process_params
-} = require('express/lib/router');
-
 
 const app = express();
-const port = 3000
+const port = 8080
 require('dotenv').config()
 
 db.connect()

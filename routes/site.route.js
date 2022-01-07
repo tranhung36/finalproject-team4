@@ -6,20 +6,20 @@ const {
 } = require('../controllers/auth.controller')
 
 /* GET home page. */
-router.get('/', function (req, res, next) {
+router.get('/', (req, res, next) => {
     res.render('products/index', {
         title: 'Home'
     });
 });
 
-router.post('/', function (req, res, next) {
+router.post('/', (req, res, next) => {
     console.log(req.body.email);
 });
 //register
 router.post("/register", register);
 
 /* GET register page. */
-router.get('/register', function (req, res, next) {
+router.get('/register', (req, res, next) => {
     res.render('register', {
         title: 'Register',
     });
@@ -29,7 +29,7 @@ router.get('/register', function (req, res, next) {
 router.post("/login", login);
 
 /* GET login page. */
-router.get('/login', function (req, res, next) {
+router.get('/login', (req, res, next) => {
     res.render('login', {
         title: 'Login',
     });

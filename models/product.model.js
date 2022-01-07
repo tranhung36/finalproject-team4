@@ -34,10 +34,6 @@ const productSchema = new Schema({
         type: Number,
         require: true
     },
-    size: {
-        type: Array,
-        require: true
-    },
     categoryId: {
         type: Schema.Types.ObjectId,
         ref: 'Category'
@@ -45,6 +41,16 @@ const productSchema = new Schema({
 }, {
     timestamps: true
 })
+
+productSchema.pre('save', (next) => {
+    const slug = this.name.toLowerCase()
+        .replace(/[^\w ]+/g, '')
+        .replace(/ +/g, '-')
+
+    this.slug = slug
+
+    next();
+});
 
 const Product = mongoose.model('Product', productSchema)
 

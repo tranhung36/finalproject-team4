@@ -1,9 +1,28 @@
 const Product = require('../models/product.model')
 
-function index(req, res, next) {
-    res.render('products/shop', {
-        title: 'Shop',
-    });
+async function index(req, res, next) {
+    try {
+        let perPage = 12; // số lượng sản phẩm xuất hiện trên 1 page
+        let page = req.params.page || 1;
+
+        let products = await Product.find()
+            .skip(perPage * page - perPage)
+            .limit(perPage)
+            .sort("-price");
+
+        let count = await Product.countDocuments();
+
+        res.render("products/shop", {
+            products, // sản phẩm trên một page
+            current: page, // page hiện tại
+            pages: Math.ceil(count / perPage), // tổng số các page
+            count: count // tổng sản phẩm
+        });
+    } catch (err) {
+        return res.status(500).json({
+            msg: err.message
+        });
+    }
 }
 
 async function show(req, res, next) {
@@ -28,12 +47,7 @@ async function show(req, res, next) {
     }
 }
 
-function cart(req, res, next) {
-    res.render('products/cart', {})
-}
-
 module.exports = {
     index,
     show,
-    cart
 }

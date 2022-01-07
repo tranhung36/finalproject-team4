@@ -1,17 +1,16 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 const {
     index,
-    show,
-    cart
+    show
 } = require('../controllers/product.controller')
 
 /* GET product page. */
-router.get('/cart', cart);
 router.get('/:slug', show, (err) => {
     console.error(err.message)
     res.status(500).send('Server error')
 });
-router.get('/', index);
+router.get('/:page', index)
 
-module.exports = router;
+
+module.exports = router

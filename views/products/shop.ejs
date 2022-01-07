@@ -207,15 +207,15 @@
             <nav class="mx-auto">
               <ul class="pagination" style="margin-top: 2rem">
                 <!-- FIRST ITEM -->
-                <!-- Nếu thông số http://localhost:8080/products/shop/1/ là 1 thì First sẽ bị disabled -->
+                <!-- Nếu thông số http://localhost:8080/products là 1 thì First sẽ bị disabled -->
                 <% if(current == 1) { %>
                 <li class="page-item disabled">
-                  <a class="page-link" href="/products/shop/1">First</a>
+                  <a class="page-link" href="/products">First</a>
                 </li>
                 <% } else { %>
-                <!-- Nếu thông số http://localhost:8080/products/shop/2/ từ 2 trở lên thì First sẽ bỏ disabled -->
+                <!-- Nếu thông số http://localhost:8080/products từ 2 trở lên thì First sẽ bỏ disabled -->
                 <li class="page-item">
-                  <a class="page-link" href="/products/shop/1">First</a>
+                  <a class="page-link" href="/products">First</a>
                 </li>
                 <% } %>
 
@@ -231,13 +231,13 @@
          Trong vòng lặp for có ba biểu thức tùy chọn nên chỉ cần các bạn tách mỗi biểu thức bằng dấu `;` là oke rồi -->
                 <% if(i == current) { %>
                 <li class="page-item active">
-                  <a class="page-link" href="/products/shop/<%= i %>/">
+                  <a class="page-link" href="/products?page=<%= i %>">
                     <%= i %>
                   </a>
                 </li>
                 <% } else { %>
                 <li class="page-item">
-                  <a class="page-link" href="/products/shop/<%= i %>/">
+                  <a class="page-link" href="/products?page=<%= i %>">
                     <%= i %>
                   </a>
                 </li>
@@ -256,7 +256,7 @@
                 <% } else { %>
                 <!-- Ngược lại, thì Last là trang cuối cùng pages ở đây là 6 đồng nghĩa với Last là trang số 6 -->
                 <li class="page-item">
-                  <a class="page-link" href="/products/shop/<%= pages %>/">
+                  <a class="page-link" href="/products?page=<%= pages %>">
                     Last
                   </a>
                 </li>

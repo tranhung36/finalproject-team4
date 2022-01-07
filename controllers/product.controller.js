@@ -3,7 +3,7 @@ const Product = require('../models/product.model')
 async function index(req, res, next) {
     try {
         let perPage = 12; // số lượng sản phẩm xuất hiện trên 1 page
-        let page = req.params.page || 1;
+        let page = req.query.page || 1;
 
         let products = await Product.find()
             .skip(perPage * page - perPage)
@@ -12,7 +12,7 @@ async function index(req, res, next) {
 
         let count = await Product.countDocuments();
 
-        res.render("products/shop", {
+        res.render('products/shop', {
             products, // sản phẩm trên một page
             current: page, // page hiện tại
             pages: Math.ceil(count / perPage), // tổng số các page

@@ -10,7 +10,7 @@ router.get('/:slug', show, (err) => {
     console.error(err.message)
     res.status(500).send('Server error')
 });
-router.get('/:page', index)
+router.get('/', index)
 
 
 module.exports = router

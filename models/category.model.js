@@ -11,12 +11,22 @@ const categorySchema = new Schema({
     },
     slug: {
         type: String,
-        require: true,
         unique: true
     },
 }, {
     timestamps: true
 })
+
+categorySchema.pre('save', (next) => {
+    const slug = this.name.toLowerCase()
+        .replace(/[^\w ]+/g, '')
+        .replace(/ +/g, '-')
+
+    this.slug = slug
+
+    next();
+});
+
 
 const Category = mongoose.model('Category', categorySchema)
 

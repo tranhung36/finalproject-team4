@@ -28,15 +28,11 @@ const productSchema = new Schema({
     },
     images: [{
         type: String,
-        // require: true
+        require: true
     }],
     stock: {
         type: Number,
-        // require: true
-    },
-    size: {
-        type: Array,
-        // require: true
+        require: true
     },
     categoryId: {
         type: Schema.Types.ObjectId,

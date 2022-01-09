@@ -1,61 +1,67 @@
 <%- include("./partialsSeller/sidebar") %>
-    <div class="content-wrapper">
-        <div class="content-header">
-            <h1>Dashboard</h1>
-            <ul class="content-header__breadcrumb">
-                <li>Home</li>
-                <li>Dashboard</li>
-            </ul>
-        </div>
-        <div class="shop-info box-info">
-            <div class="col-12">
-                <a href="/sellerPage">Quay lại</a>
-                <div class="col-lg-8">
-                <% products.forEach(pro=>{ %>
-                    <form action="/sellerPage/crud-page/updateProduct/<%- pro._id %>?_method=PUT" enctype="multipart/form-data" method="POST">
-                        <input type="hidden" name="_method" value="PUT">
-                        <div class="input-group">
-                            <div class="col-12">
-                                <label for="productname" class="form-label">Tên sản phẩm</label>
-                                <input type="text" name="productname" value="<%- pro.name %>" id="productname" class="form-control">
-                            </div>
-                            <div class="col-12">
-                                <label for="category">Danh mục</label>
-                                <select class="form-select form-control" name="category" aria-label="Category" required>
-                                    <option value="<%- pro.categoryId %>" selected>Chọn danh mục</option>
-                                  <% categories.forEach(cate =>{ %>
-                                    <option value="<%- cate._id %>"><%- cate.name %> </option>
-                                  <% }) %> 
-                                </select>
-                            </div>
-                            <div class="col-12">
-                                <label for="slug" class="form-label">Slug</label>
-                                <input type="text" value="<%- pro.slug %>" name="slug" id="slug" class="form-control">
-                            </div>
-                            <div class="col-12">
-                                <label for="price" class="form-label">Price</label>
-                                <input type="number" value="<%- pro.price %>" name="price" id="price" class="form-control">
-                            </div>
-                            <div class="col-12">
-                                <label for="description" class="form-label">Mô tả</label>
-                                <textarea type="text" value="" name="description" id="description" class="form-control"><%- pro.description %></textarea>
-                            </div>
-
-                            <div class="col-12">
-                                <label for="thumbnail" class="form-label">Thumbnail</label>
-                                <div class="form-label">
-                                    <img src="/../images/<%- pro.thumbnail %>" width="70px" height="50px" alt="">
-                                </div>
-                                <input type="file" value="<%- pro.thumbnail %>" name="image" id="image" class="form-control">
-                            </div>
-                            
+<div class="content-wrapper">
+    <div class="content-header">
+        <h1>Dashboard</h1>
+        <ul class="content-header__breadcrumb">
+            <li>Home</li>
+            <li>Dashboard</li>
+        </ul>
+    </div>
+    <div class="shop-info box-info">
+        <div class="col-12">
+            <a href="/sellerPage/crud-page">Quay lại</a>
+            <div class="col-lg-8">
+            <% products.forEach(pro=>{ %>
+                <form action="/sellerPage/crud-page/updateProduct/<%- pro.slug %>.<%- pro._id %>?_method=PUT" enctype="multipart/form-data" method="POST">
+                    <input type="hidden" name="_method" value="PUT">
+                    <div class="input-group">
+                        <div class="col-12">
+                            <label for="productname" class="form-label">Tên sản phẩm</label>
+                            <input type="text" name="productname" value="<%- pro.name %>" id="productname" class="form-control">
                         </div>
-                        <button class="btn btn-dark" id="button-addon2" type="submit">Update</button>
-                    </form>
+                        <div class="col-12">
+                            <label for="category">Danh mục</label>
+                            <select class="form-select form-control" name="category" aria-label="Category" required>
+                                <option value="<%- pro.categoryId %>" selected>Chọn danh mục</option>
+                                <% categories.forEach(cate =>{ %>
+                                <option value="<%- cate._id %>"><%- cate.name %> </option>
+                                <% }) %> 
+                            </select>
+                        </div>
+                        <div class="col-12">
+                            <label for="price" class="form-label">Price</label>
+                            <input type="number" value="<%- pro.price %>" name="price" id="price" class="form-control">
+                        </div>
+                        <div class="col-12">
+                            <label for="stock" class="form-label">Số lượng</label>
+                            <input type="number" value="<%- pro.price %>" name="stock" id="stock" class="form-control">
+                        </div>
+                        <div class="col-12">
+                            <label for="description" class="form-label">Mô tả</label>
+                            <textarea type="text" value="" name="description" id="description" class="form-control"><%- pro.description %></textarea>
+                        </div>
 
-                <% }) %> 
-                </div>
+                        <div class="col-12">
+                            <label for="thumbnail" class="form-label">Thumbnail</label>
+                            <div class="form-label">
+                                <img src="/../images/<%- pro.thumbnail %>" width="70px" height="50px" alt="">
+                            </div>
+                            <input type="file" value="<%- pro.thumbnail %>" name="image" id="image" class="form-control">
+                        </div>
+                        
+                    </div>
+                    <button class="btn btn-dark" id="button-addon2" type="submit">Update</button>
+                </form>
+            <% }) %> 
             </div>
         </div>
     </div>
-<script src="'/javascripts/seller.ejs'"></script>
+</div>
+<script>
+    document.querySelector('#button-addon2').onclick = (e) =>{
+        if(document.querySelector('#image').value === '' ){
+            e.preventDefault()
+            alert('Bạn chưa chọn ảnh')
+        }
+    }
+</script>

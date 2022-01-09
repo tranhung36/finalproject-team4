@@ -24,8 +24,8 @@
                         <td><%- product.price %></td>
                         <td><%- product.description %></td>
                         <td>
-                        <a class="btn btn-primary" href="/sellerPage/crud-page/updateProduct/<%- product._id %>">Update</a>
-                        <a class="btn btn-info" href="/sellerPage/crud-page/deleteProduct/<%- product._id %>">Delete</a>
+                        <a class="btn btn-primary" href="/sellerPage/crud-page/updateProduct/<%- product.slug %>.<%- product._id %>">Update</a>
+                        <a class="btn btn-info" href="/sellerPage/crud-page/deleteProduct/<%- product.slug %>.<%- product._id %>">Delete</a>
                         </td>
                     </tr>
                 </tbody>
@@ -33,4 +33,3 @@
         </table>
     </div>
 </div>
-<script src="../javascripts/seller.js"></script>

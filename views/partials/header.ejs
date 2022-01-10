@@ -7,6 +7,7 @@
                 aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto">
+                    
                     <li class="nav-item">
                         <!-- Link--><a class="nav-link active" href="/">Home</a>
                     </li>
@@ -14,9 +15,17 @@
                         <!-- Link--><a class="nav-link" href="/products">Shop</a>
                     </li>
                 </ul>
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="/cart"> <i
-                                class="fas fa-dolly-flatbed me-1 text-gray"></i>Cart<small
+                <div class="navbar-nav search">
+                    <div class="search-field">
+                        
+                        <input id="search-input" type="text" class="search-input" placeholder="Search">
+                        <a href="#" class="search-icon"><i class="fas fa-search"></i></a>
+                    </div>
+                    <ul id="search-list">
+                    </ul>
+                </div>
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="/cart"> Cart<small
                                 class="text-gray fw-normal">(2)</small></a></li>
                     <li class="nav-item"><a class="nav-link" href="#!"> <i class="far fa-heart me-1"></i><small
                                 class="text-gray fw-normal"> (0)</small></a></li>

@@ -16,22 +16,20 @@
                 </tr>
             </thead>
             <% productByUserID.forEach((product,index)=> {%>
-            <tbody>
-                <tr>
-                    <th scope="row"><%- index + 1 %></th>
-                    <td><img src="../../images/<%- product.thumbnail %>" width="70px" height="50px" alt=""></td>
-                    <td><%- product.name %></td>
-                    <td><%- product.price %></td>
-                    <td><%- product.description %></td>
-                    <td>
-                        <a class="btn btn-primary"
-                            href="/sellerPage/crud-page/updateProduct/<%- product._id %>">Update</a>
-                        <a class="btn btn-info" href="/sellerPage/crud-page/deleteProduct/<%- product._id %>">Delete</a>
-                    </td>
-                </tr>
-            </tbody>
-            <% }) %>
+                <tbody>
+                    <tr>
+                        <th scope="row"><%- index + 1 %></th>
+                        <td><img src="../../images/<%- product.thumbnail %>" width="70px" height="50px" alt=""></td>
+                        <td><%- product.name %></td>
+                        <td><%- product.price %></td>
+                        <td><%- product.description %></td>
+                        <td>
+                        <a class="btn btn-primary" href="/sellerPage/crud-page/updateProduct/<%- product.slug %>.<%- product._id %>">Update</a>
+                        <a class="btn btn-info" href="/sellerPage/crud-page/deleteProduct/<%- product.slug %>.<%- product._id %>">Delete</a>
+                        </td>
+                    </tr>
+                </tbody>
+                <% }) %>
         </table>
     </div>
 </div>
-<script src="../javascripts/seller.js"></script>

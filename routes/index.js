@@ -7,7 +7,6 @@ const cartRoute = require('./cart.route')
 const categoryRoute = require('./category.route')
 const sellerRoute = require('./seller.route')
 
-
 router.use('/cart', cartRoute)
 router.use('/products', productRoute)
 router.use('/category', categoryRoute)

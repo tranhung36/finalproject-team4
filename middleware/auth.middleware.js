@@ -17,4 +17,18 @@ const verifyToken = (req, res, next) => {
   next()
 };
 
-module.exports = verifyToken;
+const checkAuth = (req, res, next) => {
+  const token = req.cookies['access_token']
+  if (token) {
+    res.locals.user = token
+    next()
+  } else {
+    next()
+  }
+}
+
+
+module.exports = {
+  verifyToken,
+  checkAuth
+};

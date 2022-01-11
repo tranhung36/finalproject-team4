@@ -20,7 +20,7 @@ async function index(req, res, next) {
         });
     } catch (err) {
         return res.status(500).json({
-            msg: err.message
+            msg: err.message,
         });
     }
 }

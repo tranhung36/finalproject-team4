@@ -9,6 +9,7 @@ const db = require('./config/database/db')
 const fileupload = require('express-fileupload');
 const methodOverride = require('method-override')
 
+
 const routes = require('./routes');
 
 const app = express();
@@ -33,6 +34,7 @@ app.use(express.urlencoded({
 }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
 
 // routes
 app.use('/', routes);

@@ -174,15 +174,15 @@
               <div class="product text-center">
                 <div class="mb-3 position-relative">
                   <div class="badge text-white bg-"></div>
-                  <a class="d-block" href="detail.html"><img class="img-fluid w-100" src="<%= products[i].thumbnail %>"
-                      alt="..." /></a>
+                  <a class="d-block" href="/products/<%= products[i].slug %>"><img class="img-fluid w-100"
+                      src="<%= products[i].thumbnail %>" alt="..." /></a>
                   <div class="product-overlay">
                     <ul class="mb-0 list-inline">
                       <li class="list-inline-item m-0 p-0">
                         <a class="btn btn-sm btn-outline-dark" href="#!"><i class="far fa-heart"></i></a>
                       </li>
                       <li class="list-inline-item m-0 p-0">
-                        <a class="btn btn-sm btn-dark" href="cart.html">Add to cart</a>
+                        <a class="btn btn-sm btn-dark" href="/cart/add-to-cart/<%= products[i].slug %>">Add to cart</a>
                       </li>
                       <li class="list-inline-item mr-0">
                         <a class="btn btn-sm btn-outline-dark" href="#productView" data-bs-toggle="modal"><i
@@ -192,7 +192,7 @@
                   </div>
                 </div>
                 <h6>
-                  <a class="reset-anchor" href="detail.html"><%= products[i].name %></a>
+                  <a class="reset-anchor" href="/products/<%= products[i].slug %>"><%= products[i].name %></a>
                 </h6>
                 <p class="small text-muted">$<%= products[i].price %></p>
               </div>

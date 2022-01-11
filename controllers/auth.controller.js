@@ -88,7 +88,12 @@ async function login(req, res) {
   }
 }
 
+function logout(req, res, next) {
+  res.clearCookie('access_token').redirect('/login')
+}
+
 module.exports = {
   register,
-  login
+  login,
+  logout
 }

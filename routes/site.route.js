@@ -2,19 +2,18 @@ const express = require('express');
 const router = express.Router();
 const {
     register,
-    login
+    login,
+    logout
 } = require('../controllers/auth.controller')
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
     res.render('products/index', {
-        title: 'Home'
+        title: 'Home',
+        user: req.cookies['access_token']
     });
 });
 
-router.post('/', (req, res, next) => {
-    console.log(req.body.email);
-});
 //register
 router.post("/register", register);
 
@@ -34,5 +33,7 @@ router.get('/login', (req, res, next) => {
         title: 'Login',
     });
 });
+
+router.get('/logout', logout)
 
 module.exports = router;

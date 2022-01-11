@@ -1,0 +1,50 @@
+<form id="login" class="d-flex justify-content-center pt-4" action="/register" method="POST">
+  <!-- FORM REGISTER -->
+  <div class="form w-75">
+    <div class="container-sm py-5 d-flex">
+      <div class="left text-center">
+        <div class="container">
+          <h3 class="text-danger py-5">Boutique</h3>
+          <h3 class="mt-5">Welcome</h3>
+          <p>Sign in by entering the information below</p>
+          <div class="row g-2">
+            <div class="col-md">
+              <div class="form-floating">
+                <input type="text" name="first_name" class="form-control" id="floatingInputGrid"
+                  placeholder="First Name" />
+                <label for="floatingInputGrid">First Name</label>
+              </div>
+            </div>
+            <div class="col-md">
+              <div class="form-floating">
+                <input type="text" name="last_name" class="form-control" id="floatingInputGrid"
+                  placeholder="Last Name" />
+                <label for="floatingInputGrid">Last Name</label>
+              </div>
+            </div>
+            <div class="form-floating mt-2">
+              <input type="email" name="email" class="form-control" id="floatingInput" placeholder="name@example.com" />
+              <label for="floatingInput">Email address</label>
+            </div>
+            <div class="form-floating">
+              <input type="password" name="password" class="form-control" id="floatingPassword"
+                placeholder="Password" />
+              <label for="floatingPassword">Password</label>
+            </div>
+
+            <div class="mt-5 d-grid mb-5">
+              <button class="btn rounded btn-primary" type="submit">
+                Continue
+              </button>
+            </div>
+          </div>
+
+          <div class="mt-3">
+            <p>Already have an account? Login <a href="/login">here</a></p>
+          </div>
+        </div>
+      </div>
+      <div class="right w-100 d-none d-lg-block"></div>
+    </div>
+  </div>
+</form>

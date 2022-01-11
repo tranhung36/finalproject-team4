@@ -1,0 +1,205 @@
+.main-header    
+    display: flex
+    justify-content: space-between
+    margin-left: 250px
+    padding: 8px
+    border-bottom: 1px solid #dee2e6
+    ul
+        height: 40px
+        line-height: 40px
+        display: flex
+        justify-content: space-between
+        li
+            width: 100%
+            height: 100%
+            a, & a > i
+                text-decoration: none
+                padding: 8px 16px
+                color: rgba(0, 0, 0, 0.6)
+                &:hover
+                    color: rgba(0, 0, 0, 0.8)
+
+.main-sidebar
+    width: 250px
+    position: fixed
+    top: 70px
+    left: 0
+    background-color: #343a40
+    p
+        color: rgba(255,255,255,.8)
+    .sidebar__info
+        border-bottom: 1px solid #4b545c
+        padding: 13px 8px
+        a
+            display: flex
+            justify-content: space-evenly
+            align-items: center
+            img
+                width: 33px
+                height: 33px
+                border-radius: 50%
+    .sidebar__main
+        padding: 0 8px
+        height: 100vh
+        .sidebar__admin-info
+            display: flex
+            justify-content: space-evenly
+            align-items: center
+            padding: 13px 8px
+            margin: 0px 0 16px
+            border-bottom: 1px solid #4b545c
+            img
+                width: 33px
+                height: 33px
+                border-radius: 50%
+        .sidebar__search
+            display: flex
+            align-items: center
+            justify-content: center
+            .search-field
+                height: 38px
+                width: 194px
+                input
+                    width: 100%
+                    height: 100%
+                    background-color: #3f474e
+                    color: #fff
+                    margin: 0
+                    border: none !important
+                    border-top-left-radius: 4px
+                    border-bottom-left-radius: 4px
+                    padding-left: 8px
+                    outline: none
+            .search-icon
+                height: 38px
+                flex: 1
+                button
+                    height: 100%
+                    width: 40px
+                    margin: 0
+                    border: unset !important
+                    border-top-right-radius: 4px
+                    border-bottom-right-radius: 4px
+                    cursor: pointer
+        .sidebar__control
+            width: 234px
+            margin: 8px auto 0
+            > ul
+                > li
+                    margin-bottom: 2px
+                    border-radius: 4px
+                    a
+                        display: flex
+                        justify-content: flex-start
+                        align-items: center
+                        color: #fff
+                        padding: 8px 16px
+                        &:hover
+                            background-color: #494e53
+                        &:active
+                            background-color: #494e53
+                        i
+                            margin-right: 10px
+                            color: #fff
+                        p
+                            width: 100%
+                            display: flex
+                            justify-content: space-between
+                            align-items: center
+                            i
+                                font-size: 14px
+                                
+            &__inventory
+                cursor: pointer
+                position: relative
+                a
+                    i   
+                        transition: transform ease-in-out .3s 
+                ul
+                    width: 100%
+                    display: none
+                    transition: all 0.5s ease-in-out
+                    li
+                        width: 100%
+                &:hover > ul i
+                    // position: absolute
+                    // display: block    
+
+.content-wrapper
+    background-color: #f4f6f9
+    .content-header
+        margin-left: 250px
+        display: flex
+        justify-content: space-between
+        align-items: center
+        padding: 15px 24px
+        h1
+            font-size: 25px
+            font-weight: bold
+        ul
+            display: flex
+            justify-content: space-between
+            align-items: center
+            li
+                margin-left: 10px
+                &+::before
+                    float: left
+                    padding-right: 8px
+                    color: #6c757d
+                    content: "/"
+
+    .shop-info
+        margin-left: 250px
+        padding: 15px 24px
+        display: grid
+        grid-template-columns: repeat(auto-fit, minmax(170px, 1fr))
+        grid-gap: 20px
+        padding-bottom: 0
+        &__block
+            color: #fff
+            position: relative
+            border-radius: 4px
+            > i
+                position: absolute
+                right: 20px
+                top: 20px
+                color: rgba(0,0,0,.15)
+                font-size: 80px
+            &:nth-child(1)
+                background-color: #17a2b8
+            &:nth-child(2)
+                background-color: #28a745
+            &:nth-child(3)
+                background-color: #ffc107
+            &:nth-child(4)
+                background-color: #dc3545
+            .box-info__header
+                padding: 10px
+                p
+                    font-size: 30px
+                    padding: 10px
+                    color:#fff
+                    &:first-child
+                        font-weight: 900
+                    &:last-child
+                        ffont-size: 25px
+                        margin-bottom: 10px
+            .box-info__footer
+                display: flex
+                justify-content: center
+                align-items: center
+                background-color: rgba(0,0,0,.1)
+                padding: 4px 0
+                p
+                    margin-right: 8px
+                    color: #fff
+                    font-weight: 500
+                i
+                    width: 20px
+                    height: 20px
+                    line-height: 20px
+                    text-align: center
+                    border-radius: 50%
+                    background-color: #fff
+
+            

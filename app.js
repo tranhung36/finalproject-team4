@@ -6,6 +6,8 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const expressLayouts = require('express-ejs-layouts')
 const db = require('./config/database/db')
+const fileupload = require('express-fileupload');
+const methodOverride = require('method-override')
 
 const routes = require('./routes');
 
@@ -21,6 +23,8 @@ app.set('view engine', 'ejs');
 app.set('layout', 'layouts/layout')
 
 app.use(expressLayouts)
+app.use(fileupload());
+app.use(methodOverride('_method'));
 app.use(logger('dev'));
 app.use(morgan('combined'))
 app.use(express.json());
@@ -51,6 +55,6 @@ app.use(function (err, req, res, next) {
 
 app.listen(port, () => {
   console.log(`Server listening at http://localhost:${port}`)
-})
+});
 
 module.exports = app;

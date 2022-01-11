@@ -26,25 +26,32 @@ const productSchema = new Schema({
         type: String,
         require: true
     },
-    images: {
-        type: Array,
-        require: true
-    },
+    images: [{
+        type: String,
+    }],
     stock: {
         type: Number,
-        require: true
-    },
-    size: {
-        type: Array,
-        require: true
     },
     categoryId: {
         type: Schema.Types.ObjectId,
-        ref: 'Category'
+        ref: 'category'
+    },
+    userID: {
+        type: String,
     }
 }, {
     timestamps: true
 })
+
+productSchema.pre('save', (next) => {
+    const slug = this.name.toLowerCase()
+        .replace(/[^\w ]+/g, '')
+        .replace(/ +/g, '-')
+
+    this.slug = slug
+
+    next();
+});
 
 const Product = mongoose.model('Product', productSchema)
 

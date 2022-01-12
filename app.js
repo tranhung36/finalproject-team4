@@ -9,12 +9,11 @@ const db = require('./config/database/db')
 const fileupload = require('express-fileupload');
 const methodOverride = require('method-override')
 
-
 const routes = require('./routes');
+require('dotenv').config()
 
 const app = express();
 const port = 8080
-require('dotenv').config()
 
 db.connect()
 

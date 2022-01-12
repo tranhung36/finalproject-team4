@@ -7,7 +7,8 @@ module.exports = async (req, res, next) => {
     if (accessToken) {
         const user = decodeJWT(accessToken)
         const order = await Order.findOne({
-            userId: user.user_id
+            userId: user.user_id,
+            ordered: false
         }).populate({
             path: 'orderItems',
             populate: {

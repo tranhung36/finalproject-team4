@@ -9,7 +9,7 @@ const paymentSchema = new Schema({
         ref: 'User',
         require: true
     },
-    stripeId: {
+    stripeChargeId: {
         type: String,
         require: true
     },

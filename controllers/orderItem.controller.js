@@ -12,7 +12,8 @@ async function cart(req, res, next) {
         const accessToken = req.cookies['access_token']
         const user = decodeJWT(accessToken)
         const order = await Order.findOne({
-            userId: user.user_id
+            userId: user.user_id,
+            ordered: false,
         }).populate({
             path: 'orderItems',
             populate: {
@@ -44,6 +45,7 @@ async function addToCart(req, res, next) {
         })
         orderItem = await OrderItem.findOne({
             productId: item._id,
+            ordered: false,
             userId: user.user_id
         })
         if (!orderItem) {
@@ -54,7 +56,8 @@ async function addToCart(req, res, next) {
         }
 
         const order = await Order.findOne({
-            userId: user.user_id
+            userId: user.user_id,
+            ordered: false
         })
         if (order) {
             const ordItem = order.orderItems.find(id => {
@@ -87,7 +90,8 @@ async function removeItemSingleFromCart(req, res, next) {
         const accessToken = req.cookies['access_token']
         const user = decodeJWT(accessToken)
         const order = await Order.findOne({
-            userId: user.user_id
+            userId: user.user_id,
+            ordered: false
         }).populate({
             path: 'orderItems',
             populate: {
@@ -121,7 +125,8 @@ async function removeItemFromCart(req, res, next) {
         const accessToken = req.cookies['access_token']
         const user = decodeJWT(accessToken)
         const order = await Order.findOne({
-            userId: user.user_id
+            userId: user.user_id,
+            ordered: false
         }).populate({
             path: 'orderItems',
             populate: {

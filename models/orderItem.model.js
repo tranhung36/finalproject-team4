@@ -12,6 +12,10 @@ const orderItemSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'User',
     },
+    ordered: {
+        type: Boolean,
+        default: false
+    },
     quantity: {
         type: Number,
         default: 1,

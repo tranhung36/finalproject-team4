@@ -32,7 +32,7 @@
             <!-- CATEGORY-->
             <% for(let i = 0; i < categories.length; i++) { %>
               <li class="mb-2">
-                <a class="reset-anchor" href="/products?<%=categories[i].slug%>"><%=categories[i].name %></a>
+                <a class="reset-anchor" href="/products?category=<%=categories[i].slug%>"><%=categories[i].name %></a>
               </li>
               <% } %>
           </ul>
@@ -208,12 +208,12 @@
                 <% } %>
 
                 <!-- ITEMS  -->
-                <% var i = (Number(current) > 3 ? Number(current) - 2 : 1) %> <%
+                <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %> <%
                 if(i !== 1) { %>
                 <li class="page-item disabled">
                   <a class="page-link" href="#">...</a>
                 </li>
-                <% } %> <% for(; i <= (Number(current) + 2) && i <= pages; i++)
+                <% } %> <% for(; i <= (Number(current) + 4) && i <= pages; i++)
                 { %>
                 <% if(i == current) { %>
                 <li class="page-item active">
@@ -223,11 +223,11 @@
                 </li>
                 <% } else { %>
                 <li class="page-item">
-                  <a class="page-link" href="<%=url%>?page=<%=i%>">
+                  <a class="page-link" href="<%=url%>page=<%=i%>">
                     <%= i %>
                   </a>
                 </li>
-                <% } %> <% if (i == Number(current) + 2 && i < pages) { %>
+                <% } %> <% if (i == Number(current) + 4 && i < pages) { %>
                 <li class="page-item disabled">
                   <a class="page-link" href="#">...</a>
                 </li>
@@ -240,7 +240,7 @@
                 </li>
                 <% } else { %>
                 <li class="page-item">
-                  <a class="page-link" href="<%=url%>?page=<%= pages %>">
+                  <a class="page-link" href="<%=url%>page=<%= pages %>">
                     Last
                   </a>
                 </li>

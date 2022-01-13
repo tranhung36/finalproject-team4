@@ -8,7 +8,7 @@ async function index(req, res, next) {
     let sortType = req.query.show;
     
     
-    const url = !sortType ? "/products" : "/products?show="+sortType;
+    const url = !sortType ? "/products?" : "/products?show="+sortType+"&";
     
     
     let sortBy = sortType=== "priceAsc" ? "price" : sortType=== "priceDesc" ? "-price" : ""

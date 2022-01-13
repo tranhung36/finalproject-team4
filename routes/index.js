@@ -7,6 +7,7 @@ const cartRoute = require('./cart.route')
 const categoryRoute = require('./category.route')
 const sellerRoute = require('./seller.route')
 const cart = require('../middleware/cartItem.middleware')
+const searchRoute = require('./search.route')
 const {
     checkAuth
 } = require('../middleware/auth.middleware')
@@ -19,5 +20,6 @@ router.use('/category', categoryRoute)
 router.use('/user', userRoute)
 router.use('/sellerPage', sellerRoute)
 router.use('/', siteRoute)
+router.use('/search', searchRoute)
 
 module.exports = router

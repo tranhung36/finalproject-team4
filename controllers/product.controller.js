@@ -7,7 +7,12 @@ async function index(req, res, next) {
     let page = req.query.page || 1;
     let sortType = req.query.show;
 
+
+    const url = !sortType ? "/products?" : "/products?show=" + sortType + "&";
+
+
     let sortBy = sortType === "priceAsc" ? "price" : sortType === "priceDesc" ? "-price" : ""
+
     let products = await Product.find()
       .skip(perPage * page - perPage)
       .limit(perPage)
@@ -16,12 +21,13 @@ async function index(req, res, next) {
     let count = await Product.countDocuments();
 
     let categories = await Category.find();
-    res.render("products/shop.ejs", {
+    res.render("products/shop", {
       products, // sản phẩm trên một page
       current: page, // page hiện tại
       pages: Math.ceil(count / perPage), // tổng số các page
       count: count, // tổng sản phẩm
       categories: categories, // loại danh mục
+      url: url,
     });
   } catch (err) {
     return res.status(500).json({

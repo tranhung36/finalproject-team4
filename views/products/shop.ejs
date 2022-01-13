@@ -29,7 +29,13 @@
             <strong class="small text-uppercase fw-bold">Fashion &amp; Acc</strong>
           </div>
           <ul class="list-unstyled small text-muted ps-lg-4 font-weight-normal">
-            <li class="mb-2">
+            <!-- CATEGORY-->
+            <% for(let i = 0; i < categories.length; i++) { %>
+              <li class="mb-2">
+                <a class="reset-anchor" href="#!"><%=categories[i].name %></a>
+              </li>
+              <% } %>
+            <!-- <li class="mb-2">
               <a class="reset-anchor" href="#!">Women's T-Shirts</a>
             </li>
             <li class="mb-2">
@@ -44,9 +50,9 @@
             </li>
             <li class="mb-2">
               <a class="reset-anchor" href="#!">Men's sunglasses</a>
-            </li>
+            </li> -->
           </ul>
-          <div class="py-2 px-4 bg-light mb-3">
+          <!-- <div class="py-2 px-4 bg-light mb-3">
             <strong class="small text-uppercase fw-bold">Health &amp; Beauty</strong>
           </div>
           <ul class="list-unstyled small text-muted ps-lg-4 font-weight-normal">
@@ -83,7 +89,7 @@
             <li class="mb-2">
               <a class="reset-anchor" href="#!">Keyboards</a>
             </li>
-          </ul>
+          </ul> -->
           <h6 class="text-uppercase mb-4">Price range</h6>
           <div class="price-range pt-4 mb-5">
             <div id="range"></div>
@@ -156,12 +162,12 @@
                   <a class="reset-anchor p-0" href="#!"><i class="fas fa-th"></i></a>
                 </li>
                 <li class="list-inline-item">
-                  <select class="selectpicker" data-customclass="form-control form-control-sm">
+                  <select class="selectpicker" name="selectpicker" id="selectpicker" data-customclass="form-control form-control-sm" onchange="location = this.value">
                     <option value>Sort By</option>
-                    <option value="default">Default sorting</option>
-                    <option value="popularity">Popularity</option>
-                    <option value="low-high">Price: Low to High</option>
-                    <option value="high-low">Price: High to Low</option>
+                    <option value="default" name="default" selected >Default</option>
+                    <!-- <option value="popularity" name="popularity" >Popularity</option> -->
+                    <option value="/products?show=priceAsc" name="priceAsc">Price: Low to High</option>
+                    <option value="/products?show=priceDesc"name="priceDesc">Price: High to Low</option>
                   </select>
                 </li>
               </ul>

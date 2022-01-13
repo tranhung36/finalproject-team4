@@ -2,7 +2,9 @@ const searchList = document.querySelector('#search-list')
 const searchInput = document.querySelector('#search-input')
 const serverPages = document.querySelector('.server-pg')
 const clientPage = document.querySelector('.client-pg')
-clientPage.style.display = 'none'
+if(clientPage){
+    clientPage.style.display = 'none'
+}
 const loadValue = async () => {
     try {
         // call api
@@ -42,7 +44,7 @@ const loadSearchValue = async (key) => {
     const searchStringValue = await searchValue.json()
     const searchData = searchStringValue.data
     const selections = document.querySelector('.sp-sort-by')
-    selections.onclick = (e) => {
+    selections.onchange = (e) => {
         if (e.target.value == 'priceAsc') {
             const sort = searchData.sort((a, b) => a.price > b.price ? 1 : -1)
             sortProduct(sort, searchData)
@@ -65,14 +67,47 @@ const sortProduct = (sort, searchData) => {
     const pages = Math.ceil(searchData.length / 8)
     let html = ``
     for (let i = 0; i < pages; i++) {
-        html += `<li class="page-item"><a class="page-link"</a>${i + 1}</li>`
+        html += `<li class="page-item"><input type="radio" hidden value="${i + 1}" name="radio" class="page-link radio-pg"></li>`
     }
     page.innerHTML = html
+    for (let i = 0; i < pages; i++) {
+        html += `<li class="page-item"><a class="page-link btn-page">${i + 1}</a></li>`
+    }
+    page.innerHTML = html
+    const firstSelected = document.querySelector('.radio-pg')
+    firstSelected.checked = true
+    if(firstSelected.checked == true){
+        const productHTML = sort.slice(8 * (1 - 1), 8 * (1)).map(s => {
+            return `
+            <div class="col-xl-3 col-lg-4 col-sm-6">
+                <div class="product text-center">
+                  <div class="position-relative mb-3">
+                    <div class="badge text-white bg-"></div><a class="d-block" href="detail.html"><img class="img-fluid w-100"
+                        src="/../images/${s.thumbnail}" alt="..."></a>
+                    <div class="product-overlay">
+                      <ul class="mb-0 list-inline">
+                        <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-outline-dark" href="#!"><i
+                              class="far fa-heart"></i></a></li>
+                        <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-dark" href="/cart">Add to cart</a>
+                        </li>
+                        <li class="list-inline-item me-0"><a class="btn btn-sm btn-outline-dark" href="#productView"
+                            data-bs-toggle="modal"><i class="fas fa-expand"></i></a></li>
+                      </ul>
+                    </div>
+                  </div>
+                  <h6> <a class="reset-anchor" href="detail.html">${s.name}</a></h6>
+                  <p class="small text-muted">${s.price}</p>
+                </div>
+            </div>
+            `
+        })
+        document.querySelector('.sp-right .row ').innerHTML = productHTML.join(' ')
+    }
     const pageValue = document.querySelectorAll('.client-pg ul li a')
     pageValue.forEach(page => {
         page.onclick = () => {
             let value =  Number(page.innerText) 
-            const ascString = sort.slice(8 * (value - 1), 8 * (value)).map(s => {
+            const productHTML = sort.slice(8 * (value - 1), 8 * (value)).map(s => {
                 return `
                 <div class="col-xl-3 col-lg-4 col-sm-6">
                     <div class="product text-center">
@@ -96,7 +131,7 @@ const sortProduct = (sort, searchData) => {
                 </div>
                 `
             })
-            document.querySelector('.sp-right .row ').innerHTML = ascString.join(' ')
+            document.querySelector('.sp-right .row ').innerHTML = productHTML.join(' ')
         }
     })
 

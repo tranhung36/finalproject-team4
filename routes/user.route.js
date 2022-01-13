@@ -1,9 +1,17 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-
-/* GET users listing. */
-router.get('/', (req, res, next) => {
-  res.render("user");
+const { getProfile, changeProfile } = require('../controllers/profile.controller')
+/* GET users profile */
+router.get("/:id", getProfile, (err) => {
+  console.error(err.message)
+  res.status(500).send('Server error')
 });
+
+// CHANGE users profile
+router.post(':id', changeProfile, (err) => {
+  console.error(err.message)
+  res.status(500).send('Server error')
+});
+
 
 module.exports = router;

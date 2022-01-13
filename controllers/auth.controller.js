@@ -74,9 +74,6 @@ async function login(req, res) {
       }, {
         expiresIn: "1h",
       });
-      //update UI
-      const button = document.getElementById('loginButton');
-      button.textContent = 'Hello';
       // user
       res.cookie('access_token', token, {
           maxAge: 3600 * 1000,

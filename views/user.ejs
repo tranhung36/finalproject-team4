@@ -7,7 +7,7 @@
       </div>
       <div class="col-md-6">
         <div class="profile-head">
-          <h5>Hello userName</h5>
+          <h5>Hello <%= user.first_name + " " + user.last_name %></h5>
           <h6></h6>
         </div>
       </div>
@@ -117,7 +117,7 @@
                 <div class="row gutters">
                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                         <div class="text-right">
-                            <button type="button" id="submit" name="submit" class="btn btn-secondary">Cancel</button>
+                            <a href="/"><button type="button" class="btn btn-secondary">Cancel</button></a>
                             <button type="button" id="submit" name="submit" class="btn btn-primary">Update</button>
                         </div>
                     </div>

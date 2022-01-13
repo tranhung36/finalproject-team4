@@ -1,23 +1,30 @@
 const Category = require('../models/category.model')
 const Product = require('../models/product.model')
-const parseJWT = require('../middleware/parseJWT')
+const userInfo = require('../services/user.service')
 const slugURL = require('../middleware/slug')
 
 async function renderSellerPage(req, res) {
-    res.render('seller/sellerPage',);
+    res.render('seller/sellerPage', );
 }
 
 async function renderCRUDPage(req, res) {
     // get all products corresponding to the person who logged in
-    const productByUserID = await Product.find({ userID: parseJWT(req.cookies.access_token).user_id })
+    const productByUserID = await Product.find({
+        userID: userInfo(req).user_id
+    })
     const categories = await Category.find()
 
-    res.render('seller/crudPage', { productByUserID, categories });
+    res.render('seller/crudPage', {
+        productByUserID,
+        categories
+    });
 }
 
 async function renderCreateProduct(req, res) {
     const categories = await Category.find()
-    res.render('seller/createProduct', { categories });
+    res.render('seller/createProduct', {
+        categories
+    });
 }
 
 async function createProduct(req, res) {
@@ -66,32 +73,45 @@ async function createProduct(req, res) {
                 description: req.body.description,
                 thumbnail: newImageName,
                 images: imageArray,
-                userID: parseJWT(req.cookies.access_token).user_id
+                userID: userInfo(req).user_id
             });
             await product.save();
             res.redirect('/sellerPage/crud-page')
         }
     } catch (error) {
-        res.status(500).send({ message: error.message || "Error Occured" });
+        res.status(500).send({
+            message: error.message || "Error Occured"
+        });
     }
 }
 
 async function deleteProduct(req, res) {
     try {
-        await Product.findByIdAndDelete({ _id: req.params.id })
+        await Product.findByIdAndDelete({
+            _id: req.params.id
+        })
         res.redirect('/sellerPage/crud-page')
     } catch (error) {
-        res.status(500).send({ message: error.message || "Error Occured" });
+        res.status(500).send({
+            message: error.message || "Error Occured"
+        });
     }
 }
 
 async function renderUpdateProduct(req, res) {
     try {
-        const products = await Product.find({ _id: req.params.id })
+        const products = await Product.find({
+            _id: req.params.id
+        })
         const categories = await Category.find()
-        res.render('seller/updateProduct', { products, categories })
+        res.render('seller/updateProduct', {
+            products,
+            categories
+        })
     } catch (error) {
-        res.status(404).send({ message: error.message || "Error Occured" });
+        res.status(404).send({
+            message: error.message || "Error Occured"
+        });
     }
 }
 
@@ -112,15 +132,30 @@ async function updateProduct(req, res) {
             imageUploadFile.mv(uploadPath, function (err) {
                 if (err) return res.satus(500).send(err);
             })
-            const { productname, price, category, stock, description } = req.body
-            await Product.findOneAndUpdate({ _id: req.params.id }, {
-                name: productname, slug: slugURL(req.body.productname), stock,
-                price: Number(price), categoryId: category, description, thumbnail: newImageName
+            const {
+                productname,
+                price,
+                category,
+                stock,
+                description
+            } = req.body
+            await Product.findOneAndUpdate({
+                _id: req.params.id
+            }, {
+                name: productname,
+                slug: slugURL(req.body.productname),
+                stock,
+                price: Number(price),
+                categoryId: category,
+                description,
+                thumbnail: newImageName
             })
             res.redirect('/sellerPage/crud-page')
         }
     } catch (error) {
-        res.status(500).send({ message: error.message || "Error Occured" });
+        res.status(500).send({
+            message: error.message || "Error Occured"
+        });
     }
 }
 
@@ -138,19 +173,27 @@ async function renderSearchPage(req, res) {
         const pages = Math.ceil(data.length / productPerPage)
         const page = Number(req.params.page)
         let pagination = data.slice(productPerPage * page, productPerPage * (1 + page))
-        res.render('seller/searchPage', { pagination, key, pages })
+        res.render('seller/searchPage', {
+            pagination,
+            key,
+            pages
+        })
     } catch (error) {
-        res.status(404).send({ message: error.message || "Error Occured" });
+        res.status(404).send({
+            message: error.message || "Error Occured"
+        });
     }
 }
 
 //API 
 async function renderSearchBar(req, res) {
     const product = await Product.find()
-    res.send({ product });
+    res.send({
+        product
+    });
 }
 
-async function searchApi (req, res){
+async function searchApi(req, res) {
     try {
         // get key
         const key = req.query.key.toLowerCase()
@@ -159,9 +202,14 @@ async function searchApi (req, res){
         const data = products.filter(value => {
             return value.name.toLowerCase().includes(key.toLowerCase())
         })
-        res.send({ data, key })
+        res.send({
+            data,
+            key
+        })
     } catch (error) {
-        res.status(404).send({ message: error.message || "Error Occured" });
+        res.status(404).send({
+            message: error.message || "Error Occured"
+        });
     }
 }
 

@@ -31,10 +31,10 @@
           <ul class="list-unstyled small text-muted ps-lg-4 font-weight-normal">
             <!-- CATEGORY-->
             <% for(let i = 0; i < categories.length; i++) { %>
-              <li class="mb-2">
-                <a class="reset-anchor" href="#!"><%=categories[i].name %></a>
-              </li>
-              <% } %>
+            <li class="mb-2">
+              <a class="reset-anchor" href="#!"><%=categories[i].name %></a>
+            </li>
+            <% } %>
             <!-- <li class="mb-2">
               <a class="reset-anchor" href="#!">Women's T-Shirts</a>
             </li>
@@ -162,12 +162,13 @@
                   <a class="reset-anchor p-0" href="#!"><i class="fas fa-th"></i></a>
                 </li>
                 <li class="list-inline-item">
-                  <select class="selectpicker" name="selectpicker" id="selectpicker" data-customclass="form-control form-control-sm" onchange="location = this.value">
+                  <select class="selectpicker" name="selectpicker" id="selectpicker"
+                    data-customclass="form-control form-control-sm" onchange="location = this.value">
                     <option value>Sort By</option>
-                    <option value="default" name="default" selected >Default</option>
+                    <option value="default" name="default" selected>Default</option>
                     <!-- <option value="popularity" name="popularity" >Popularity</option> -->
                     <option value="/products?show=priceAsc" name="priceAsc">Price: Low to High</option>
-                    <option value="/products?show=priceDesc"name="priceDesc">Price: High to Low</option>
+                    <option value="/products?show=priceDesc" name="priceDesc">Price: High to Low</option>
                   </select>
                 </li>
               </ul>

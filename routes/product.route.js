@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const {
     index,
-    show
+    show,
 } = require('../controllers/product.controller')
 
 /* GET product page. */

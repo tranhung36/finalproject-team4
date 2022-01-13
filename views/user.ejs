@@ -42,7 +42,7 @@
                 <label>User Id</label>
               </div>
               <div class="col-md-6">
-                <p>user12345</p>
+                <p><%= user._id %></p>
               </div>
             </div>
             <div class="row">
@@ -50,7 +50,7 @@
                 <label>Name</label>
               </div>
               <div class="col-md-6">
-                <p>Họ và tên</p>
+                <p><%= user.first_name + " " + user.last_name %></p>
               </div>
             </div>
             <div class="row">
@@ -84,13 +84,13 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="firstName">First Name</label>
-                                    <input type="text" class="form-control" id="firstName" placeholder="Change first name">
+                                    <input type="text" class="form-control" id="firstName" placeholder="<%= user.first_name %>">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="lastName">Last Name</label>
-                                    <input type="text" class="form-control" id="lastName" placeholder="Change last name">
+                                    <input type="text" class="form-control" id="lastName" placeholder="<%= user.last_name %>">
                                 </div>
                             </div>
                         </div>

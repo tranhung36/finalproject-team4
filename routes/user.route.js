@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { getProfile, changeProfile } = require('../controllers/profile.controller')
+
 /* GET users profile */
 router.get("/:id", getProfile, (err) => {
   console.error(err.message)

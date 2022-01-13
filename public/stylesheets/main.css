@@ -355,4 +355,123 @@
   border-radius: 50%;
   background-color: #fff;
 }
+
+.search {
+  width: 270px;
+  display: block;
+}
+
+.search .search-field {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  position: relative;
+  border: 1px solid #000;
+}
+
+.search .search-field input {
+  padding: 4px 8px;
+  outline: none;
+  width: 235px;
+  border: none;
+}
+
+.search .search-field .search-icon {
+  padding: 5px 8px;
+  border: none;
+  border-left: 1px solid #000;
+  cursor: pointer;
+  width: 35px;
+  text-align: center;
+  outline: none;
+}
+
+.search #search-list {
+  width: 270px;
+  background-color: #ffffffe7;
+  position: absolute;
+  z-index: 100;
+  max-height: 300px;
+  overflow-y: auto;
+  -webkit-box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.26);
+          box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.26);
+}
+
+.search #search-list::-webkit-scrollbar {
+  width: 4px;
+}
+
+.search #search-list::-webkit-scrollbar-track {
+  background: #fff;
+}
+
+.search #search-list::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 20px;
+  border: 3px solid #ccc;
+}
+
+.search #search-list .search-item {
+  margin: 5px 3px;
+}
+
+.search #search-list .search-item a {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.search #search-list .search-item a:hover {
+  background-color: #ddd;
+}
+
+.search #search-list .search-item a img {
+  width: 60px;
+  height: 60px;
+}
+
+.search #search-list .search-item a .item-info {
+  margin-left: 10px;
+}
+
+.search #search-list .search-item a .item-info p:first-child {
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+.search #search-list .search-item a .item-info p:last-child {
+  color: red;
+  font-weight: bold;
+}
+
+.crud-page {
+  margin-left: 250px;
+  min-height: 100vh;
+}
+
+.crud-page .table-control {
+  padding-top: 50px;
+  width: 100%;
+}
+
+.crud-page .table-control th:nth-child(1) {
+  width: 5%;
+  padding: auto;
+}
+
+.crud-page .table-control th:nth-child(2) {
+  width: 90px;
+}
 /*# sourceMappingURL=main.css.map */

@@ -17,7 +17,7 @@ const categorySchema = new Schema({
     timestamps: true
 })
 
-categorySchema.pre('save', (next) => {
+categorySchema.pre('save', function(next) {
     const slug = this.name.toLowerCase()
         .replace(/[^\w ]+/g, '')
         .replace(/ +/g, '-')

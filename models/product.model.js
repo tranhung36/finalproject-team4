@@ -43,7 +43,7 @@ const productSchema = new Schema({
     timestamps: true
 })
 
-productSchema.pre('save', (next) => {
+productSchema.pre('save', function(next) {
     const slug = this.name.toLowerCase()
         .replace(/[^\w ]+/g, '')
         .replace(/ +/g, '-')

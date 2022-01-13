@@ -16,14 +16,18 @@ async function cart(req, res, next) {
                 model: 'Product'
             }
         }).exec()
-        const totalItem = order.orderItems.reduce((total, item) => {
-            return total += item.quantity * item.productId.price
-        }, 0)
         if (order) {
+            const totalItem = order.orderItems.reduce((total, item) => {
+                return total += item.quantity * item.productId.price
+            }, 0)
+
             res.render('products/cart', {
+                order,
                 orderItems: order.orderItems,
                 totalItem
             })
+        } else {
+            res.render('products/cart_empty')
         }
     } catch (error) {
         next(error)

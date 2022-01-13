@@ -58,6 +58,7 @@ async function payment(req, res, next) {
                         currency: 'usd',
                         product_data: {
                             name: item.productId.name,
+                            images: [item.productId.thumbnail]
                         },
                         unit_amount: item.productId.price,
                     },
@@ -83,9 +84,8 @@ async function payment(req, res, next) {
                 item.save()
             })
             order.save()
-            res.redirect(303, session.url)
         }
-
+        res.redirect(303, session.url)
     } catch (error) {
         next(error)
     }

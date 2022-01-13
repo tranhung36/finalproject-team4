@@ -40,7 +40,7 @@ router.get('/logout', logout)
 
 router.get('/checkout', verifyToken, checkout)
 
-router.post('/create-checkout-session', payment);
+router.get('/create-checkout-session', payment);
 
 router.get('/success', successPayment)
 

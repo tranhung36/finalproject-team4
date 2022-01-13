@@ -9,9 +9,6 @@ const {
     deleteProduct,
     renderUpdateProduct,
     updateProduct,
-    renderSearchBar,
-    renderSearchPage,
-    searchApi
 } = require('../controllers/seller.controller')
 
 router.get('/', renderSellerPage)
@@ -26,8 +23,5 @@ router.get('/crud-page/deleteProduct/:slug.:id', deleteProduct)
 router.get('/crud-page/updateProduct/:slug.:id', renderUpdateProduct)
 router.put('/crud-page/updateProduct/:slug.:id', updateProduct)
 
-router.get('/searchValue', renderSearchBar);
-router.get('/search&page=:page', renderSearchPage);
-router.get('/searchApi', searchApi)
 
 module.exports = router

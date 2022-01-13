@@ -4,7 +4,7 @@ const searchInput = document.querySelector('#search-input')
 const loadValue = async () => {
     try {
         // call api
-        const searchJsonValue = await fetch('http://localhost:8080/sellerPage/searchValue')
+        const searchJsonValue = await fetch('http://localhost:8080/search/searchValue')
         const searchStringValue = await searchJsonValue.json()
         const productString = searchStringValue.product
         // get product 
@@ -35,9 +35,8 @@ const loadValue = async () => {
 }
 loadValue();
 
-
 const loadSearchValue = async (key) => {
-    const searchValue = await fetch(`http://localhost:8080/sellerPage/searchApi?key=${key}`)
+    const searchValue = await fetch(`http://localhost:8080/search/searchApi?key=${key}`)
     const searchStringValue = await searchValue.json()
     const searchData = searchStringValue.data
     // console.log(searchData);

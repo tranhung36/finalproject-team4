@@ -91,7 +91,7 @@ async function renderUpdateProduct(req, res) {
         const categories = await Category.find()
         res.render('seller/updateProduct', { products, categories })
     } catch (error) {
-        res.status(500).send({ message: error.message || "Error Occured" });
+        res.status(404).send({ message: error.message || "Error Occured" });
     }
 }
 
@@ -150,6 +150,21 @@ async function renderSearchBar(req, res) {
     res.send({ product });
 }
 
+async function searchApi (req, res){
+    try {
+        // get key
+        const key = req.query.key.toLowerCase()
+        //get all products corresponding to key
+        const products = await Product.find()
+        const data = products.filter(value => {
+            return value.name.toLowerCase().includes(key.toLowerCase())
+        })
+        res.send({ data, key })
+    } catch (error) {
+        res.status(404).send({ message: error.message || "Error Occured" });
+    }
+}
+
 module.exports = {
     renderSellerPage,
     renderCRUDPage,
@@ -159,5 +174,6 @@ module.exports = {
     renderUpdateProduct,
     updateProduct,
     renderSearchBar,
-    renderSearchPage
+    renderSearchPage,
+    searchApi
 }

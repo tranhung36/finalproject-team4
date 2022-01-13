@@ -23,9 +23,9 @@
     <h2 class="h5 text-uppercase mb-4">Billing details</h2>
     <div class="row">
       <div class="col-lg-8">
-        <form method="POST" action="/checkout">
+        <form method="POST" action="/create-checkout-session">
           <div class="row gy-3">
-            <div class="col-lg-6">
+            <!-- <div class="col-lg-6">
               <label class="form-label text-sm text-uppercase" for="firstName">First name </label>
               <input class="form-control form-control-lg" name="firstName" type="text" value="<%= user.first_name %>"
                 id="firstName" placeholder="Enter your first name">
@@ -49,9 +49,9 @@
               <label class="form-label text-sm text-uppercase" for="address">Address</label>
               <input class="form-control form-control-lg" name="address" type="text" id="address"
                 placeholder="House number and street name">
-            </div>
+            </div> -->
             <div class="col-lg-12 form-group">
-              <button class="btn btn-dark" type="submit">Place order</button>
+              <button class="btn btn-dark" type="submit" id="checkout-button">Checkout</button>
             </div>
           </div>
         </form>

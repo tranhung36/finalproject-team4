@@ -1,16 +1,11 @@
 const OrderItem = require('../models/orderItem.model')
 const Product = require('../models/product.model')
 const Order = require('../models/order.model')
-const jsdom = require('jsdom')
-const {
-    JSDOM
-} = jsdom
-const decodeJWT = require('jwt-decode')
+const userInfo = require('../services/user.service')
 
 async function cart(req, res, next) {
     try {
-        const accessToken = req.cookies['access_token']
-        const user = decodeJWT(accessToken)
+        const user = userInfo(req)
         const order = await Order.findOne({
             userId: user.user_id,
             ordered: false,
@@ -38,8 +33,7 @@ async function cart(req, res, next) {
 async function addToCart(req, res, next) {
     try {
         let orderItem
-        const accessToken = req.cookies['access_token']
-        const user = decodeJWT(accessToken)
+        const user = userInfo(req)
         const item = await Product.findOne({
             slug: req.params.slug
         })
@@ -87,8 +81,7 @@ async function addToCart(req, res, next) {
 
 async function removeItemSingleFromCart(req, res, next) {
     try {
-        const accessToken = req.cookies['access_token']
-        const user = decodeJWT(accessToken)
+        const user = userInfo(req)
         const order = await Order.findOne({
             userId: user.user_id,
             ordered: false
@@ -122,8 +115,7 @@ async function removeItemSingleFromCart(req, res, next) {
 
 async function removeItemFromCart(req, res, next) {
     try {
-        const accessToken = req.cookies['access_token']
-        const user = decodeJWT(accessToken)
+        const user = userInfo(req)
         const order = await Order.findOne({
             userId: user.user_id,
             ordered: false

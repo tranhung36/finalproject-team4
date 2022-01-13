@@ -7,8 +7,9 @@ const {
 } = require('../controllers/auth.controller')
 const {
     checkout,
-    checkoutHandle,
-    payment
+    payment,
+    successPayment,
+    cancelPayment
 } = require('../controllers/checkout.controller')
 const {
     verifyToken
@@ -37,23 +38,13 @@ router.get('/login', (req, res, next) => {
 
 router.get('/logout', logout)
 
-router.post('/checkout', checkoutHandle)
-
 router.get('/checkout', verifyToken, checkout)
-
-router.get('/payment', (req, res) => {
-    res.render('products/payment')
-})
 
 router.post('/create-checkout-session', payment);
 
-router.get('/success', (req, res) => {
-    res.render('success')
-})
+router.get('/success', successPayment)
 
-router.get('/cancel', (req, res) => {
-    res.render('cancel')
-})
+router.get('/cancel', cancelPayment)
 
 /* GET home page. */
 router.get('/', (req, res, next) => {

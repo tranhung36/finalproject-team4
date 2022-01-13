@@ -1,61 +1,22 @@
-const Order = require('../models/order.model')
-const User = require('../models/user.model')
 const Payment = require('../models/payment.model')
-const OrderItem = require('../models/orderItem.model')
-const decodeJWT = require('jwt-decode')
 const config = require('../config/stripe/secretKey.config')
 const stripe = require('stripe')(config.stripe.secretKey);
+const {
+    orderInfo
+} = require('../services/order.service')
 
-async function checkoutHandle(req, res, next) {
-    try {
-        const accessToken = req.cookies['access_token']
-        const user = decodeJWT(accessToken)
-        const order = await Order.findOne({
-            userId: user.user_id,
-            ordered: false
-        }).populate({
-            path: 'orderItems',
-            populate: {
-                path: 'productId',
-                model: 'Product'
-            },
-        }).populate('userId').exec()
-        res.render('products/payment', {
-            title: 'Payment'
-        })
-    } catch (error) {
-        next(error)
-    }
-}
 
 async function checkout(req, res, next) {
     try {
-        const accessToken = req.cookies['access_token']
-        if (accessToken) {
-            const decoded = decodeJWT(accessToken)
-            const user = await User.findOne({
-                _id: decoded.user_id
-            })
-            const order = await Order.findOne({
-                userId: user._id,
-                ordered: false
-            }).populate({
-                path: 'orderItems',
-                populate: {
-                    path: 'productId',
-                    model: 'Product'
-                }
-            }).exec()
-            const totalItem = order.orderItems.reduce((total, item) => {
-                return total += item.quantity * item.productId.price
-            }, 0)
-            res.render('products/checkout', {
-                user,
-                order,
-                totalItem,
-                title: 'Checkout'
-            })
-        }
+        const order = await orderInfo(req)
+        const totalItem = order.orderItems.reduce((total, item) => {
+            return total += item.quantity * item.productId.price
+        }, 0)
+        res.render('products/checkout', {
+            order,
+            totalItem,
+            title: 'Checkout'
+        })
     } catch (error) {
         next(error)
     }
@@ -63,18 +24,7 @@ async function checkout(req, res, next) {
 
 async function payment(req, res, next) {
     try {
-        const accessToken = req.cookies['access_token']
-        const user = decodeJWT(accessToken)
-        const order = await Order.findOne({
-            userId: user.user_id,
-            ordered: false
-        }).populate({
-            path: 'orderItems',
-            populate: {
-                path: 'productId',
-                model: 'Product'
-            },
-        }).populate('userId').exec()
+        const order = await orderInfo(req)
         const session = await stripe.checkout.sessions.create({
             shipping_address_collection: {
                 allowed_countries: ['US', 'CA', 'VN'],
@@ -120,7 +70,7 @@ async function payment(req, res, next) {
         });
 
         const payment = await Payment.create({
-            userId: user.user_id,
+            userId: order.userId._id,
             stripeChargeId: session.id,
             amount: session.amount_total
         })
@@ -133,16 +83,25 @@ async function payment(req, res, next) {
                 item.save()
             })
             order.save()
-            res.redirect(303, session.url);
+            res.redirect(303, session.url)
         }
+
     } catch (error) {
         next(error)
     }
+}
 
+function successPayment(req, res, next) {
+    res.render('success')
+}
+
+function cancelPayment(req, res, next) {
+    res.render('cancel')
 }
 
 module.exports = {
-    checkoutHandle,
     checkout,
-    payment
+    payment,
+    successPayment,
+    cancelPayment,
 }

@@ -16,11 +16,12 @@
                     </li>
                 </ul>
                 <div class="navbar-nav search">
-                    <div class="search-field">
-                        
-                        <input id="search-input" type="text" class="search-input" placeholder="Search">
-                        <a href="#" class="search-icon"><i class="fas fa-search"></i></a>
-                    </div>
+                    <form action="/sellerPage/search&page=0" method="GET">
+                        <div class="search-field"> 
+                            <input id="search-input" name="key" type="text" class="search-input" placeholder="Search">
+                            <button type="submit" class="search-icon"><i class="fas fa-search"></i></button>
+                        </div>
+                    </form>
                     <ul id="search-list">
                     </ul>
                 </div>

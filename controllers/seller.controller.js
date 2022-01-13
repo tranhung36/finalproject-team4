@@ -1,32 +1,32 @@
-
-const slugURL = require('../middleware/slug')
 const Category = require('../models/category.model')
 const Product = require('../models/product.model')
 const parseJWT = require('../middleware/parseJWT')
+const slugURL = require('../middleware/slug')
 
-async function renderSellerPage(req,res){
+async function renderSellerPage(req, res) {
     res.render('seller/sellerPage',);
 }
 
-async function renderCRUDPage(req,res){
-
+async function renderCRUDPage(req, res) {
+    // get all products corresponding to the person who logged in
     const productByUserID = await Product.find({ userID: parseJWT(req.cookies.access_token).user_id })
     const categories = await Category.find()
 
     res.render('seller/crudPage', { productByUserID, categories });
 }
 
-async function renderCreateProduct(req,res){
+async function renderCreateProduct(req, res) {
     const categories = await Category.find()
     res.render('seller/createProduct', { categories });
 }
 
-async function createProduct(req,res){
+async function createProduct(req, res) {
     try {
+        // image Array
         let imageUploadFiles;
         let uploadPaths;
         let newImageNames;
-
+        // image single
         let imageUploadFile;
         let uploadPath;
         let newImageName;
@@ -76,7 +76,7 @@ async function createProduct(req,res){
     }
 }
 
-async function deleteProduct(req,res){
+async function deleteProduct(req, res) {
     try {
         await Product.findByIdAndDelete({ _id: req.params.id })
         res.redirect('/sellerPage/crud-page')
@@ -85,7 +85,7 @@ async function deleteProduct(req,res){
     }
 }
 
-async function renderUpdateProduct(req,res){
+async function renderUpdateProduct(req, res) {
     try {
         const products = await Product.find({ _id: req.params.id })
         const categories = await Category.find()
@@ -95,7 +95,7 @@ async function renderUpdateProduct(req,res){
     }
 }
 
-async function updateProduct(req,res){
+async function updateProduct(req, res) {
     try {
         let imageUploadFile;
         let uploadPath;
@@ -114,17 +114,38 @@ async function updateProduct(req,res){
             })
             const { productname, price, category, stock, description } = req.body
             await Product.findOneAndUpdate({ _id: req.params.id }, {
-                name: productname, slug:slugURL(req.body.productname), stock,
+                name: productname, slug: slugURL(req.body.productname), stock,
                 price: Number(price), categoryId: category, description, thumbnail: newImageName
             })
             res.redirect('/sellerPage/crud-page')
         }
     } catch (error) {
-        res.redirect('/sellerPage/CRUD-Page');
+        res.status(500).send({ message: error.message || "Error Occured" });
     }
 }
 
-async function renderSearch(req,res){
+async function renderSearchPage(req, res) {
+    try {
+        // get key
+        const key = req.query.key.toLowerCase()
+        //get all products corresponding to key
+        const products = await Product.find()
+        const data = products.filter(value => {
+            return value.name.toLowerCase().includes(key.toLowerCase())
+        })
+        // paginate
+        const productPerPage = 8
+        const pages = Math.ceil(data.length / productPerPage)
+        const page = Number(req.params.page)
+        let pagination = data.slice(productPerPage * page, productPerPage * (1 + page))
+        res.render('seller/searchPage', { pagination, key, pages })
+    } catch (error) {
+        res.status(404).send({ message: error.message || "Error Occured" });
+    }
+}
+
+//API 
+async function renderSearchBar(req, res) {
     const product = await Product.find()
     res.send({ product });
 }
@@ -137,5 +158,6 @@ module.exports = {
     deleteProduct,
     renderUpdateProduct,
     updateProduct,
-    renderSearch
+    renderSearchBar,
+    renderSearchPage
 }

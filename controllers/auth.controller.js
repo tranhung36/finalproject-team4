@@ -2,7 +2,8 @@ const {
   signJWT
 } = require('../utils/jwt.util');
 const User = require("../models/user.model");
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt');
+const jsdom = require("jsdom");
 
 async function register(req, res) {
   try {
@@ -73,7 +74,6 @@ async function login(req, res) {
       }, {
         expiresIn: "1h",
       });
-
       // user
       res.cookie('access_token', token, {
         maxAge: 3600 * 1000,

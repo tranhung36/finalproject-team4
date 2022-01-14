@@ -47,7 +47,7 @@ async function createProduct(req, res) {
             uploadPath = require('path').resolve('./') + '/public/images/' + newImageName;
 
             imageUploadFile.mv(uploadPath, function (err) {
-                if (err) return res.satus(500).send(err);
+                if (err) return res.status(500).send(err);
             })
 
             imageUploadFiles = req.files.images;
@@ -59,7 +59,7 @@ async function createProduct(req, res) {
                 uploadPaths = require('path').resolve('./') + '/public/images/' + newImageNames;
 
                 img.mv(uploadPaths, function (err) {
-                    if (err) return res.satus(500).send(err);
+                    if (err) return res.status(500).send(err);
                 })
                 imageArray.push(newImageNames);
             })

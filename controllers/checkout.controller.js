@@ -66,9 +66,22 @@ async function payment(req, res, next) {
                 }
             }),
             mode: 'payment',
-            success_url: `${process.env.DOMAIN}/success`,
-            cancel_url: `${process.env.DOMAIN}/cancel`,
+            success_url: `${process.env.DOMAIN}/success?id={CHECKOUT_SESSION_ID}`,
+            cancel_url: `${process.env.DOMAIN}/cart`,
         });
+
+        res.redirect(303, session.url)
+    } catch (error) {
+        next(error)
+    }
+}
+
+async function successPayment(req, res, next) {
+    try {
+        const order = await orderInfo(req)
+        const session = await stripe.checkout.sessions.retrieve(req.query.id, {
+            expand: ['line_items']
+        })
 
         const payment = await Payment.create({
             userId: order.userId._id,
@@ -84,15 +97,12 @@ async function payment(req, res, next) {
                 item.save()
             })
             order.save()
+            res.render('success')
         }
-        res.redirect(303, session.url)
+
     } catch (error) {
         next(error)
     }
-}
-
-function successPayment(req, res, next) {
-    res.render('success')
 }
 
 function cancelPayment(req, res, next) {

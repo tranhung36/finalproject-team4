@@ -4,8 +4,6 @@ async function getProfile(req, res) {
   try {
     const id = req.params.id;
     const user = await Profile.findOne({ _id: id });
-    // console.log({user});
-    const abc = {name: "asdfasf", age: 18}
     res.render("user", {
       user: user,
     });
@@ -18,15 +16,23 @@ async function getProfile(req, res) {
 
 async function changeProfile (req, res) {
     try {
+        //get change input
+        const {
+            firstName,
+            lastName
+        } = req.body;
+
+        //filter
         const id = req.params.id;
-        const user = await Profile.findOne({ _id: id });
-        // console.log({user});
-        const abc = {name: "asdfasf", age: 18}
-        res.render("user", {
-          user: user,
-        });
+        const filter = {_id: id}
+        //change
+        const update = {first_name: firstName, last_name: lastName}
+        console.log(req.body);
+        //update
+        await Profile.findOneAndUpdate( filter, update, {new: true});
+        
       } catch (err) {
-        return res.status(500).json({
+        return res.json({
           msg: err.message,
         });
       }

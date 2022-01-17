@@ -11,6 +11,7 @@ const searchRoute = require('./search.route')
 const {
     checkAuth
 } = require('../middleware/auth.middleware')
+const adminRoute= require('./admin.route')
 
 router.use('*', checkAuth)
 router.use('*', cart)
@@ -21,5 +22,7 @@ router.use('/user', userRoute)
 router.use('/sellerPage', sellerRoute)
 router.use('/', siteRoute)
 router.use('/search', searchRoute)
+router.use('/admin', adminRoute)
+
 
 module.exports = router

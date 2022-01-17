@@ -75,6 +75,7 @@ async function addToCart(req, res, next) {
                 orderItems: [orderItem]
             })
         }
+
         res.writeHead(303, {
             Location: req.headers.referer
         }).end()

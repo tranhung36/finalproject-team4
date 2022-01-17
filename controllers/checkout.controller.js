@@ -97,7 +97,7 @@ async function successPayment(req, res, next) {
                 item.save()
             })
             order.save()
-            res.render('success')
+            res.redirect('/payment-success')
         }
 
     } catch (error) {

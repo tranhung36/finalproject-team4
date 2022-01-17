@@ -149,13 +149,11 @@
                   <select class="selectpicker" name="selectpicker" id="selectpicker"
                     data-customclass="form-control form-control-sm" onchange="location = this.value">
                     <option value>Sort By</option>
-                    <<<<<<< HEAD <option value="default" name="default" selected>Default</option>
-                      =======
-                      <option value="/products" name="default">Default</option>
-                      >>>>>>> origin/week2-quanghuy
-                      <!-- <option value="popularity" name="popularity" >Popularity</option> -->
-                      <option value="/products?show=priceAsc" name="priceAsc">Price: Low to High</option>
-                      <option value="/products?show=priceDesc" name="priceDesc">Price: High to Low</option>
+                    <option value="default" name="default" selected>Default</option>
+                    <option value="/products" name="default">Default</option>
+                    <!-- <option value="popularity" name="popularity" >Popularity</option> -->
+                    <option value="/products?show=priceAsc" name="priceAsc">Price: Low to High</option>
+                    <option value="/products?show=priceDesc" name="priceDesc">Price: High to Low</option>
                   </select>
                 </li>
               </ul>
@@ -168,8 +166,8 @@
               <div class="product text-center">
                 <div class="mb-3 position-relative">
                   <div class="badge text-white bg-"></div>
-                  <a class="d-block" href="/products/<%= products[i].slug %>"><img class="img-fluid w-100"
-                      src="<%= products[i].thumbnail %>" alt="..." /></a>
+                  <a class="d-block" href="/products/<%= products[i].slug %>"><img class="img-fluid w-50"
+                      src="/images/<%= products[i].thumbnail %>" alt="..." /></a>
                   <div class="product-overlay">
                     <ul class="mb-0 list-inline">
                       <li class="list-inline-item m-0 p-0">

@@ -1,10 +1,14 @@
 const Category = require('../models/category.model')
 const Product = require('../models/product.model')
+const OrderItem = require('../models/orderItem.model')
+const Order = require('../models/order.model')
 const userInfo = require('../services/user.service')
 const slugURL = require('../middleware/slug')
 
 async function renderSellerPage(req, res) {
-    res.render('seller/sellerPage', );
+    res.render('seller/sellerPage', {
+        layout: 'layouts/layout_seller',
+    });
 }
 
 async function renderCRUDPage(req, res) {
@@ -15,6 +19,7 @@ async function renderCRUDPage(req, res) {
     const categories = await Category.find()
 
     res.render('seller/crudPage', {
+        layout: 'layouts/layout_seller',
         productByUserID,
         categories
     });
@@ -23,6 +28,7 @@ async function renderCRUDPage(req, res) {
 async function renderCreateProduct(req, res) {
     const categories = await Category.find()
     res.render('seller/createProduct', {
+        layout: 'layouts/layout_seller',
         categories
     });
 }
@@ -76,7 +82,7 @@ async function createProduct(req, res) {
                 userID: userInfo(req).user_id
             });
             await product.save();
-            res.redirect('/sellerPage/crud-page')
+            res.redirect('/seller/my-products')
         }
     } catch (error) {
         res.status(500).send({
@@ -90,7 +96,7 @@ async function deleteProduct(req, res) {
         await Product.findByIdAndDelete({
             _id: req.params.id
         })
-        res.redirect('/sellerPage/crud-page')
+        res.redirect('/seller/my-products')
     } catch (error) {
         res.status(500).send({
             message: error.message || "Error Occured"
@@ -105,6 +111,7 @@ async function renderUpdateProduct(req, res) {
         })
         const categories = await Category.find()
         res.render('seller/updateProduct', {
+            layout: 'layouts/layout_seller',
             products,
             categories
         })
@@ -150,7 +157,7 @@ async function updateProduct(req, res) {
                 description,
                 thumbnail: newImageName
             })
-            res.redirect('/sellerPage/crud-page')
+            res.redirect('/seller/my-products')
         }
     } catch (error) {
         res.status(500).send({
@@ -174,6 +181,7 @@ async function renderSearchPage(req, res) {
         const page = Number(req.params.page)
         let pagination = data.slice(productPerPage * page, productPerPage * (1 + page))
         res.render('seller/searchPage', {
+            layout: 'layouts/layout_seller',
             pagination,
             key,
             pages
@@ -213,6 +221,23 @@ async function searchApi(req, res) {
     }
 }
 
+async function manageOrder(req, res, next) {
+    try {
+        const user = userInfo(req)
+        const myProducts = await OrderItem.find({})
+        const orders = await Order.find().populate({
+            path: 'orderItems',
+            populate: {
+                path: 'productId',
+                model: 'Product'
+            }
+        }).exec()
+        console.log(orders)
+    } catch (error) {
+        next(error)
+    }
+}
+
 module.exports = {
     renderSellerPage,
     renderCRUDPage,
@@ -223,5 +248,6 @@ module.exports = {
     updateProduct,
     renderSearchBar,
     renderSearchPage,
-    searchApi
+    searchApi,
+    manageOrder
 }

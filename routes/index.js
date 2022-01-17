@@ -18,7 +18,7 @@ router.use('/cart', cartRoute)
 router.use('/products', productRoute)
 router.use('/category', categoryRoute)
 router.use('/user', userRoute)
-router.use('/sellerPage', sellerRoute)
+router.use('/seller', sellerRoute)
 router.use('/', siteRoute)
 router.use('/search', searchRoute)
 

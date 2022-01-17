@@ -1,4 +1,3 @@
-<%- include("./partialsSeller/sidebar") %>
 <div class="content-wrapper">
     <div class="content-header">
         <h1>Dashboard</h1>
@@ -9,9 +8,9 @@
     </div>
     <div class="shop-info box-info">
         <div class="col-12">
-            <a href="/sellerPage">Quay lại</a>
+            <a href="/seller">Quay lại</a>
             <div class="col-lg-8">
-                <form action="/sellerPage/crud-page/createProduct" enctype="multipart/form-data" method="POST">
+                <form action="/seller/create-product" enctype="multipart/form-data" method="POST">
                     <div class="input-group">
                         <div class="col-12">
                             <label for="productname" class="form-label">Tên sản phẩm</label>
@@ -21,9 +20,9 @@
                             <label for="category">Danh mục</label>
                             <select class="form-select form-control" name="category" aria-label="Category">
                                 <option selected>Chọn danh mục</option>
-                                <% categories.forEach(cate =>{ %> 
+                                <% categories.forEach(cate =>{ %>
                                 <option value="<%- cate.id %>"><%- cate.name %> </option>
-                                <% }) %> 
+                                <% }) %>
                             </select>
                         </div>
                         <div class="col-12">

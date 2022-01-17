@@ -44,6 +44,10 @@ router.get('/create-checkout-session', payment);
 
 router.get('/success', successPayment)
 
+router.get('/payment-success', (req, res) => {
+    res.render('products/payment_success')
+})
+
 router.get('/cancel', cancelPayment)
 
 /* GET home page. */

@@ -29,24 +29,14 @@
             <strong class="small text-uppercase fw-bold">Fashion &amp; Acc</strong>
           </div>
           <ul class="list-unstyled small text-muted ps-lg-4 font-weight-normal">
+            <!-- CATEGORY-->
+            <% for(let i = 0; i < categories.length; i++) { %>
             <li class="mb-2">
-              <a class="reset-anchor" href="#!">Women's T-Shirts</a>
+              <a class="reset-anchor" href="/products?category=<%=categories[i].slug%>"><%=categories[i].name %></a>
             </li>
-            <li class="mb-2">
-              <a class="reset-anchor" href="#!">Men's T-Shirts</a>
-            </li>
-            <li class="mb-2"><a class="reset-anchor" href="#!">Dresses</a></li>
-            <li class="mb-2">
-              <a class="reset-anchor" href="#!">Novelty socks</a>
-            </li>
-            <li class="mb-2">
-              <a class="reset-anchor" href="#!">Women's sunglasses</a>
-            </li>
-            <li class="mb-2">
-              <a class="reset-anchor" href="#!">Men's sunglasses</a>
-            </li>
+            <% } %>
           </ul>
-          <div class="py-2 px-4 bg-light mb-3">
+          <!-- <div class="py-2 px-4 bg-light mb-3">
             <strong class="small text-uppercase fw-bold">Health &amp; Beauty</strong>
           </div>
           <ul class="list-unstyled small text-muted ps-lg-4 font-weight-normal">
@@ -83,7 +73,7 @@
             <li class="mb-2">
               <a class="reset-anchor" href="#!">Keyboards</a>
             </li>
-          </ul>
+          </ul> -->
           <h6 class="text-uppercase mb-4">Price range</h6>
           <div class="price-range pt-4 mb-5">
             <div id="range"></div>
@@ -156,12 +146,16 @@
                   <a class="reset-anchor p-0" href="#!"><i class="fas fa-th"></i></a>
                 </li>
                 <li class="list-inline-item">
-                  <select class="selectpicker" data-customclass="form-control form-control-sm">
+                  <select class="selectpicker" name="selectpicker" id="selectpicker"
+                    data-customclass="form-control form-control-sm" onchange="location = this.value">
                     <option value>Sort By</option>
-                    <option value="default">Default sorting</option>
-                    <option value="popularity">Popularity</option>
-                    <option value="low-high">Price: Low to High</option>
-                    <option value="high-low">Price: High to Low</option>
+                    <<<<<<< HEAD <option value="default" name="default" selected>Default</option>
+                      =======
+                      <option value="/products" name="default">Default</option>
+                      >>>>>>> origin/week2-quanghuy
+                      <!-- <option value="popularity" name="popularity" >Popularity</option> -->
+                      <option value="/products?show=priceAsc" name="priceAsc">Price: Low to High</option>
+                      <option value="/products?show=priceDesc" name="priceDesc">Price: High to Low</option>
                   </select>
                 </li>
               </ul>
@@ -174,15 +168,15 @@
               <div class="product text-center">
                 <div class="mb-3 position-relative">
                   <div class="badge text-white bg-"></div>
-                  <a class="d-block" href="detail.html"><img class="img-fluid w-100" src="<%= products[i].thumbnail %>"
-                      alt="..." /></a>
+                  <a class="d-block" href="/products/<%= products[i].slug %>"><img class="img-fluid w-100"
+                      src="<%= products[i].thumbnail %>" alt="..." /></a>
                   <div class="product-overlay">
                     <ul class="mb-0 list-inline">
                       <li class="list-inline-item m-0 p-0">
                         <a class="btn btn-sm btn-outline-dark" href="#!"><i class="far fa-heart"></i></a>
                       </li>
                       <li class="list-inline-item m-0 p-0">
-                        <a class="btn btn-sm btn-dark" href="cart.html">Add to cart</a>
+                        <a class="btn btn-sm btn-dark" href="/cart/add-to-cart/<%= products[i].slug %>">Add to cart</a>
                       </li>
                       <li class="list-inline-item mr-0">
                         <a class="btn btn-sm btn-outline-dark" href="#productView" data-bs-toggle="modal"><i
@@ -192,7 +186,7 @@
                   </div>
                 </div>
                 <h6>
-                  <a class="reset-anchor" href="detail.html"><%= products[i].name %></a>
+                  <a class="reset-anchor" href="/products/<%= products[i].slug %>"><%= products[i].name %></a>
                 </h6>
                 <p class="small text-muted">$<%= products[i].price %></p>
               </div>
@@ -207,41 +201,37 @@
             <nav class="mx-auto">
               <ul class="pagination" style="margin-top: 2rem">
                 <!-- FIRST ITEM -->
-                <!-- Nếu thông số http://localhost:8080/products là 1 thì First sẽ bị disabled -->
                 <% if(current == 1) { %>
                 <li class="page-item disabled">
-                  <a class="page-link" href="/products">First</a>
+                  <a class="page-link" href="<%=url%>">First</a>
                 </li>
                 <% } else { %>
-                <!-- Nếu thông số http://localhost:8080/products từ 2 trở lên thì First sẽ bỏ disabled -->
                 <li class="page-item">
-                  <a class="page-link" href="/products">First</a>
+                  <a class="page-link" href="<%=url%>">First</a>
                 </li>
                 <% } %>
 
                 <!-- ITEMS  -->
-                <% var i = (Number(current) > 3 ? Number(current) - 2 : 1) %> <%
+                <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %> <%
                 if(i !== 1) { %>
                 <li class="page-item disabled">
                   <a class="page-link" href="#">...</a>
                 </li>
-                <% } %> <% for(; i <= (Number(current) + 2) && i <= pages; i++)
+                <% } %> <% for(; i <= (Number(current) + 4) && i <= pages; i++)
                 { %>
-                <!-- Sử dụng vòng lặp để lặp qua từng trang và tăng số trang 
-         Trong vòng lặp for có ba biểu thức tùy chọn nên chỉ cần các bạn tách mỗi biểu thức bằng dấu `;` là oke rồi -->
                 <% if(i == current) { %>
                 <li class="page-item active">
-                  <a class="page-link" href="/products?page=<%= i %>">
+                  <a class="page-link" href="">
                     <%= i %>
                   </a>
                 </li>
                 <% } else { %>
                 <li class="page-item">
-                  <a class="page-link" href="/products?page=<%= i %>">
+                  <a class="page-link" href="<%=url%>page=<%=i%>">
                     <%= i %>
                   </a>
                 </li>
-                <% } %> <% if (i == Number(current) + 2 && i < pages) { %>
+                <% } %> <% if (i == Number(current) + 4 && i < pages) { %>
                 <li class="page-item disabled">
                   <a class="page-link" href="#">...</a>
                 </li>
@@ -249,14 +239,12 @@
 
                 <!-- LAST ITEM -->
                 <% if(current == pages) { %>
-                <!-- Nếu số current( chỉ số phân trang ) là 6 và tổng số page là 6 thì Last bị disabled -->
                 <li class="page-item disabled">
                   <a class="page-link" href="#"> Last </a>
                 </li>
                 <% } else { %>
-                <!-- Ngược lại, thì Last là trang cuối cùng pages ở đây là 6 đồng nghĩa với Last là trang số 6 -->
                 <li class="page-item">
-                  <a class="page-link" href="/products?page=<%= pages %>">
+                  <a class="page-link" href="<%=url%>page=<%= pages %>">
                     Last
                   </a>
                 </li>

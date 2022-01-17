@@ -2,19 +2,20 @@ const express = require('express');
 const router = express.Router();
 const {
     register,
-    login
+    login,
+    logout
 } = require('../controllers/auth.controller')
+const {
+    checkout,
+    payment,
+    successPayment,
+    cancelPayment
+} = require('../controllers/checkout.controller')
+const {
+    verifyToken
+} = require('../middleware/auth.middleware')
 
-/* GET home page. */
-router.get('/', (req, res, next) => {
-    res.render('products/index', {
-        title: 'Home'
-    });
-});
 
-router.post('/', (req, res, next) => {
-    console.log(req.body.email);
-});
 //register
 router.post("/register", register);
 
@@ -34,5 +35,24 @@ router.get('/login', (req, res, next) => {
         title: 'Login',
     });
 });
+
+router.get('/logout', logout)
+
+router.get('/checkout', verifyToken, checkout)
+
+router.get('/create-checkout-session', payment);
+
+router.get('/success', successPayment)
+
+router.get('/cancel', cancelPayment)
+
+/* GET home page. */
+router.get('/', (req, res, next) => {
+    res.render('products/index', {
+        title: 'Home',
+        user: req.cookies['access_token']
+    });
+});
+
 
 module.exports = router;

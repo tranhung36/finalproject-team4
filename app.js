@@ -10,10 +10,10 @@ const fileupload = require('express-fileupload');
 const methodOverride = require('method-override')
 
 const routes = require('./routes');
+require('dotenv').config()
 
 const app = express();
 const port = 8080
-require('dotenv').config()
 
 db.connect()
 
@@ -33,6 +33,7 @@ app.use(express.urlencoded({
 }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
 
 // routes
 app.use('/', routes);

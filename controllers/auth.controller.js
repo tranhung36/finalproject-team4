@@ -3,7 +3,6 @@ const {
 } = require('../utils/jwt.util');
 const User = require("../models/user.model");
 const bcrypt = require('bcrypt');
-const jsdom = require("jsdom");
 
 async function register(req, res) {
   try {
@@ -88,7 +87,12 @@ async function login(req, res) {
   }
 }
 
+function logout(req, res, next) {
+  res.clearCookie('access_token').redirect('/login')
+}
+
 module.exports = {
   register,
-  login
+  login,
+  logout
 }

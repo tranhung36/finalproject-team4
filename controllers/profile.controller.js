@@ -38,4 +38,7 @@ async function changeProfile (req, res) {
       }
 }
 
-module.exports = { getProfile, changeProfile };
+module.exports = {
+  getProfile,
+  changeProfile
+};

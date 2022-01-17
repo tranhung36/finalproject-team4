@@ -1,19 +1,27 @@
 const express = require('express')
 const router = express.Router()
 const sellerController = require('../controllers/seller.controller')
+const {
+    renderSellerPage,
+    renderCRUDPage,
+    renderCreateProduct,
+    createProduct,
+    deleteProduct,
+    renderUpdateProduct,
+    updateProduct,
+} = require('../controllers/seller.controller')
 
-router.get('/', async (req, res, next) => {
-    res.render('seller/sellerPage');
-})
+router.get('/', renderSellerPage)
 //read
-router.get('/crud-page', sellerController.renderCRUDPage)
+router.get('/crud-page', renderCRUDPage)
 //create
-router.get('/crud-page/createProduct', sellerController.renderCreateProduct)
-router.post('/crud-page/createProduct', sellerController.createProduct)
+router.get('/crud-page/createProduct', renderCreateProduct)
+router.post('/crud-page/createProduct', createProduct)
 //delete
-router.get('/crud-page/deleteProduct/:id', sellerController.deleteProduct)
+router.get('/crud-page/deleteProduct/:slug.:id', deleteProduct)
 //update
-router.get('/crud-page/updateProduct/:id', sellerController.renderUpdateProduct)
-router.put('/crud-page/updateProduct/:id', sellerController.updateProduct)
+router.get('/crud-page/updateProduct/:slug.:id', renderUpdateProduct)
+router.put('/crud-page/updateProduct/:slug.:id', updateProduct)
+
 
 module.exports = router

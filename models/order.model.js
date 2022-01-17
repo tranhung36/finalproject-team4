@@ -4,29 +4,25 @@ const {
 } = mongoose
 
 const orderSchema = new Schema({
-    orderItem: {
-        type: ObjectId,
-        require: true
-    },
+    orderItems: [{
+        type: Schema.Types.ObjectId,
+        ref: 'OrderItem',
+    }],
     userId: {
-        type: ObjectId,
-        require: true,
+        type: Schema.Types.ObjectId,
+        ref: 'User',
     },
     ordered: {
         type: Boolean,
-        require: true
     },
-    billingAddress: {
-        type: ObjectId,
-        require: true
-    },
+    address: String,
     coupon: {
-        type: ObjectId,
-        require: true
+        type: Schema.Types.ObjectId,
+        ref: 'Coupon',
     },
     stripeId: {
-        type: ObjectId,
-        require: true
+        type: Schema.Types.ObjectId,
+        ref: 'Payment',
     }
 }, {
     timestamps: true

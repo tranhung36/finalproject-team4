@@ -1,7 +1,7 @@
 <%- include("./partialsSeller/sidebar") %>
-<div class="container col-xl-10" style="margin-left: 250px">
-
-    <div class="table-control" style="padding-top:50px">
+<div class="container col-xl-10 crud-page">
+    
+    <div class="table-control">
         <a href="/sellerPage/crud-page/createProduct" class="btn btn-primary mb-2" style="float: right">Thêm mới</a>
         <table class="table table-striped table-hover table-bordered paginated">
             <thead>
@@ -9,29 +9,26 @@
                     <th scope="col">STT</th>
                     <th scope="col">Hình ảnh</th>
                     <th scope="col">Tên sản phẩm</th>
-                    <!-- <th scope="col">Danh mục</th> -->
                     <th scope="col">Giá</th>
                     <th scope="col">Mô tả</th>
                     <th scope="col">Xử lí</th>
                 </tr>
             </thead>
             <% productByUserID.forEach((product,index)=> {%>
-            <tbody>
-                <tr>
-                    <th scope="row"><%- index + 1 %></th>
-                    <td><img src="../../images/<%- product.thumbnail %>" width="70px" height="50px" alt=""></td>
-                    <td><%- product.name %></td>
-                    <td><%- product.price %></td>
-                    <td><%- product.description %></td>
-                    <td>
-                        <a class="btn btn-primary"
-                            href="/sellerPage/crud-page/updateProduct/<%- product._id %>">Update</a>
-                        <a class="btn btn-info" href="/sellerPage/crud-page/deleteProduct/<%- product._id %>">Delete</a>
-                    </td>
-                </tr>
-            </tbody>
-            <% }) %>
+                <tbody>
+                    <tr>
+                        <td><%- index + 1 %></th>
+                        <td><img src="../../images/<%- product.thumbnail %>" alt=""></td>
+                        <td><%- product.name %></td>
+                        <td><%- product.price %></td>
+                        <td><%- product.description %></td>
+                        <td>
+                        <a class="btn btn-primary" href="/sellerPage/crud-page/updateProduct/<%- product.slug %>.<%- product._id %>">Update</a>
+                        <a class="btn btn-info delete-product" href="/sellerPage/crud-page/deleteProduct/<%- product.slug %>.<%- product._id %>">Delete</a>
+                        </td>
+                    </tr>
+                </tbody>
+                <% }) %>
         </table>
     </div>
 </div>
-<script src="../javascripts/seller.js"></script>

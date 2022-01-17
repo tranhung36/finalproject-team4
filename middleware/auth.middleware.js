@@ -1,6 +1,7 @@
 const {
   verifyJWT
 } = require('../utils/jwt.util');
+const decodeJWT = require('jwt-decode')
 
 const verifyToken = (req, res, next) => {
   const token = req.cookies['access_token']
@@ -17,4 +18,19 @@ const verifyToken = (req, res, next) => {
   next()
 };
 
-module.exports = verifyToken;
+const checkAuth = (req, res, next) => {
+  const token = req.cookies['access_token']
+  if (token) {
+    const user = decodeJWT(token)
+    res.locals.userInfo = user.user_id
+    next()
+  } else {
+    next()
+  }
+}
+
+
+module.exports = {
+  verifyToken,
+  checkAuth
+};

@@ -1,11 +1,17 @@
 const Category = require('../models/category.model')
 const Product = require('../models/product.model')
+const userInfo = require('../services/user.service')
+const slugURL = require('../middleware/slug')
 
-exports.renderCRUDPage = async (req, res, next) => {
+async function renderSellerPage(req, res) {
+    res.render('seller/sellerPage', );
+}
+
+async function renderCRUDPage(req, res) {
+    // get all products corresponding to the person who logged in
     const productByUserID = await Product.find({
-        userID: 1
+        userID: userInfo(req).user_id
     })
-
     const categories = await Category.find()
 
     res.render('seller/crudPage', {
@@ -13,19 +19,21 @@ exports.renderCRUDPage = async (req, res, next) => {
         categories
     });
 }
-exports.renderCreateProduct = async (req, res, next) => {
+
+async function renderCreateProduct(req, res) {
     const categories = await Category.find()
     res.render('seller/createProduct', {
         categories
     });
 }
 
-exports.createProduct = async (req, res) => {
+async function createProduct(req, res) {
     try {
+        // image Array
         let imageUploadFiles;
         let uploadPaths;
         let newImageNames;
-
+        // image single
         let imageUploadFile;
         let uploadPath;
         let newImageName;
@@ -39,7 +47,7 @@ exports.createProduct = async (req, res) => {
             uploadPath = require('path').resolve('./') + '/public/images/' + newImageName;
 
             imageUploadFile.mv(uploadPath, function (err) {
-                if (err) return res.satus(500).send(err);
+                if (err) return res.status(500).send(err);
             })
 
             imageUploadFiles = req.files.images;
@@ -51,31 +59,33 @@ exports.createProduct = async (req, res) => {
                 uploadPaths = require('path').resolve('./') + '/public/images/' + newImageNames;
 
                 img.mv(uploadPaths, function (err) {
-                    if (err) return res.satus(500).send(err);
+                    if (err) return res.status(500).send(err);
                 })
                 imageArray.push(newImageNames);
             })
 
             const product = new Product({
                 name: req.body.productname,
-                slug: req.body.slug,
+                slug: slugURL(req.body.productname),
                 price: Number(req.body.price),
+                stock: Number(req.body.stock),
                 categoryId: req.body.category,
                 description: req.body.description,
                 thumbnail: newImageName,
                 images: imageArray,
-                userID: '1'
+                userID: userInfo(req).user_id
             });
-            console.log(product);
             await product.save();
+            res.redirect('/sellerPage/crud-page')
         }
     } catch (error) {
-
-        res.redirect('/sellerPage/CRUD-Page');
+        res.status(500).send({
+            message: error.message || "Error Occured"
+        });
     }
 }
 
-exports.deleteProduct = async (req, res) => {
+async function deleteProduct(req, res) {
     try {
         await Product.findByIdAndDelete({
             _id: req.params.id
@@ -88,7 +98,7 @@ exports.deleteProduct = async (req, res) => {
     }
 }
 
-exports.renderUpdateProduct = async (req, res) => {
+async function renderUpdateProduct(req, res) {
     try {
         const products = await Product.find({
             _id: req.params.id
@@ -99,18 +109,14 @@ exports.renderUpdateProduct = async (req, res) => {
             categories
         })
     } catch (error) {
-        res.status(500).send({
+        res.status(404).send({
             message: error.message || "Error Occured"
         });
     }
 }
-exports.updateProduct = async (req, res) => {
 
+async function updateProduct(req, res) {
     try {
-        let imageUploadFiles;
-        let uploadPaths;
-        let newImageNames;
-
         let imageUploadFile;
         let uploadPath;
         let newImageName;
@@ -128,55 +134,94 @@ exports.updateProduct = async (req, res) => {
             })
             const {
                 productname,
-                slug,
                 price,
                 category,
-                description,
-                thumbnail
+                stock,
+                description
             } = req.body
             await Product.findOneAndUpdate({
                 _id: req.params.id
             }, {
                 name: productname,
-                slug,
+                slug: slugURL(req.body.productname),
+                stock,
                 price: Number(price),
                 categoryId: category,
                 description,
                 thumbnail: newImageName
             })
-
-            // imageUploadFiles = req.files.images;
-            // let imageArray = []
-
-            // imageUploadFiles.map(img => {
-            //     newImageNames = Date.now() + img.name;
-
-            //     uploadPaths = require('path').resolve('./') + '/public/images/' + newImageNames;
-
-            //     img.mv(uploadPaths, function (err) {
-            //         if (err) return res.satus(500).send(err);
-            //     })
-            //     imageArray.push(newImageNames);
-            // })
-            // console.log('mang',imageArray);
-
+            res.redirect('/sellerPage/crud-page')
         }
-
-    } catch (error) {
-
-        res.redirect('/sellerPage/CRUD-Page');
-    }
-}
-
-exports.deleteProduct = async (req, res) => {
-    try {
-        await Product.findByIdAndDelete({
-            _id: req.params.id
-        })
-        res.redirect('/sellerPage/crud-page')
     } catch (error) {
         res.status(500).send({
             message: error.message || "Error Occured"
         });
     }
+}
+
+async function renderSearchPage(req, res) {
+    try {
+        // get key
+        const key = req.query.key.toLowerCase()
+        //get all products corresponding to key
+        const products = await Product.find()
+        const data = products.filter(value => {
+            return value.name.toLowerCase().includes(key.toLowerCase())
+        })
+        // paginate
+        const productPerPage = 8
+        const pages = Math.ceil(data.length / productPerPage)
+        const page = Number(req.params.page)
+        let pagination = data.slice(productPerPage * page, productPerPage * (1 + page))
+        res.render('seller/searchPage', {
+            pagination,
+            key,
+            pages
+        })
+    } catch (error) {
+        res.status(404).send({
+            message: error.message || "Error Occured"
+        });
+    }
+}
+
+//API 
+async function renderSearchBar(req, res) {
+    const product = await Product.find()
+    res.send({
+        product
+    });
+}
+
+async function searchApi(req, res) {
+    try {
+        // get key
+        const key = req.query.key.toLowerCase()
+        //get all products corresponding to key
+        const products = await Product.find()
+        const data = products.filter(value => {
+            return value.name.toLowerCase().includes(key.toLowerCase())
+        })
+        res.send({
+            data,
+            key
+        })
+    } catch (error) {
+        res.status(404).send({
+            message: error.message || "Error Occured"
+        });
+    }
+}
+
+module.exports = {
+    renderSellerPage,
+    renderCRUDPage,
+    renderCreateProduct,
+    createProduct,
+    deleteProduct,
+    renderUpdateProduct,
+    updateProduct,
+    renderSearchBar,
+    renderSearchPage,
+    searchApi
 }

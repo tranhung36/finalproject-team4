@@ -2,7 +2,13 @@
 <div class="container emp-profile">
   <form method="post" action="/user/<%= user._id%>">
     <div class="row">
+<<<<<<< HEAD
       <div class="col-md-4"></div>
+=======
+      <div class="col-md-4">
+
+      </div>
+>>>>>>> 67c997b7cbb5a8f2a248829cc73fb9e93111898a
       <div class="col-md-6">
         <div class="profile-head">
           <h5>Hello <%= user.first_name + " " + user.last_name %></h5>
@@ -10,12 +16,7 @@
         </div>
       </div>
       <div class="col-md-2">
-        <input
-          type="submit"
-          class="profile-edit-btn"
-          name="btnAddMore"
-          value="Edit Profile"
-        />
+        <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Edit Profile" />
       </div>
     </div>
     <div class="row">
@@ -24,6 +25,7 @@
         <div class="profile-img">
           <img
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog"
+<<<<<<< HEAD
             alt=""
           />
           <div class="file btn btn-lg btn-primary">
@@ -38,6 +40,16 @@
             role="tabpanel"
             aria-labelledby="home-tab"
           >
+=======
+            alt="" />
+          <div class="file btn btn-lg btn-primary">
+            Change Photo
+            <input type="file" name="file" />
+          </div>
+        </div>
+        <div class="tab-content profile-tab" id="myTabContent">
+          <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+>>>>>>> 67c997b7cbb5a8f2a248829cc73fb9e93111898a
             <div class="row">
               <div class="col-md-6">
                 <label>Name</label>
@@ -77,17 +89,22 @@
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="firstName">First Name</label>
+<<<<<<< HEAD
                       <input
                         type="text"
                         class="form-control"
                         id="firstName"
                         placeholder="<%= user.first_name %>"
                       />
+=======
+                      <input type="text" class="form-control" id="firstName" placeholder="<%= user.first_name %>">
+>>>>>>> 67c997b7cbb5a8f2a248829cc73fb9e93111898a
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="lastName">Last Name</label>
+<<<<<<< HEAD
                       <input
                         type="text"
                         class="form-control"
@@ -97,16 +114,27 @@
                     </div>
                   </div>
                 </div>
+=======
+                      <input type="text" class="form-control" id="lastName" placeholder="<%= user.last_name %>">
+                    </div>
+                  </div>
+                </div>
+
+>>>>>>> 67c997b7cbb5a8f2a248829cc73fb9e93111898a
               </div>
               <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                 <div class="form-group">
                   <label for="phone">Change Phone</label>
+<<<<<<< HEAD
                   <input
                     type="text"
                     class="form-control"
                     id="phone"
                     placeholder="Enter phone number"
                   />
+=======
+                  <input type="text" class="form-control" id="phone" placeholder="Enter phone number">
+>>>>>>> 67c997b7cbb5a8f2a248829cc73fb9e93111898a
                 </div>
               </div>
             </div>
@@ -117,18 +145,23 @@
               <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                 <div class="form-group">
                   <label for="address">Change Address</label>
+<<<<<<< HEAD
                   <input
                     type="name"
                     class="form-control"
                     id="address"
                     placeholder="Enter Address"
                   />
+=======
+                  <input type="name" class="form-control" id="address" placeholder="Enter Address">
+>>>>>>> 67c997b7cbb5a8f2a248829cc73fb9e93111898a
                 </div>
               </div>
             </div>
             <div class="row gutters">
               <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                 <div class="text-right">
+<<<<<<< HEAD
                   <a href="/"
                     ><button type="button" class="btn btn-secondary">
                       Cancel
@@ -142,6 +175,10 @@
                   >
                     Update
                   </button>
+=======
+                  <a href="/"><button type="button" class="btn btn-secondary">Cancel</button></a>
+                  <button type="button" id="submit" name="submit" class="btn btn-primary">Update</button>
+>>>>>>> 67c997b7cbb5a8f2a248829cc73fb9e93111898a
                 </div>
               </div>
             </div>
@@ -150,5 +187,12 @@
       </div>
     </div>
   </form>
+<<<<<<< HEAD
   <div class=""></div>
 </div>
+=======
+  <div class="">
+
+  </div>
+</div>
+>>>>>>> 67c997b7cbb5a8f2a248829cc73fb9e93111898a

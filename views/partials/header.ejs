@@ -7,6 +7,7 @@
                 aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto">
+
                     <li class="nav-item">
                         <!-- Link--><a class="nav-link active" href="/">Home</a>
                     </li>
@@ -15,6 +16,7 @@
                     </li>
                 </ul>
                 <ul class="navbar-nav ms-auto">
+<<<<<<< HEAD
                     <li class="nav-item"><a class="nav-link" href="/cart"> <i
                                 class="fas fa-dolly-flatbed me-1 text-gray"></i>Cart<small
                                 class="text-gray fw-normal">(2)</small></a></li>
@@ -24,6 +26,52 @@
                         class=" fas fa-user me-1 text-gray fw-normal"></i>Profile</a></li>
                     <li class="nav-item"><a class="nav-link" href="/login"> <i id="profileButton"
                                 class=" fas fa-user me-1 text-gray fw-normal"></i>Login</a></li>
+=======
+                    <div class="navbar-nav search">
+                        <form action="/search/page=0" method="GET">
+                            <div class="search-field">
+                                <input id="search-input" name="key" type="text" class="search-input"
+                                    placeholder="Search" autocomplete="off">
+                                <button type="submit" class="search-icon"><i class="fas fa-search"></i></button>
+                            </div>
+                        </form>
+                        <ul id="search-list">
+                        </ul>
+                    </div>
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/cart">
+                                <i class="fas fa-dolly-flatbed me-1 text-gray"></i>Cart
+                                <small class="text-gray fw-normal">
+                                    <% if (typeof cart !== "undefined") { %>
+                                    (<%= cart %>)
+                                    <% } else { %>
+                                    (0)
+                                    <% } %>
+                                </small>
+                            </a>
+                        </li>
+                    </ul>
+                </ul>
+                <ul class="navbar-nav">
+                    <% if (typeof userInfo !== "undefined") { %>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" id="pagesDropdown" href="#" data-bs-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-user me-1 text-gray fw-normal"></i>
+                        </a>
+                        <div class="dropdown-menu mt-3 shadow-sm" aria-labelledby="pagesDropdown">
+                            <a class="dropdown-item border-0 transition-link" href="/sellerPage">Dashboard</a>
+                            <a class="dropdown-item border-0 transition-link" href="/user/<%= userInfo %>">Edit
+                                Profile</a>
+                            <a class="dropdown-item border-0 transition-link" href="/logout">Log Out</a>
+                        </div>
+                    </li>
+                    <% } else { %>
+                    <li class="nav-item"><a class="nav-link" href="/login">Login</a>
+                    </li>
+                    <% } %>
+>>>>>>> 67c997b7cbb5a8f2a248829cc73fb9e93111898a
                 </ul>
             </div>
         </nav>

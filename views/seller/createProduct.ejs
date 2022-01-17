@@ -14,25 +14,25 @@
                 <form action="/sellerPage/crud-page/createProduct" enctype="multipart/form-data" method="POST">
                     <div class="input-group">
                         <div class="col-12">
-                            <label for="productname" class="form-label">Tên Shop</label>
+                            <label for="productname" class="form-label">Tên sản phẩm</label>
                             <input type="text" name="productname" id="productname" class="form-control">
                         </div>
                         <div class="col-12">
                             <label for="category">Danh mục</label>
                             <select class="form-select form-control" name="category" aria-label="Category">
                                 <option selected>Chọn danh mục</option>
-                                <% categories.forEach(cate =>{ %>
+                                <% categories.forEach(cate =>{ %> 
                                 <option value="<%- cate.id %>"><%- cate.name %> </option>
-                                <% }) %>
+                                <% }) %> 
                             </select>
                         </div>
                         <div class="col-12">
-                            <label for="slug" class="form-label">Slug</label>
-                            <input type="text" name="slug" id="slug" class="form-control">
+                            <label for="price" class="form-label">Giá</label>
+                            <input type="number" name="price" id="price" class="form-control">
                         </div>
                         <div class="col-12">
-                            <label for="price" class="form-label">Price</label>
-                            <input type="number" name="price" id="price" class="form-control">
+                            <label for="stock" class="form-label">Số lượng</label>
+                            <input type="number" name="stock" id="stock" class="form-control">
                         </div>
                         <div class="col-12">
                             <label for="description" class="form-label">Mô tả</label>

@@ -60,7 +60,7 @@ async function payment(req, res, next) {
                             name: item.productId.name,
                             images: [item.productId.thumbnail]
                         },
-                        unit_amount: item.productId.price,
+                        unit_amount: item.productId.price * 100,
                     },
                     quantity: item.quantity
                 }
@@ -73,6 +73,7 @@ async function payment(req, res, next) {
         res.redirect(303, session.url)
     } catch (error) {
         next(error)
+        console.log(error)
     }
 }
 

@@ -14,8 +14,24 @@ const orderSchema = new Schema({
     },
     ordered: {
         type: Boolean,
+        default: false
     },
-    address: String,
+    status: {
+        type: Boolean,
+        default: false
+    },
+    beingDelivered: {
+        type: Boolean,
+        default: false
+    },
+    received: {
+        type: Boolean,
+        default: false
+    },
+    billingAddress: {
+        type: Schema.Types.ObjectId,
+        ref: 'BillingAddress'
+    },
     coupon: {
         type: Schema.Types.ObjectId,
         ref: 'Coupon',

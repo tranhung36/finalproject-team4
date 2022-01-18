@@ -1,0 +1,39 @@
+<div class="container col-xl-10 crud-page">
+
+    <div class="table-control">
+        <table class="table table-striped table-hover table-bordered paginated">
+            <thead>
+                <tr>
+                    <th scope="col">Mã đơn hàng</th>
+                    <th scope="col">Người mua</th>
+                    <th scope="col">Số lượng</th>
+                    <th scope="col">Tổng tiền</th>
+                    <th scope="col">Ngày đặt hàng</th>
+                    <th scope="col">Trạng thái</th>
+                    <th scope="col">Hành động</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <% orderItems.forEach(i => {%>
+                <tr>
+                    <th><%= i._id %></th>
+                    <td><%= i.buyer.first_name + ' ' + i.buyer.last_name %></td>
+                    <td><%= i.quantity %></td>
+                    <td>$<%= i.quantity * i.productId.price %></td>
+                    <td><%= i.createdAt.toISOString().replace(/T/, ' ').replace(/\..+/, '') %></td>
+                    <td><select name="" id="">
+                            <option value="">Chờ lấy hàng</option>
+                            <option value="">Đang giao</option>
+                            <option value="">Đã giao</option>
+                        </select></td>
+                    <td>
+                        <a class="btn btn-primary" href="#">Update</a>
+                    </td>
+                </tr>
+                <% }) %>
+            </tbody>
+
+        </table>
+    </div>
+</div>

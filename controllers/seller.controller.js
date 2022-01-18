@@ -2,10 +2,12 @@ const Category = require('../models/category.model')
 const Product = require('../models/product.model')
 const OrderItem = require('../models/orderItem.model')
 const Order = require('../models/order.model')
+const User = require('../models/user.model')
+const mongoose = require("mongoose")
 const userInfo = require('../services/user.service')
 const slugURL = require('../middleware/slug')
 
-async function renderSellerPage(req, res) {
+function renderSellerPage(req, res) {
     res.render('seller/sellerPage', {
         layout: 'layouts/layout_seller',
     });
@@ -224,17 +226,43 @@ async function searchApi(req, res) {
 async function manageOrder(req, res, next) {
     try {
         const user = userInfo(req)
-        const myProducts = await OrderItem.find({})
-        const orders = await Order.find().populate({
-            path: 'orderItems',
-            populate: {
-                path: 'productId',
-                model: 'Product'
+        const orderItems = await OrderItem.aggregate([{
+                $lookup: {
+                    from: 'products',
+                    localField: 'productId',
+                    foreignField: '_id',
+                    as: 'productId'
+                }
+            },
+            {
+                $lookup: {
+                    from: 'users',
+                    localField: 'userId',
+                    foreignField: '_id',
+                    as: 'buyer'
+                }
+            },
+            {
+                $unwind: '$productId'
+            },
+            {
+                $unwind: '$buyer'
+            },
+            {
+                $match: {
+                    'productId.userID': new mongoose.Types.ObjectId(user.user_id),
+                    'ordered': true
+                }
             }
-        }).exec()
-        console.log(orders)
+        ]).exec()
+
+        res.render('seller/manage_orders', {
+            layout: 'layouts/layout_seller',
+            orderItems
+        })
     } catch (error) {
         next(error)
+        console.log(error)
     }
 }
 

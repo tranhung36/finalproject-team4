@@ -1,3 +1,4 @@
+const { render } = require('ejs')
 const express = require('express')
 const router = express.Router()
 const sellerController = require('../controllers/seller.controller')
@@ -22,6 +23,5 @@ router.get('/crud-page/deleteProduct/:slug.:id', deleteProduct)
 //update
 router.get('/crud-page/updateProduct/:slug.:id', renderUpdateProduct)
 router.put('/crud-page/updateProduct/:slug.:id', updateProduct)
-
 
 module.exports = router

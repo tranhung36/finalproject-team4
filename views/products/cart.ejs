@@ -111,13 +111,12 @@
                   0
                   <% } %></span></li>
               <li>
-                <form action="#">
+                <span class="dis">After discount</span>
                   <div class="input-group mb-0">
-                    <input class="form-control" type="text" placeholder="Enter your coupon">
-                    <button class="btn btn-dark btn-sm w-100" type="submit"> <i class="fas fa-gift me-2"></i>Apply
+                    <input class="form-control" id="coupon-code" name="coupon-code" type="text" placeholder="Enter your coupon">
+                    <button class="btn btn-dark btn-sm w-100 btn-add-coupon" type="submit"> <i class="fas fa-gift me-2"></i>Apply
                       coupon</button>
                   </div>
-                </form>
               </li>
             </ul>
           </div>
@@ -126,3 +125,21 @@
     </div>
   </section>
 </div>
+<script>
+  const handleCoupon = async () =>{
+    const couponApi = await fetch('http://localhost:8080/cart/totalPriceApi')
+    const parseCouponApi = await couponApi.json()
+    const totalPrice = parseCouponApi.totalPrice
+    const coupons = parseCouponApi.coupons
+    document.querySelector('.btn-add-coupon').onclick = () =>{
+      const couponCode = document.querySelector('#coupon-code').value
+      const checkCouponCode = coupons.filter(coupon => coupon.code === couponCode)
+      if(checkCouponCode){
+        const price = checkCouponCode.map(coupon => Number(totalPrice) * (100 - coupon.amount)/100)
+        console.log(price);
+        document.querySelector('.dis').innerText = price
+      }
+    }
+  }
+  handleCoupon()
+</script>

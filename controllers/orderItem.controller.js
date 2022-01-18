@@ -2,7 +2,10 @@ const OrderItem = require('../models/orderItem.model')
 const Product = require('../models/product.model')
 const Order = require('../models/order.model')
 const userInfo = require('../services/user.service')
-
+const Coupon = require('../models/coupon.model')
+const {
+    orderInfo
+} = require('../services/order.service')
 async function cart(req, res, next) {
     try {
         const user = userInfo(req)
@@ -41,11 +44,13 @@ async function addToCart(req, res, next) {
         const item = await Product.findOne({
             slug: req.params.slug
         })
+
         orderItem = await OrderItem.findOne({
             productId: item._id,
             ordered: false,
             userId: user.user_id
         })
+                                
         if (!orderItem) {
             orderItem = await OrderItem.create({
                 productId: item._id,
@@ -148,8 +153,24 @@ async function removeItemFromCart(req, res, next) {
     }
 }
 
+//api 
+async function addCoupon(req, res) {
+    try {
+        const coupons = await Coupon.find()
+        const order = await orderInfo(req)
+
+        const totalItem = order.orderItems.reduce((total, item) => {
+            return total += item.quantity * item.productId.price
+        }, 0)             
+        res.send({ totalPrice: totalItem, coupons })
+
+    } catch (error) {
+        console.log(error.message);
+    }
+}
 module.exports = {
     cart,
+    addCoupon,
     addToCart,
     removeItemSingleFromCart,
     removeItemFromCart

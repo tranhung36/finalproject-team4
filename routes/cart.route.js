@@ -16,6 +16,5 @@ router.get('/fake', fake)
 router.get('/add-to-cart/:slug', verifyToken, addToCart)
 router.get('/remove-single-from-cart/:slug', verifyToken, removeItemSingleFromCart)
 router.get('/remove-from-cart/:slug', verifyToken, removeItemFromCart)
-router.get('/', verifyToken, cart, addCoupon)
-router.get('/totalPriceApi', verifyToken, addCoupon)
+router.get('/', verifyToken, cart)
 module.exports = router

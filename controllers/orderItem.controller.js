@@ -24,11 +24,35 @@ async function cart(req, res, next) {
                 return total += item.quantity * item.productId.price
             }, 0)
 
+            // Start p.nguyen add coupon
+            const coupons = await Coupon.find({ active: true })
+            const findCoupon = await Coupon.find({ code: req.query.couponCode })
+
+            let notice = ''
+            let priceAfterDiscount
+            if (findCoupon.length > 0) {
+                const today = new Date()
+                findCoupon.map(coupon => {
+                    const validTo = new Date(coupon.validTo)
+                    if (today <= validTo && coupon.active === true) {
+                        priceAfterDiscount = totalItem * (100 - coupon.amount) / 100
+                    } else {
+                        notice = 'Mã quá hạn'
+                    }
+                })
+            } 
+
+            // End
             res.render('products/cart', {
                 order,
                 orderItems: order.orderItems,
-                totalItem
+                totalItem,
+                coupons,
+                price: priceAfterDiscount,
+                notice
             })
+
+            res.redirect('http://localhost:8080/cart')
         } else {
             res.render('products/cart_empty')
         }
@@ -50,7 +74,7 @@ async function addToCart(req, res, next) {
             ordered: false,
             userId: user.user_id
         })
-                                
+
         if (!orderItem) {
             orderItem = await OrderItem.create({
                 productId: item._id,
@@ -153,24 +177,10 @@ async function removeItemFromCart(req, res, next) {
     }
 }
 
-//api 
-async function addCoupon(req, res) {
-    try {
-        const coupons = await Coupon.find()
-        const order = await orderInfo(req)
 
-        const totalItem = order.orderItems.reduce((total, item) => {
-            return total += item.quantity * item.productId.price
-        }, 0)             
-        res.send({ totalPrice: totalItem, coupons })
 
-    } catch (error) {
-        console.log(error.message);
-    }
-}
 module.exports = {
     cart,
-    addCoupon,
     addToCart,
     removeItemSingleFromCart,
     removeItemFromCart

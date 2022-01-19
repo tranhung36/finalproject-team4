@@ -1,5 +1,6 @@
 const User = require("../models/user.model");
 const Coupons = require('../models/coupon.model')
+const Category = require('../models/category.model')
 const randomCode = require('../utils/randomCode')
 
 async function redenerManageUser(req, res) {
@@ -28,7 +29,8 @@ async function renderManageCoupons(req, res) {
 
 async function renderCreateCoupon(req, res) {
   try {
-    res.render('admin/createCoupon')
+    const categories = await Category.find()
+    res.render('admin/createCoupon', { categories })
   } catch (err) {
     return res.status(500).json({ msg: err.message });
   }
@@ -38,21 +40,71 @@ async function createCoupon(req, res) {
   try {
     const code = randomCode(12)
     const coupon = await Coupons.find({ code })
-
-    if (coupon.length === 0) {
-      const coupons = new Coupons({
-        code,
-        name: req.body.couponname,
-        maxDiscount: req.body.maxDiscount,
-        amount: req.body.amount,
-        validFrom: req.body.validfrom,
-        validTo: req.body.validto,
-        active: false
-      });
-      console.log(coupons);
-      await coupons.save();
+    let getCategoryName
+    if (req.body.byCategory != 0) {
+      getCategoryName = await Category.findById({ _id: req.body.byCategory })
     }
-    res.redirect('http://localhost:8080/admin/manageCoupons')
+    if (coupon.length === 0) {
+      if (req.body.byCategory == '0') {
+        if (req.body.maxDiscount == '') {
+          const coupon = new Coupons({
+            code,
+            name: req.body.couponname,
+            amount: req.body.amount,
+            maxDiscount: 0,
+            byCategory: req.body.byCategory,
+            description: `Up to ${req.body.amount}% on total bill`,
+            validFrom: req.body.validfrom,
+            validTo: req.body.validto,
+            active: false
+          });
+          await coupon.save();
+        } else {
+          const coupon = new Coupons({
+            code,
+            name: req.body.couponname,
+            maxDiscount: 0,
+            amount: req.body.amount,
+            byCategory: req.body.byCategory,
+            description: `Up to ${req.body.amount}% on total bill. Maximum no more than $${req.body.maxDiscount}`,
+            validFrom: req.body.validfrom,
+            validTo: req.body.validto,
+            active: true
+          });
+          await coupon.save();
+        }
+      } else {
+        if (req.body.maxDiscount == '') {
+          const coupon = new Coupons({
+            code,
+            name: req.body.couponname,
+            amount: req.body.amount,
+            maxDiscount: 0,
+            byCategory: req.body.byCategory,
+            description: `Up to ${req.body.amount}% discount on total bill for category ${getCategoryName.name}`,
+            validFrom: req.body.validfrom,
+            validTo: req.body.validto,
+            active: false
+          });
+          await coupon.save();
+        } else {
+          const coupon = new Coupons({
+            code,
+            name: req.body.couponname,
+            maxDiscount: req.body.maxDiscount,
+            amount: req.body.amount,
+            byCategory: req.body.byCategory,
+            description: `Up to ${req.body.amount}% discount on total bill for category ${getCategoryName.name}. Maximun no more than $${req.body.maxDiscount}`,
+            validFrom: req.body.validfrom,
+            validTo: req.body.validto,
+            active: false
+          });
+          await coupon.save();
+        }
+      }
+    }
+
+    // res.redirect('http://localhost:8080/admin/manageCoupons')
   } catch (err) {
     return res.status(500).json({ msg: err.message });
   }
@@ -61,7 +113,6 @@ async function createCoupon(req, res) {
 async function renderUpdateCoupon(req, res) {
   try {
     const coupon = await Coupons.findById(req.params.id);
-    // console.log(coupon);
     res.render('admin/updateCoupon', { coupon })
   } catch (err) {
     return res.status(500).json({ msg: err.message });
@@ -77,22 +128,22 @@ async function updateCoupon(req, res) {
       validfrom,
       validto,
       active
-  } = req.body
-    await Coupons.findOneAndUpdate({_id: req.params.id}, {
+    } = req.body
+    await Coupons.findOneAndUpdate({ _id: req.params.id }, {
       name: couponname,
       amount: Number(amount),
       maxDiscount,
       validFrom: validfrom,
       validTo: validto,
       active
-  })
-  res.redirect('http://localhost:8080/admin/manageCoupons/')
+    })
+    res.redirect('http://localhost:8080/admin/manageCoupons/')
   } catch (err) {
     return res.status(500).json({ msg: err.message });
   }
 }
 
-async function deleteCoupon(req,res) {
+async function deleteCoupon(req, res) {
   try {
     await Coupons.findByIdAndDelete(req.params.id)
     res.redirect('http://localhost:8080/admin/manageCoupons')

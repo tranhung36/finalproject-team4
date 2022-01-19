@@ -13,12 +13,20 @@ const couponSchema = new Schema({
         type: String,
         require: true
     },
+    byCategory:{
+        type: String,
+        ref: 'category'
+    },
     amount: {
         type: Number,
         require: true
     },
     maxDiscount:{
         type: Number
+    },
+    description:{
+        type: String,
+        require: true
     },
     validFrom: {
         type: String,

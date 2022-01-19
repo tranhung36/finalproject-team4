@@ -32,23 +32,54 @@ async function cart(req, res, next) {
 
             let notice = ''
             let priceAfterDiscount
+            let discount
             if (findCoupon.length > 0) {
                 const today = new Date()
+
                 findCoupon.map(coupon => {
+
                     const validTo = new Date(coupon.validTo)
-                    if (today <= validTo && coupon.active === true) {
-                        let discount = totalItem * coupon.amount / 100
-                        if(discount > coupon.maxDiscount){
-                            priceAfterDiscount = totalItem - Number(coupon.maxDiscount)
-                        }else{
-                            priceAfterDiscount = totalItem - discount
+                    const validFrom = new Date(coupon.validFrom)
+                    if (today >= validFrom && today <= validTo && coupon.active === true) {
+                        notice = 'Mã đã được áp dụng'
+                        if (coupon.byCategory == 0) {
+                            discount = totalItem * coupon.amount / 100
+
+                            if (discount > coupon.maxDiscount && Number(coupon.maxDiscount) != 0) {
+
+                                discount = Number(coupon.maxDiscount)
+                                priceAfterDiscount = totalItem - discount
+
+                            } else {
+                                priceAfterDiscount = totalItem - discount
+                            }
+
+                        } else {
+
+                            const findDiscountProduct = order.orderItems.filter(product => product.productId.categoryId == coupon.byCategory)
+
+                            const priceOfDiscountProduct = findDiscountProduct.reduce((a, b) => {
+                                return a += b.quantity * b.productId.price
+                            }, 0)
+
+                            discount = priceOfDiscountProduct * coupon.amount / 100
+
+                            if (discount > coupon.maxDiscount && Number(coupon.maxDiscount) != 0) {
+
+                                discount = coupon.maxDiscount
+                                priceAfterDiscount = priceOfDiscountProduct - discount
+
+                            } else {
+
+                                priceAfterDiscount = priceOfDiscountProduct - discount
+                            }
                         }
-                    } else {
+                    }
+                    else {
                         notice = 'Mã quá hạn'
                     }
                 })
-            } 
-            // End
+            }
 
             res.render('products/cart', {
                 order,
@@ -56,7 +87,8 @@ async function cart(req, res, next) {
                 totalItem,
                 coupons,
                 price: priceAfterDiscount,
-                notice
+                notice,
+                discount
             })
 
             res.redirect('http://localhost:8080/cart')

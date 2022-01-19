@@ -14,6 +14,15 @@
                             <label for="couponname" class="form-label">Tên chương trình</label>
                             <input type="text" name="couponname" id="couponname" class="form-control">
                         </div>
+                        <div class="col-12 mt-2">
+                            <label for="couponname" class="form-label">Theo danh mục</label>
+                            <select class="form-select" name="byCategory" aria-label="Default select example">
+                                <option value="0" selected>Chọn danh mục</option>
+                                <% categories.map(category => { %> 
+                                <option value="<%- category._id  %>"><%- category.name  %></option>
+                                <% }) %> 
+                              </select>
+                        </div>
                         <div class="col-12 mt-2 discount-precent">
                             <label for="amount" class="form-label">Phần trăm giảm giá</label>
                             <input type="number" min="0" max="100" name="amount" id="amount" class="form-control">

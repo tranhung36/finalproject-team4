@@ -5,7 +5,6 @@ const {
     addToCart,
     removeItemSingleFromCart,
     removeItemFromCart,
-    addCoupon
 } = require('../controllers/orderItem.controller')
 const fake = require('../config/seeds/orderItem.seed')
 const {

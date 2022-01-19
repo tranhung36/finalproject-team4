@@ -120,14 +120,10 @@
                   <%= totalItem %>
                   <% } %></span></li>
               <li>
-
-
-                  <%= notice %>
-
-
+                <%= notice %>
                 <form action="/cart" method="get">
                   <div class="input-group mb-0">
-                    <input class="form-control" id="coupon-code" name="couponCode" type="text" placeholder="Enter your coupon">
+                    <input class="form-control" id="coupon-code" name="couponCode" type="text" placeholder="Enter your coupon" autocomplete="off">
                     <button class="btn btn-dark btn-sm w-100 btn-add-coupon" type="submit"> <i class="fas fa-gift me-2"></i>Apply
                       coupon</button>
                   </div>
@@ -140,6 +136,8 @@
     </div>
   </section>
 </div>
+
+
 <script>
   const chooseCoupon = () =>{
     const couponCodes = document.querySelectorAll('.select-coupon li')
@@ -156,4 +154,6 @@
     })
   }
   chooseCoupon()
+
+
 </script>

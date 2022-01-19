@@ -1,51 +1,39 @@
 <%- include("./partialsAdmin/sidebar") %>
-    <div class="container col-xl-10 crud-page">
-
-        <div class="table-control">
-            <a href="/admin/manageCoupons/CreateCoupon" class="btn btn-primary mb-2" style="float: right">Thêm mới</a>
-            <table class="table table-striped table-hover table-bordered paginated">
-                <thead>
+<div class="container col-xl-10 content-wrapper">
+    <%- include("./partialsAdmin/header") %>
+    <div class="table-responsive">
+        <a href="/admin/manageCoupons/CreateCoupon" class="btn btn-primary mb-2" style="float: right">Thêm mới</a>
+        <table class="table table-striped table-hover table-bordered paginated">
+            <thead>
+                <tr>
+                    <th scope="col">STT</th>
+                    <th scope="col">Code</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Discount</th>
+                    <th scope="col">ValidFrom</th>
+                    <th scope="col">ValidTo</th>
+                    <th scope="col">Status</th>
+                </tr>
+            </thead>
+            <% coupons.forEach((coupon,index)=> {%>
+                <% const validFrom = new Date(coupon.validFrom) %>
+                <% const validTo = new Date(coupon.validTo) %>
+                <tbody>
                     <tr>
-                        <th scope="col">STT</th>
-                        <th scope="col">Code</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Discount</th>
-                        <th scope="col">ValidFrom</th>
-                        <th scope="col">ValidTo</th>
-                        <th scope="col">Status</th>
+                        <td><%= index + 1 %></td>
+                        <td><%= coupon.code %></td>
+                        <td><%= coupon.name %></td>
+                        <td><%= coupon.amount %></td>
+                        <td><%= validFrom.toLocaleString() %></td>
+                        <td><%= validTo.toLocaleString() %></td>
+                        <td><%= coupon.active %></td>
+                        <td>
+                            <a href="/admin/manageCoupons/UpdateCoupon/<%- coupon._id  %> " class="btn btn-primary" href="">Update</a>
+                            <a href="/admin/manageCoupons/DeleteCoupon/<%- coupon._id  %> " class="btn btn-info js-delete-alert" href="">Delete</a>
+                        </td>
                     </tr>
-                </thead>
-                <% coupons.forEach((coupon,index)=> {%>
-                    <% const validFrom = new Date(coupon.validFrom) %> 
-                    <% const dateValidFrom = validFrom.getUTCFullYear() + "/" + ("0" + (validFrom.getUTCMonth() + 1)).slice(-2) + "/" + ("0" + validFrom.getUTCDate()).slice(-2) + " " + ("0" + validFrom.getUTCHours()).slice(-2) + ":" + ("0" + validFrom.getUTCMinutes()).slice(-2) + ":" + ("0" + validFrom.getUTCSeconds()).slice(-2); %> 
-                    <% const validTo = new Date(coupon.validTo) %> 
-                    <% const dateValidTo = validTo.getUTCFullYear() + "/" + ("0" + (validTo.getUTCMonth() + 1)).slice(-2) + "/" + ("0" + validTo.getUTCDate()).slice(-2) + " " + ("0" + validTo.getUTCHours()).slice(-2) + ":" + ("0" + validTo.getUTCMinutes()).slice(-2) + ":" + ("0" + validTo.getUTCSeconds()).slice(-2); %> 
-                    <tbody>
-                        <tr>
-                            <td><%= index + 1 %></th>
-                                <td><%= coupon.code %></td>
-                            <td>
-                                <%= coupon.name %>
-                            </td>
-                            <td>
-                                <%= coupon.amount %>
-                            </td>
-                            <td>
-                                <%= dateValidFrom %>
-                            </td>
-                            <td>
-                                <%= dateValidTo %>
-                            </td>
-                            <td>
-                                <%= coupon.active %>
-                            </td>
-                            <td>
-                                <a href="/admin/manageCoupons/UpdateCoupon/<%- coupon._id  %> " class="btn btn-primary" href="">Update</a>
-                                <a href="/admin/manageCoupons/DeleteCoupon/<%- coupon._id  %> " class="btn btn-info delete-product" href="">Delete</a>
-                            </td>
-                        </tr>
-                    </tbody>
-                    <% }) %>
-            </table>
-        </div>
+                </tbody>
+                <% }) %>
+        </table>
     </div>
+</div>

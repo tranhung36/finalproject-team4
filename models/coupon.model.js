@@ -13,10 +13,6 @@ const couponSchema = new Schema({
         type: String,
         require: true
     },
-    unit:{
-        type: String,
-        require: true
-    },
     amount: {
         type: Number,
         require: true

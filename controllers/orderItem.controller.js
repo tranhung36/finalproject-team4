@@ -6,6 +6,7 @@ const Coupon = require('../models/coupon.model')
 const {
     orderInfo
 } = require('../services/order.service')
+
 async function cart(req, res, next) {
     try {
         const user = userInfo(req)
@@ -19,6 +20,7 @@ async function cart(req, res, next) {
                 model: 'Product'
             }
         }).exec()
+
         if (order) {
             const totalItem = order.orderItems.reduce((total, item) => {
                 return total += item.quantity * item.productId.price
@@ -35,14 +37,19 @@ async function cart(req, res, next) {
                 findCoupon.map(coupon => {
                     const validTo = new Date(coupon.validTo)
                     if (today <= validTo && coupon.active === true) {
-                        priceAfterDiscount = totalItem * (100 - coupon.amount) / 100
+                        let discount = totalItem * coupon.amount / 100
+                        if(discount > coupon.maxDiscount){
+                            priceAfterDiscount = totalItem - Number(coupon.maxDiscount)
+                        }else{
+                            priceAfterDiscount = totalItem - discount
+                        }
                     } else {
                         notice = 'Mã quá hạn'
                     }
                 })
             } 
-
             // End
+
             res.render('products/cart', {
                 order,
                 orderItems: order.orderItems,
@@ -178,10 +185,9 @@ async function removeItemFromCart(req, res, next) {
 }
 
 
-
 module.exports = {
     cart,
     addToCart,
     removeItemSingleFromCart,
-    removeItemFromCart
+    removeItemFromCart,
 }

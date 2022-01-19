@@ -39,17 +39,17 @@ async function createCoupon(req, res) {
     const code = randomCode(12)
     const coupon = await Coupons.find({ code })
 
-
     if (coupon.length === 0) {
       const coupons = new Coupons({
         code,
         name: req.body.couponname,
+        maxDiscount: req.body.maxDiscount,
         amount: req.body.amount,
         validFrom: req.body.validfrom,
         validTo: req.body.validto,
         active: false
       });
-      // console.log(coupons);
+      console.log(coupons);
       await coupons.save();
     }
     res.redirect('http://localhost:8080/admin/manageCoupons')
@@ -73,6 +73,7 @@ async function updateCoupon(req, res) {
     const {
       couponname,
       amount,
+      maxDiscount,
       validfrom,
       validto,
       active
@@ -80,10 +81,12 @@ async function updateCoupon(req, res) {
     await Coupons.findOneAndUpdate({_id: req.params.id}, {
       name: couponname,
       amount: Number(amount),
+      maxDiscount,
       validFrom: validfrom,
       validTo: validto,
       active
   })
+  res.redirect('http://localhost:8080/admin/manageCoupons/')
   } catch (err) {
     return res.status(500).json({ msg: err.message });
   }

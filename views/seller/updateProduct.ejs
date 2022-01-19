@@ -1,23 +1,20 @@
 <%- include("./partialsSeller/sidebar") %>
-<div class="content-wrapper">
-    <div class="content-header">
-        <h1>Dashboard</h1>
-        <ul class="content-header__breadcrumb">
-            <li>Home</li>
-            <li>Dashboard</li>
-        </ul>
-    </div>
+<div class="container col-xl-10 content-wrapper">
     <div class="shop-info box-info">
         <div class="col-12">
-            <a href="/sellerPage/crud-page">Quay lại</a>
-            <div class="col-lg-8">
+            <div class="col-lg-10 m-auto">
+                <%- include("./partialsSeller/header") %>
+                <a class="col-1 d-flex align-items-center justify-content-between" href="/sellerPage">
+                    <i class="fas fa-chevron-left"></i>
+                    <p class="mr-4">Quay lại</p>
+                </a>
             <% products.forEach(pro=>{ %>
                 <form action="/sellerPage/crud-page/updateProduct/<%- pro.slug %>.<%- pro._id %>?_method=PUT" enctype="multipart/form-data" method="POST">
                     <input type="hidden" name="_method" value="PUT">
                     <div class="input-group">
                         <div class="col-12">
                             <label for="productname" class="form-label">Tên sản phẩm</label>
-                            <input type="text" name="productname" value="<%- pro.name %>" id="productname" class="form-control">
+                            <input type="text" name="productname" value="<%- pro.name %>" id="productname" class="form-control" required>
                         </div>
                         <div class="col-12">
                             <label for="category">Danh mục</label>
@@ -30,27 +27,29 @@
                         </div>
                         <div class="col-12">
                             <label for="price" class="form-label">Price</label>
-                            <input type="number" value="<%- pro.price %>" name="price" id="price" class="form-control">
+                            <input type="number" value="<%- pro.price %>" name="price" id="price" class="form-control" required>
                         </div>
                         <div class="col-12">
                             <label for="stock" class="form-label">Số lượng</label>
-                            <input type="number" value="<%- pro.price %>" name="stock" id="stock" class="form-control">
+                            <input type="number" value="<%- pro.price %>" name="stock" id="stock" class="form-control" required>
                         </div>
                         <div class="col-12">
                             <label for="description" class="form-label">Mô tả</label>
-                            <textarea type="text" value="" name="description" id="description" class="form-control"><%- pro.description %></textarea>
+                            <textarea type="text" value="" name="description" id="description" class="form-control" required><%- pro.description %> </textarea>
                         </div>
 
                         <div class="col-12">
                             <label for="thumbnail" class="form-label">Thumbnail</label>
                             <div class="form-label">
-                                <img src="/../images/<%- pro.thumbnail %>" width="70px" height="50px" alt="">
+                                <img src="/../images/<%- pro.thumbnail %>" width="70px" height="50px" alt="thumbnail">
                             </div>
-                            <input type="file" value="<%- pro.thumbnail %>" name="image" id="image" class="form-control">
+                            <input type="file" value="<%- pro.thumbnail %>" name="image" id="image" class="form-control" required>
                         </div>
-                        
+                        <div class="col-12 mt-3 btn-right">
+                            <button class="btn col-xl-3 col-lg-3 col-sm-12 col-12 btn-dark" id="button-addon2"
+                                type="submit">Cập nhật</button>
+                        </div>
                     </div>
-                    <button class="btn btn-dark" id="button-addon2" type="submit">Update</button>
                 </form>
             <% }) %> 
             </div>

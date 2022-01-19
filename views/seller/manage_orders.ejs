@@ -1,10 +1,11 @@
 <div class="container col-xl-10 crud-page">
 
     <div class="table-control">
-        <table class="table table-striped table-hover table-bordered paginated">
+        <table id="tableOrders" class="table table-striped table-hover table-bordered paginated">
             <thead>
-                <tr>
+                <tr class="text-center">
                     <th scope="col">Mã đơn hàng</th>
+                    <th scope="col">Tên sản phẩm</th>
                     <th scope="col">Người mua</th>
                     <th scope="col">Số lượng</th>
                     <th scope="col">Tổng tiền</th>
@@ -16,19 +17,22 @@
 
             <tbody>
                 <% orderItems.forEach(i => {%>
-                <tr>
-                    <th><%= i._id %></th>
+                <tr class="options text-center">
+                    <td><%= i._id %></td>
+                    <td><%= i.productName %></td>
                     <td><%= i.buyer.first_name + ' ' + i.buyer.last_name %></td>
-                    <td><%= i.quantity %></td>
-                    <td>$<%= i.quantity * i.productId.price %></td>
-                    <td><%= i.createdAt.toISOString().replace(/T/, ' ').replace(/\..+/, '') %></td>
-                    <td><select name="" id="">
-                            <option value="">Chờ lấy hàng</option>
+                    <td><%= i.totalQuantity %></td>
+                    <td>$<%= i.total %></td>
+                    <td><%= i.orderedDate.toISOString().replace(/T/, ' ').replace(/\..+/, '') %></td>
+                    <td><select name="" id="selectStatus" disabled>
+                            <option value="">Chuẩn bị</option>
                             <option value="">Đang giao</option>
                             <option value="">Đã giao</option>
                         </select></td>
-                    <td>
-                        <a class="btn btn-primary" href="#">Update</a>
+                    <td class="td-actions">
+                        <button id="edit" class="btn"><i class="fas fa-edit"></i></button>
+                        <button id="save" class="btn" style="display: none;"><i class="fas fa-edit"></i></button>
+                        <button id="cancel" class="btn" style="display: none;"><i class="fas fa-edit"></i></button>
                     </td>
                 </tr>
                 <% }) %>
@@ -37,3 +41,16 @@
         </table>
     </div>
 </div>
+
+<script>
+    const editBtn = document.querySelector('#edit')
+    const select = document.querySelector('#selectStatus')
+    const saveBtn = document.querySelector('#save')
+    const cancelBtn = document.querySelector('#cancel')
+
+    editBtn.addEventListener('click', (e) => {
+        select.removeAttribute('disabled')
+        saveBtn.removeAttribute('style')
+        cancelBtn.removeAttribute('style')
+    })
+</script>

@@ -253,9 +253,33 @@ async function manageOrder(req, res, next) {
                     'productId.userID': new mongoose.Types.ObjectId(user.user_id),
                     'ordered': true
                 }
-            }
+            },
+            {
+                $group: {
+                    _id: '$_id',
+                    productName: {
+                        $first: '$productId.name'
+                    },
+                    status: {
+                        $first: '$status'
+                    },
+                    buyer: {
+                        $first: '$buyer'
+                    },
+                    orderedDate: {
+                        $first: '$createdAt'
+                    },
+                    totalQuantity: {
+                        $sum: '$quantity'
+                    },
+                    total: {
+                        $sum: {
+                            $multiply: ['$productId.price', '$quantity']
+                        }
+                    }
+                },
+            },
         ]).exec()
-
         res.render('seller/manage_orders', {
             layout: 'layouts/layout_seller',
             orderItems

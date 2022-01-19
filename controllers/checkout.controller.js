@@ -1,5 +1,6 @@
 const Payment = require('../models/payment.model')
 const config = require('../config/stripe/secretKey.config')
+const BillingAddress = require('../models/bill.model')
 const stripe = require('stripe')(config.stripe.secretKey);
 const {
     orderInfo
@@ -50,6 +51,7 @@ async function payment(req, res, next) {
                     }
                 }
             }],
+            customer_details: {},
             payment_method_types: ['card'],
             customer_email: order.userId.email,
             line_items: order.orderItems.map(item => {
@@ -89,6 +91,30 @@ async function successPayment(req, res, next) {
             stripeChargeId: session.id,
             amount: session.amount_total
         })
+
+        let lineAddress
+        let billingAddress
+        if (session.shipping.address.line1) {
+            lineAddress = session.shipping.address.line1
+        } else {
+            lineAddress = session.shipping.address.line2
+        }
+
+        billingAddress = await BillingAddress.findOne({
+            userId: order.userId._id,
+            city: session.shipping.address.city,
+            address: lineAddress,
+        })
+
+        if (billingAddress) {
+            order.billingAddress = billingAddress._id
+        } else {
+            billingAddress = await BillingAddress.create({
+                userId: order.userId._id,
+                city: session.shipping.address.city,
+                address: lineAddress,
+            })
+        }
 
         if (payment) {
             order.ordered = true

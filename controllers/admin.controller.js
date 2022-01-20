@@ -108,12 +108,11 @@ async function renderUpdateCoupon(req, res) {
 
 async function updateCoupon(req, res) {
   try {
-    console.log(req.body);
-    
+
     const coupon = await Coupons.findById(req.params.id);
-    console.log('coupon', coupon);
-    const category = await Category.findById(coupon.byCategory  )
-    console.log('category', category);
+
+    const category = await Category.findById(coupon.byCategory)
+
     let description = ``
     if (coupon.byCategory == null) {
       categoryName = ''
@@ -133,7 +132,7 @@ async function updateCoupon(req, res) {
         }
       }
     }
-    console.log(description);
+
     const { couponname, amount, maxDiscount, validfrom, validto, active } = req.body
     await Coupons.findOneAndUpdate({ _id: coupon._id }, {
       name: couponname,

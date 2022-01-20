@@ -73,7 +73,7 @@ async function cart(req, res, next) {
 
                                 discount = coupon.maxDiscount
                                 priceAfterDiscount = priceOfDiscountProduct + priceOfRestProduct - discount
-                                console.log('4',discount);
+
                             } else {
                                 priceAfterDiscount = priceOfDiscountProduct + priceOfRestProduct - discount
                             }

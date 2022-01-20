@@ -21,14 +21,13 @@
                                     class="form-control" disabled>
                             </div>
                             <div class="col-12 mt-2">
-                                <label for="firstname" class="form-label">First name</label>
-                                <input type="text" value="<%= user.first_name %>" name="firstname" id="firstname"
-                                    class="form-control">
-                            </div>
-                            <div class="col-12 mt-2">
-                                <label for="lastname" class="form-label">Last name</label>
-                                <input type="text" value="<%= user.last_name %>" name="lastname" id="lastname"
-                                    class="form-control">
+                                <label for="role">Role</label>
+                                <select class="form-select form-control" name="role" aria-label="role" required>
+                                    <option value="" >Choose role</option>
+                                    <option value="Seller">Seller </option>
+                                    <option value="User">User </option>
+                                    
+                            </select>
                             </div>
                             <div class="col-12 mt-2" style="display: none;">
                                 <label for="password" class="form-label">Password</label>

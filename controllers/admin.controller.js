@@ -24,6 +24,8 @@ async function createUser(req, res) {
     let firstname = req.body.firstname;
     let lastname = req.body.lastname;
     let password = req.body.password;
+    let role = req.body.role;
+
     //Encrypt user password
     const encryptedPassword = await bcrypt.hash(password, 10);
     const user = new User({
@@ -31,6 +33,7 @@ async function createUser(req, res) {
       last_name: lastname,
       email: email,
       password: encryptedPassword,
+      role:role,
     });
     await user.save();
     res.redirect("/admin/manageUsers");
@@ -57,15 +60,14 @@ async function renderUpdateUserPage(req, res) {
 async function updateUser(req, res) {
   try {
     let id = req.params.id;
-    let firstname = req.body.firstname;
-    let lastname = req.body.lastname;
+    let role = req.body.role;
+
     await User.findOneAndUpdate(
       {
         _id: id
       },
       {
-        first_name: firstname,
-        last_name: lastname,
+        role:role
       }
     );
     res.redirect("/admin/manageUsers");

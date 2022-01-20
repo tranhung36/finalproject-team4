@@ -10,6 +10,7 @@
                     <th scope="col">First name</th>
                     <th scope="col">Last name</th>
                     <th scope="col">Gmail</th>
+                    <th scope="col">Role</th>
                 </tr>
             </thead>
             <% userInfo.forEach((user,index)=> {%>
@@ -19,6 +20,7 @@
                         <td><%= user.email %></td>
                         <td><%= user.first_name %></td>
                         <td><%= user.last_name %></td>
+                        <td><%= user.role %></td>
                         
                         <td>
                         <a class="btn btn-primary" href="/admin/manageUsers/updateUser/<%- user._id %>">Update</a>

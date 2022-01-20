@@ -10,6 +10,7 @@
                     <th scope="col">Code</th>
                     <th scope="col">Name</th>
                     <th scope="col">Discount</th>
+                    <th scope="col">Max</th>
                     <th scope="col">ValidFrom</th>
                     <th scope="col">ValidTo</th>
                     <th scope="col">Status</th>
@@ -24,6 +25,7 @@
                         <td><%= coupon.code %></td>
                         <td><%= coupon.name %></td>
                         <td><%= coupon.amount %></td>
+                        <td><%= coupon.maxDiscount %></td>
                         <td><%= validFrom.toLocaleString() %></td>
                         <td><%= validTo.toLocaleString() %></td>
                         <td><%= coupon.active %></td>

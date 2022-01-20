@@ -43,7 +43,7 @@ async function cart(req, res, next) {
                     if (today >= validFrom && today <= validTo && coupon.active === true) {
                         notice = 'Coupon Has Been Applied'
 
-                        if (coupon.byCategory == 0) {
+                        if (coupon.byCategory == null) {
                             discount = totalItem * coupon.amount / 100
 
                             if (discount > coupon.maxDiscount && Number(coupon.maxDiscount) != 0) {
@@ -84,7 +84,7 @@ async function cart(req, res, next) {
                     }
                 })
             }
-            
+
             // End add coupon
 
             res.render('products/cart', {

@@ -18,7 +18,7 @@ async function redenerManageUser(req, res) {
   }
 }
 
-// Start Manage Coupons
+//---------- Start Manage Coupons
 async function renderManageCoupons(req, res) {
   try {
     const coupons = await Coupons.find();
@@ -45,67 +45,46 @@ async function createCoupon(req, res) {
     if (req.body.byCategory != 0) {
       getCategoryName = await Category.findById({ _id: req.body.byCategory })
     }
+    let maxDiscount
+    let description = ``
+    let byCategory 
     if (coupon.length === 0) {
       if (req.body.byCategory == '0') {
         if (req.body.maxDiscount == '') {
-          const coupon = new Coupons({
-            code,
-            name: req.body.couponname,
-            amount: req.body.amount,
-            maxDiscount: 0,
-            byCategory: req.body.byCategory,
-            description: `Up to ${req.body.amount}% on total bill`,
-            validFrom: req.body.validfrom,
-            validTo: req.body.validto,
-            active: false
-          });
-          await coupon.save();
+          byCategory = null
+          maxDiscount= 0
+          description= `Up to ${req.body.amount}% on total bill`
         } else {
-          const coupon = new Coupons({
-            code,
-            name: req.body.couponname,
-            maxDiscount: req.body.maxDiscount,
-            amount: req.body.amount,
-            byCategory: req.body.byCategory,
-            description: `Up to ${req.body.amount}% on total bill. Maximum no more than $${req.body.maxDiscount}`,
-            validFrom: req.body.validfrom,
-            validTo: req.body.validto,
-            active: true
-          });
-          await coupon.save();
+          byCategory = null
+          maxDiscount= req.body.maxDiscount
+          description= `Up to ${req.body.amount}% on total bill. Maximum no more than $${req.body.maxDiscount}`
         }
       } else {
         if (req.body.maxDiscount == '') {
-          const coupon = new Coupons({
-            code,
-            name: req.body.couponname,
-            amount: req.body.amount,
-            maxDiscount: 0,
-            byCategory: req.body.byCategory,
-            description: `Up to ${req.body.amount}% discount on total bill for category ${getCategoryName.name}`,
-            validFrom: req.body.validfrom,
-            validTo: req.body.validto,
-            active: false
-          });
-          await coupon.save();
+          byCategory = req.body.byCategory,
+          maxDiscount= 0
+          description= `Up to ${req.body.amount}% discount on total bill for category ${getCategoryName.name}`
         } else {
-          const coupon = new Coupons({
-            code,
-            name: req.body.couponname,
-            maxDiscount: req.body.maxDiscount,
-            amount: req.body.amount,
-            byCategory: req.body.byCategory,
-            description: `Up to ${req.body.amount}% discount on total bill for category ${getCategoryName.name}. Maximun no more than $${req.body.maxDiscount}`,
-            validFrom: req.body.validfrom,
-            validTo: req.body.validto,
-            active: false
-          });
-          await coupon.save();
+          byCategory = req.body.byCategory,
+          maxDiscount= req.body.maxDiscount
+          description= `Up to ${req.body.amount}% discount on total bill for category ${getCategoryName.name}. Maximun no more than $${req.body.maxDiscount}`
         }
       }
+      const coupon = new Coupons({
+        code,
+        name: req.body.couponname,
+        maxDiscount,
+        amount: req.body.amount,
+        byCategory,
+        description,
+        validFrom: req.body.validfrom,
+        validTo: req.body.validto,
+        active: false
+      });
+      await coupon.save();
     }
 
-    // res.redirect('http://localhost:8080/admin/manageCoupons')
+    res.redirect('http://localhost:8080/admin/manageCoupons')
   } catch (err) {
     return res.status(500).json({ msg: err.message });
   }
@@ -114,7 +93,6 @@ async function createCoupon(req, res) {
 async function renderUpdateCoupon(req, res) {
   try {
     const coupon = await Coupons.findById(req.params.id);
-    console.log(coupon.byCategory);
     if (coupon.byCategory != 0) {
       const category = await Category.find({ _id: coupon.byCategory })
       res.render('admin/updateCoupon', { coupon, category })
@@ -130,14 +108,17 @@ async function renderUpdateCoupon(req, res) {
 
 async function updateCoupon(req, res) {
   try {
-
+    console.log(req.body);
+    
     const coupon = await Coupons.findById(req.params.id);
-    const category = await Category.findById(coupon.byCategory)
+    console.log('coupon', coupon);
+    const category = await Category.findById(coupon.byCategory  )
+    console.log('category', category);
     let description = ``
-    if (coupon.byCategory == 0) {
+    if (coupon.byCategory == null) {
       categoryName = ''
       if (req.body.byCategory == '0') {
-        if (req.body.maxDiscount == '0') {
+        if (req.body.maxDiscount == 0) {
           description = `Up to ${req.body.amount}% on total bill`
         } else {
           description = `Up to ${req.body.amount}% on total bill. Maximum no more than $${req.body.maxDiscount}`
@@ -145,13 +126,14 @@ async function updateCoupon(req, res) {
       } 
     } else {
       if (req.body.byCategory != '0') {
-        if (req.body.maxDiscount == '0') {
+        if (req.body.maxDiscount == 0) {
           description = `Up to ${req.body.amount}% discount on total bill for category ${category.name}`
         } else {
           description = `Up to ${req.body.amount}% discount on total bill for category ${category.name}. Maximun no more than $${req.body.maxDiscount}`
         }
       }
     }
+    console.log(description);
     const { couponname, amount, maxDiscount, validfrom, validto, active } = req.body
     await Coupons.findOneAndUpdate({ _id: coupon._id }, {
       name: couponname,
@@ -177,7 +159,7 @@ async function deleteCoupon(req, res) {
     return res.status(500).json({ msg: err.message });
   }
 }
-// End Manage Coupons
+//---------- End Manage Coupons
 
 module.exports = {
   redenerManageUser,

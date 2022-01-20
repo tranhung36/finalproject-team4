@@ -18,14 +18,14 @@
                                 class="form-control">
                         </div>
                         <div class="col-12 mt-2">
-                            <label for="couponname" class="form-label">Danh mục giảm giá</label>
+                            <label for="category" class="form-label">Danh mục giảm giá</label>
                             <%if(category == 0 ){ %>
-                                <input type="text" value="0" name="byCategory1"  id="couponname" class="form-control" disabled>
-                                <input type="text" hidden value="<%- coupon.byCategory %>" name="byCategory"  id="couponname" class="form-control">
+                                <input type="text" value="0" name="byCategory1"  id="category" class="form-control" disabled>
+                                <input type="text" hidden value="0" name="byCategory"  id="category" class="form-control">
                              <% }else{  %>
                                 <% category.map(cate => { %>
-                                    <input type="text"  value="<%- cate.name  %> " name="byCategory1" id="couponname" class="form-control" disabled>
-                                    <input type="text" hidden value="<%- coupon.byCategory %> " name="byCategory" id="couponname" class="form-control">
+                                    <input type="text"  value="<%- cate.name  %> " name="byCategory1" id="category" class="form-control" disabled>
+                                    <input type="text" hidden value="<%- coupon.byCategory %> " name="byCategory" id="category" class="form-control">
                                 <% }) %> 
                              <% } %> 
                         </div>

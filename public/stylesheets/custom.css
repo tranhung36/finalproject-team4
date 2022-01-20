@@ -139,8 +139,33 @@ body {
     max-height: 100%;
 }
 
+#purchase .noBill {
+    min-height: 500px;
+}
 
+#purchase .infor {
+    min-height: 210px;
+}
 
+#purchase .details {
+    width: 65%;
+}
+
+#purchase img {
+    width: 160px;
+    height: 140px;
+}
+
+#purchase .avartar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+}
+
+#purchase .productImg {
+    width: 80px;
+    height: 80px;
+}
 
 .emp-profile{
     padding: 3%;

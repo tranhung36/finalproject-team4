@@ -9,10 +9,7 @@ router.get("/:id", getProfile, (err) => {
 });
 
 // CHANGE users profile
-router.post(':id', changeProfile, (err) => {
-  console.error(err.message)
-  res.status(500).send('Server error')
-});
+router.post('/:id', changeProfile);
 
 
 module.exports = router;

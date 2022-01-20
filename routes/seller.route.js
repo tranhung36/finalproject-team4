@@ -1,6 +1,5 @@
 const express = require('express')
 const router = express.Router()
-const sellerController = require('../controllers/seller.controller')
 const {
     renderSellerPage,
     renderCRUDPage,
@@ -29,7 +28,6 @@ router.put('/update-product/:slug.:id', updateProduct)
 router.get('/', renderSellerPage)
 
 router.get('/manage-orders', verifyToken, manageOrder)
-
 
 
 module.exports = router

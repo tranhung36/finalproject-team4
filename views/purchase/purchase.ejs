@@ -1,0 +1,43 @@
+<div id="purchase" class="container d-flex my-4">
+  <div class="w-25 px-3">
+    <div class="d-flex">
+      <img src="/img/category-2.jpg" class="avartar" alt="" />
+      <div class="ms-4 mt-3">
+        <span class="fw-bold">Thiên Phan</span>
+        <div>
+          <i class="fas fa-pencil-alt"></i>
+          <a href="#">Edit profile</a>
+        </div>
+      </div>
+    </div>
+    <hr style="border: 1px solid yellow" />
+    <div class="d-flex flex-column">
+      <a href="#">My Account</a>
+      <a href="">My Purchase</a>
+    </div>
+  </div>
+  <div class="w-75">
+    <ul class="nav nav-tabs" onclick="onClick()">
+      <li class="nav-item col text-center">
+        <a class="nav-link" aria-current="page" href="#">Tất cả</a>
+      </li>
+      <li class="nav-item col text-center">
+        <a class="nav-link" href="#">Chờ xác nhận</a>
+      </li>
+      <li class="nav-item col text-center">
+        <a class="nav-link" href="#">Chờ Lấy Hàng</a>
+      </li>
+      <li class="nav-item col text-center">
+        <a class="nav-link" href="#">Đang Giao</a>
+      </li>
+      <li class="nav-item col text-center">
+        <a class="nav-link" href="#">Đã Giao</a>
+      </li>
+      <li class="nav-item col text-center">
+        <a class="nav-link" href="#">Đã Hủy</a>
+      </li>
+    </ul>
+    <%- include('./product.ejs') %> <%- include('./product.ejs') %> <%-
+    include('./noBill.ejs') %>
+  </div>
+</div>

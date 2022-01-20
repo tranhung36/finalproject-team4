@@ -86,6 +86,12 @@ body>div.row.no-gutters>aside {
 
 .main-sidebar .sidebar__info a {
   text-decoration: none;
+}
+.main-sidebar .sidebar-content .sidebar__info {
+  border-bottom: 1px solid #4b545c;
+  padding: 13px 24px;
+}
+.main-sidebar .sidebar-content .sidebar__info a {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -108,8 +114,7 @@ body>div.row.no-gutters>aside {
   padding: 0 8px;
 }
 
-
-.main-sidebar .sidebar__main .sidebar__admin-info {
+.main-sidebar .sidebar-content .sidebar__main .sidebar__admin-info {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -181,9 +186,10 @@ body>div.row.no-gutters>aside {
 .main-sidebar .sidebar__main .sidebar__control {
   display: flex;
   justify-content: center;
+}
+.main-sidebar .sidebar-content .sidebar__main .sidebar__control {
   margin: 8px auto 0;
 }
-
 .main-sidebar .sidebar-content .sidebar__main .sidebar__control > ul > li {
   margin-bottom: 2px;
   border-radius: 4px;

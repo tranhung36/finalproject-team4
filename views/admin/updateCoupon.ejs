@@ -4,7 +4,7 @@
         <div class="col-12">
             <div class="col-lg-10 m-auto">
                 <%- include("./partialsAdmin/header") %>
-                <a class="col-1 d-flex align-items-center justify-content-between" href="/sellerPage">
+                <a class="col-1 d-flex align-items-center justify-content-between" href="/admin/manageCoupons">
                     <i class="fas fa-chevron-left"></i>
                     <p class="mr-4">Quay lại</p>
                 </a>
@@ -18,6 +18,18 @@
                                 class="form-control">
                         </div>
                         <div class="col-12 mt-2">
+                            <label for="couponname" class="form-label">Danh mục giảm giá</label>
+                            <%if(category == 0 ){ %>
+                                <input type="text" value="0" name="byCategory1"  id="couponname" class="form-control" disabled>
+                                <input type="text" hidden value="<%- coupon.byCategory %>" name="byCategory"  id="couponname" class="form-control">
+                             <% }else{  %>
+                                <% category.map(cate => { %>
+                                    <input type="text"  value="<%- cate.name  %> " name="byCategory1" id="couponname" class="form-control" disabled>
+                                    <input type="text" hidden value="<%- coupon.byCategory %> " name="byCategory" id="couponname" class="form-control">
+                                <% }) %> 
+                             <% } %> 
+                        </div>
+                        <div class="col-12 mt-2">
                             <label for="amount" class="form-label">Phần trăm giảm giá</label>
                             <input type="number" value="<%- coupon.amount %>" name="amount" id="amount"
                                 class="form-control">
@@ -27,7 +39,11 @@
                             <input type="number" value="<%- coupon.maxDiscount %>" name="maxDiscount" id="maxDiscount"
                                 class="form-control">
                         </div>
-                        <div class="row align-center justify-content-between col-12 p-0 mt-2">
+                        <div class="col-12 mt-2">
+                            <label for="amount" class="form-label">Description</label>
+                            <textarea name="description" id="description" class="form-control" disabled><%- coupon.description %></textarea>
+                        </div>
+                        <div class="row align-center justify-content-between col-12 mt-2 p-0">
                             <div class="col-5 p-0">
                                 <label for="validto" class="form-label">Từ ngày</label>
                                 <input type="datetime-local" value="<%- coupon.validFrom %>" name="validfrom"

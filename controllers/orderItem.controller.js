@@ -30,7 +30,7 @@ async function cart(req, res, next) {
             const coupons = await Coupon.find({ active: true })
             const findCoupon = await Coupon.find({ code: req.query.couponCode })
 
-            let notice = ''
+            let notice
             let priceAfterDiscount
             let discount
             if (findCoupon.length > 0) {
@@ -41,7 +41,8 @@ async function cart(req, res, next) {
                     const validTo = new Date(coupon.validTo)
                     const validFrom = new Date(coupon.validFrom)
                     if (today >= validFrom && today <= validTo && coupon.active === true) {
-                        notice = 'Mã đã được áp dụng'
+                        notice = 'Coupon Has Been Applied'
+
                         if (coupon.byCategory == 0) {
                             discount = totalItem * coupon.amount / 100
 
@@ -53,12 +54,16 @@ async function cart(req, res, next) {
                             } else {
                                 priceAfterDiscount = totalItem - discount
                             }
-
                         } else {
 
                             const findDiscountProduct = order.orderItems.filter(product => product.productId.categoryId == coupon.byCategory)
+                            const findRestProduct = order.orderItems.filter(product => product.productId.categoryId != coupon.byCategory)
 
                             const priceOfDiscountProduct = findDiscountProduct.reduce((a, b) => {
+                                return a += b.quantity * b.productId.price
+                            }, 0)
+
+                            const priceOfRestProduct = findRestProduct.reduce((a, b) => {
                                 return a += b.quantity * b.productId.price
                             }, 0)
 
@@ -67,19 +72,20 @@ async function cart(req, res, next) {
                             if (discount > coupon.maxDiscount && Number(coupon.maxDiscount) != 0) {
 
                                 discount = coupon.maxDiscount
-                                priceAfterDiscount = priceOfDiscountProduct - discount
-
+                                priceAfterDiscount = priceOfDiscountProduct + priceOfRestProduct - discount
+                                console.log('4',discount);
                             } else {
-
-                                priceAfterDiscount = priceOfDiscountProduct - discount
+                                priceAfterDiscount = priceOfDiscountProduct + priceOfRestProduct - discount
                             }
                         }
                     }
                     else {
-                        notice = 'Mã quá hạn'
+                        notice = 'Invalid Coupon'
                     }
                 })
             }
+            
+            // End add coupon
 
             res.render('products/cart', {
                 order,

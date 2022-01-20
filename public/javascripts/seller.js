@@ -3,7 +3,7 @@ const dropdownItems = document.querySelectorAll('.dropdown-select .sub-sidebar__
 
 selectedDropdowns.forEach(selectedDropdown => {
     selectedDropdown.onclick = () => {
-        
+
         const showDropdowns = document.querySelectorAll('.sub-sidebar__control')
         const showDropdownsI = document.querySelectorAll('.dropdown-select a p i')
 
@@ -24,10 +24,10 @@ selectedDropdowns.forEach(selectedDropdown => {
 })
 
 const showNavAside = () => {
-    const btnNavAside =  document.querySelector('.btn-nav-aside')
+    const btnNavAside = document.querySelector('.btn-nav-aside')
     const mainSideBar = document.querySelector('.main-sidebar')
     const sidebarContent = document.querySelector('.sidebar-content')
-    const btnCloseSideBar =  document.querySelector('.close-sidebar')
+    const btnCloseSideBar = document.querySelector('.close-sidebar')
     btnNavAside.onclick = () => {
         mainSideBar.style.display = 'flex'
     }
@@ -37,17 +37,17 @@ const showNavAside = () => {
 }
 showNavAside()
 
-const checkValueImage = () =>{
+const checkValueImage = () => {
     const imageValue = document.querySelector('#image')
     const imageValues = document.querySelector('#images')
-    const handleButton =  document.querySelector('#handleButton')
-    if(handleButton){
-        handleButton.onclick = (e) =>{
-            if(imageValue.value == ''){
+    const handleButton = document.querySelector('#handleButton')
+    if (handleButton) {
+        handleButton.onclick = (e) => {
+            if (imageValue.value == '') {
                 e.preventDefault()
                 alert('Chưa nhập thumbnail cho sản phẩm')
             }
-            if(imageValues.files.length <2){
+            if (imageValues.files.length < 2) {
                 e.preventDefault()
                 alert('Images cần 2 ảnh trở lên')
             }
@@ -55,15 +55,17 @@ const checkValueImage = () =>{
     }
 }
 // CRUD-page handle delete Button
-const btnDelete= document.querySelector('.js-delete-alert')
-if (btnDelete) {
-    btnDelete.onclick = (e) => {
-        const result = confirm("Bạn có muốn xóa không?");
-        if (result) {
-            alert("Xóa thành công");
-        } else {
-            e.preventDefault()
+const deleteBtns = document.querySelectorAll('.js-delete-alert')
+if (deleteBtns) {
+    deleteBtns.forEach(deleteBtn => {
+        deleteBtn.onclick = (e) => {
+            const result = confirm("Bạn có muốn xóa không?");
+            if (result) {
+                alert("Xóa thành công");
+            } else {
+                e.preventDefault()
+            }
         }
-    }
+    })
 }
 checkValueImage()

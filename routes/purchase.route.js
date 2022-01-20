@@ -1,11 +1,7 @@
 const express = require('express')
 const router = express.Router()
+const {myOrders} = require('../controllers/profile.controller')
 
 //follow bill
-router.get('/', (req, res, next) => {
-    res.render('purchase/purchase', {
-        title: 'Purchase',
-    });
-})
-
+router.get('/', myOrders)
 module.exports = router;

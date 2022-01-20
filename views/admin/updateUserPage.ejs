@@ -1,0 +1,45 @@
+<%- include("./partialsAdmin/sidebar") %>
+    <div class="content-wrapper">
+        <div class="content-header">
+            <h1>Edit user</h1>
+            <ul class="content-header__breadcrumb">
+                <li>Home</li>
+                <li>Dashboard</li>
+            </ul>
+        </div>
+        <div class="shop-info box-info">
+            <div class="col-12">
+                <a href="/admin/manageUsers">Back</a>
+                <div class="col-lg-8">
+                    <form action="/admin/manageUsers/updateUser/<%= user._id %>?_method=PUT" enctype="multipart/form-data"
+                        method="POST">
+                        <input type="hidden" name="_method" value="PUT">
+                        <div class="input-group">
+                            <div class="col-12 mt-2">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="text" value="<%= user.email %>" name="email" id="email"
+                                    class="form-control" disabled>
+                            </div>
+                            <div class="col-12 mt-2">
+                                <label for="role">Role</label>
+                                <select class="form-select form-control" name="role" aria-label="role" required>
+                                    <option value="" >Choose role</option>
+                                    <option value="Seller">Seller </option>
+                                    <option value="User">User </option>
+                                    
+                            </select>
+                            </div>
+                            <div class="col-12 mt-2" style="display: none;">
+                                <label for="password" class="form-label">Password</label>
+                                <input type="text" value="<%= user.password %>" name="password" id="password"
+                                    class="form-control">
+                            </div>
+                            
+                        </div>
+
+                        <button class="btn btn-dark" id="button-addon2" type="submit">Update</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>

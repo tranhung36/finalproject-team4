@@ -1,13 +1,18 @@
 const express = require("express");
 const router = express.Router();
 const {
-    redenerManageUser,
     renderManageCoupons,
     renderCreateCoupon,
     createCoupon,
     renderUpdateCoupon,
     updateCoupon,
-    deleteCoupon
+    deleteCoupon,
+    renderManageUserPage,
+    renderUpdateUserPage,
+    renderCreateUserPage,
+    deleteUser,
+    createUser,
+    updateUser,
 } = require("../controllers/admin.controller");
 
 //----------- Start Coupon Route
@@ -22,9 +27,17 @@ router.put('/manageCoupons/UpdateCoupon/:id', updateCoupon)
 router.get('/manageCoupons/Deletecoupon/:id', deleteCoupon)
 //----------- End Coupon Route
 
+router.get("/manageUsers", renderManageUserPage);
 
-router.get("/", redenerManageUser);
+router.get("/manageUsers/createUser", renderCreateUserPage);
+router.post("/manageUsers/createUser", createUser);
 
+router.get("/manageUsers/updateUser/:id", renderUpdateUserPage);
+router.put("/manageUsers/updateUser/:id", updateUser);
+
+router.get("/manageUsers/deleteUser/:id", deleteUser);
+
+router.get("/", renderManageUserPage);
 
 
 module.exports = router;

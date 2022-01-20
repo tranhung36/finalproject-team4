@@ -1,0 +1,59 @@
+<%- include("./partialsAdmin/sidebar") %>
+<div class="content-wrapper container">
+    <div class="shop-info box-info">
+        <div class="col-12">
+            <div class="col-lg-10 m-auto">
+                <%- include("./partialsAdmin/header") %>
+                <a class="col-1 d-flex align-items-center justify-content-between" href="/admin/manageCoupons">
+                    <i class="fas fa-chevron-left"></i>
+                    <p class="mr-4">Quay lại</p>
+                </a>
+                <form action="/admin/manageCoupons/CreateCoupon" enctype="multipart/form-data" method="POST">
+                    <div class="input-group">
+                        <div class="col-12 mt-2">
+                            <label for="couponname" class="form-label">Tên chương trình</label>
+                            <input type="text" name="couponname" id="couponname" class="form-control">
+                        </div>
+                        <div class="col-12 mt-2">
+                            <label for="couponname" class="form-label">Theo danh mục</label>
+                            <select class="form-select" name="byCategory" aria-label="Default select example">
+                                <option value="0" selected>Chọn danh mục</option>
+                                <% categories.map(category => { %>
+                                <option value="<%- category._id  %>"><%- category.name  %></option>
+                                <% }) %>
+                            </select>
+                        </div>
+                        <div class="col-12 mt-2 discount-precent">
+                            <label for="amount" class="form-label">Phần trăm giảm giá</label>
+                            <input type="number" min="0" max="100" name="amount" id="amount" class="form-control">
+                        </div>
+                        <div class="col-12 mt-2 discount-money">
+                            <label for="amount" class="form-label">Giảm tối đa ( bỏ qua nếu không muốn )</label>
+                            <input type="number" min="0" name="maxDiscount" id="maxDiscount" class="form-control">
+                        </div>
+                        <div class="row align-center justify-content-between col-12 p-0 mt-2">
+                            <div class="col-5 p-0">
+                                <label for="validfrom" class="form-label">Từ ngày</label>
+                                <input type="datetime-local" name="validfrom" id="validfrom"
+                                    class="form-control"></input>
+                            </div>
+                            <div class="col-5 p-0">
+                                <label for="validto" class="form-label">Đến ngày</label>
+                                <input type="datetime-local" name="validto" id="validto" class="form-control"
+                                    accept="image/*">
+                            </div>
+                        </div>
+                        <div class="col-12 mt-3 btn-right">
+                            <button class="btn col-xl-3 col-lg-3 col-sm-12 col-12 btn-dark" id="handleButton"
+                                type="submit">Thêm mới</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+</script>

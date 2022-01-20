@@ -13,6 +13,7 @@ async function renderManageUserPage(req, res) {
 
     res.render("admin/ManageUserPage", {
       userInfo,
+      layout: 'layouts/layout_seller',
     });
   } catch (err) {
     return res.status(500).json({
@@ -20,9 +21,11 @@ async function renderManageUserPage(req, res) {
     });
   }
 }
-async function renderCreateUserPage(req, res) {
-  res.render("admin/createUserPage");
-  ``;
+
+function renderCreateUserPage(req, res) {
+  res.render("admin/createUserPage", {
+    layout: 'layouts/layout_seller',
+  })
 }
 async function createUser(req, res) {
   try {
@@ -57,7 +60,8 @@ async function renderUpdateUserPage(req, res) {
     });
     //res.json(user)
     res.render("admin/updateUserPage", {
-      user
+      user,
+      layout: 'layouts/layout_seller',
     });
   } catch (err) {
     return res.status(500).json({

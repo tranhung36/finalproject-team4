@@ -100,7 +100,6 @@ async function cart(req, res, next) {
                 discount
             })
 
-            res.redirect('http://localhost:8080/cart')
         } else {
             res.render('products/cart_empty')
         }

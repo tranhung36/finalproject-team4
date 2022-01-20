@@ -107,18 +107,19 @@
               <li class="d-flex align-items-start justify-content-between">
                 <strong class="">COUPON AVAILABLE</strong>
                 <ul class="select-coupon">
-                  <% coupons.map(coupon => { %> 
-                  <li class="d-flex align-items-start justify-content-between"><span class="text-muted small"><%- coupon.code %></span></li>
-                  <% }) %> 
+                  <% coupons.map(coupon => { %>
+                  <li class="d-flex align-items-start justify-content-between"><span
+                      class="text-muted small"><%- coupon.code %></span></li>
+                  <% }) %>
                 </ul>
               </li>
               <li class="d-flex align-items-center justify-content-between"><strong
-                class="text-uppercase small font-weight-bold">Discount</strong><span
-                class="text-muted small">$<% if (discount) { %>
-                <%= discount %>
-                <% } else { %>
-                0
-                <% } %></span></li>
+                  class="text-uppercase small font-weight-bold">Discount</strong><span
+                  class="text-muted small">$<% if (discount) { %>
+                  <%= discount %>
+                  <% } else { %>
+                  0
+                  <% } %></span></li>
               <li class="border-bottom my-2"></li>
               <li class="d-flex align-items-center justify-content-between mb-2"><strong class="text-uppercase small
                   font-weight-bold">Total</strong><span>$<% if (price) { %>
@@ -130,8 +131,10 @@
                 <%= notice %>
                 <form action="/cart" method="get">
                   <div class="input-group mb-0">
-                    <input class="form-control" id="coupon-code" name="couponCode" type="text" placeholder="Enter your coupon" autocomplete="off">
-                    <button class="btn btn-dark btn-sm w-100 btn-add-coupon" type="submit"> <i class="fas fa-gift me-2"></i>Apply
+                    <input class="form-control" id="coupon-code" name="couponCode" type="text"
+                      placeholder="Enter your coupon" autocomplete="off">
+                    <button class="btn btn-dark btn-sm w-100 btn-add-coupon" type="submit"> <i
+                        class="fas fa-gift me-2"></i>Apply
                       coupon</button>
                   </div>
                 </form>
@@ -146,14 +149,14 @@
 
 
 <script>
-  const chooseCoupon = () =>{
+  const chooseCoupon = () => {
     const couponCodes = document.querySelectorAll('.select-coupon li')
-    const codeInput= document.querySelector('#coupon-code')
-    couponCodes.forEach(coupon =>{
-      coupon.onclick = () =>{
+    const codeInput = document.querySelector('#coupon-code')
+    couponCodes.forEach(coupon => {
+      coupon.onclick = () => {
         const codes = document.querySelectorAll('.select-coupon li span')
-        codes.forEach(code =>{
-          if(coupon.contains(code)){
+        codes.forEach(code => {
+          if (coupon.contains(code)) {
             codeInput.value = code.innerText
           }
         })
@@ -161,6 +164,4 @@
     })
   }
   chooseCoupon()
-
-
 </script>

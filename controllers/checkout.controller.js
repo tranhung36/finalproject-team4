@@ -26,6 +26,11 @@ async function checkout(req, res, next) {
 async function payment(req, res, next) {
     try {
         const order = await orderInfo(req)
+
+        const promotionCode = await stripe.promotionCodes.list({
+            limit: 3,
+        });
+
         const session = await stripe.checkout.sessions.create({
             shipping_address_collection: {
                 allowed_countries: ['US', 'CA', 'VN'],
@@ -67,6 +72,7 @@ async function payment(req, res, next) {
                     quantity: item.quantity
                 }
             }),
+            allow_promotion_codes: true,
             mode: 'payment',
             success_url: `${process.env.DOMAIN}/success?id={CHECKOUT_SESSION_ID}`,
             cancel_url: `${process.env.DOMAIN}/cart`,

@@ -276,3 +276,6 @@ body {
     margin-bottom: 1rem;
 }
 
+.page-holder {
+    overflow: hidden;
+}

@@ -1,5 +1,4 @@
-<%- include("./partialsAdmin/sidebar") %>
-<div class="col-12 col-sm-6 col-md-8 col-lg-10 crud-page py-5 px-5">
+<div class="col-12 col-sm-6 col-md-8 col-lg-10 py-5 px-5">
 
     <div class="table-control">
         <a href="/admin/manageUsers/createUser" class="btn btn-primary mb-2" style="float: right">Add new user</a>
@@ -14,8 +13,8 @@
                     <th scope="col">Actions</th>
                 </tr>
             </thead>
-            <% userInfo.forEach((user,index)=> {%>
             <tbody>
+                <% userInfo.forEach((user,index)=> {%>
                 <tr>
                     <td><%= index + 1 %></th>
                     <td><%= user.email %></td>
@@ -28,8 +27,8 @@
                         <a class="btn btn-info " href="/admin/manageUsers/deleteUser/<%- user._id %>">Delete</a>
                     </td>
                 </tr>
+                <% }) %>
             </tbody>
-            <% }) %>
         </table>
     </div>
 </div>

@@ -2,10 +2,12 @@ const User = require("../models/user.model");
 const Coupons = require('../models/coupon.model')
 const Category = require('../models/category.model')
 const randomCode = require('../utils/randomCode');
+const config = require('../config/stripe/secretKey.config')
 const {
   Schema
 } = require("mongoose");
 const bcrypt = require("bcrypt");
+const stripe = require('stripe')(config.stripe.secretKey)
 
 async function renderManageUserPage(req, res) {
   try {
@@ -105,7 +107,8 @@ async function renderManageCoupons(req, res) {
   try {
     const coupons = await Coupons.find();
     res.render('admin/manageCoupons', {
-      coupons
+      coupons,
+      layout: 'layouts/layout_seller',
     })
   } catch (err) {
     return res.status(500).json({
@@ -118,7 +121,8 @@ async function renderCreateCoupon(req, res) {
   try {
     const categories = await Category.find()
     res.render('admin/createCoupon', {
-      categories
+      categories,
+      layout: 'layouts/layout_seller',
     })
   } catch (err) {
     return res.status(500).json({
@@ -176,9 +180,29 @@ async function createCoupon(req, res) {
         active: false
       });
       await coupon.save();
+
+      let couponCodeStripe
+
+      const couponStripe = await stripe.coupons.create({
+        currency: 'usd',
+        percent_off: req.body.amount,
+        duration: 'repeating',
+        duration_in_months: 3,
+      });
+
+      if (couponStripe) {
+        couponCodeStripe = await stripe.coupons.retrieve(
+          couponStripe.id
+        );
+      }
+
+      const promotionCode = await stripe.promotionCodes.create({
+        coupon: couponCodeStripe.id,
+        code: code
+      });
     }
 
-    res.redirect('http://localhost:8080/admin/manageCoupons')
+    res.redirect('/admin/manageCoupons')
   } catch (err) {
     return res.status(500).json({
       msg: err.message
@@ -195,13 +219,15 @@ async function renderUpdateCoupon(req, res) {
       })
       res.render('admin/updateCoupon', {
         coupon,
-        category
+        category,
+        layout: 'layouts/layout_seller',
       })
     } else {
       const category = 0
       res.render('admin/updateCoupon', {
         coupon,
-        category
+        category,
+        layout: 'layouts/layout_seller',
       })
     }
 
@@ -258,7 +284,7 @@ async function updateCoupon(req, res) {
       active,
       description
     })
-    res.redirect('http://localhost:8080/admin/manageCoupons/')
+    res.redirect('/admin/manageCoupons/')
 
   } catch (err) {
     return res.status(500).json({
@@ -270,7 +296,7 @@ async function updateCoupon(req, res) {
 async function deleteCoupon(req, res) {
   try {
     await Coupons.findByIdAndDelete(req.params.id)
-    res.redirect('http://localhost:8080/admin/manageCoupons')
+    res.redirect('/admin/manageCoupons')
   } catch (err) {
     return res.status(500).json({
       msg: err.message

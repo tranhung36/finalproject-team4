@@ -25,9 +25,11 @@
   width: 100%;
   height: 100%;
 }
+.main-sidebar .sidebar__main .sidebar__control>ul>li a {
+  text-decoration: none;
+}
 
 .main-header ul li a, .main-header ul li a > i {
-  text-decoration: none;
   padding: 8px 16px;
   color: rgba(0, 0, 0, 0.6);
 }
@@ -36,15 +38,31 @@
   color: rgba(0, 0, 0, 0.8);
 }
 
+#orders {
+  margin-left: auto;
+}
+
+body>div.row.no-gutters>div {
+  margin-left: auto;
+}
+
 .main-sidebar {
-  width: 250px;
   position: fixed;
+  height: 100%;
+  overflow: auto;
+  top: 0;
   left: 0;
   background-color: #343a40;
 }
 
+body>div.row.no-gutters>aside {
+  position: fixed;
+  height: 100%;
+}
+
 .main-sidebar p {
   color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 0;
 }
 
 .main-sidebar .sidebar__info {
@@ -53,6 +71,7 @@
 }
 
 .main-sidebar .sidebar__info a {
+  text-decoration: none;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -72,8 +91,8 @@
 
 .main-sidebar .sidebar__main {
   padding: 0 8px;
-  height: 100vh;
 }
+
 
 .main-sidebar .sidebar__main .sidebar__admin-info {
   display: -webkit-box;
@@ -100,6 +119,7 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  justify-content: center;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
@@ -130,7 +150,6 @@
   height: 38px;
   -webkit-box-flex: 1;
       -ms-flex: 1;
-          flex: 1;
 }
 
 .main-sidebar .sidebar__main .sidebar__search .search-icon button {
@@ -144,7 +163,8 @@
 }
 
 .main-sidebar .sidebar__main .sidebar__control {
-  width: 234px;
+  display: flex;
+  justify-content: center;
   margin: 8px auto 0;
 }
 
@@ -225,7 +245,6 @@
 }
 
 .content-wrapper .content-header {
-  margin-left: 250px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -267,7 +286,6 @@
 }
 
 .content-wrapper .shop-info {
-  margin-left: 250px;
   padding: 15px 24px;
   display: -ms-grid;
   display: grid;
@@ -322,7 +340,7 @@
 }
 
 .content-wrapper .shop-info__block .box-info__header p:last-child {
-  ffont-size: 25px;
+  font-size: 25px;
   margin-bottom: 10px;
 }
 
@@ -455,10 +473,10 @@
   font-weight: bold;
 }
 
-.crud-page {
+/* .crud-page {
   margin-left: 250px;
   min-height: 100vh;
-}
+} */
 
 .crud-page .table-control {
   padding-top: 50px;

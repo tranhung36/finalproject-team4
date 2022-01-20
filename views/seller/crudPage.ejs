@@ -1,4 +1,4 @@
-<div class="container col-xl-10 crud-page">
+<div class="col-12 col-sm-6 col-md-8 col-lg-10 crud-page py-5 px-5">
 
     <div class="table-control">
         <a href="/seller/create-product" class="btn btn-primary mb-2" style="float: right">Thêm mới</a>
@@ -13,8 +13,8 @@
                     <th scope="col">Xử lí</th>
                 </tr>
             </thead>
-            <% productByUserID.forEach((product,index)=> {%>
             <tbody>
+                <% productByUserID.forEach((product,index)=> {%>
                 <tr>
                     <td><%- index + 1 %></th>
                     <td><img src="../../images/<%- product.thumbnail %>" alt=""></td>
@@ -28,8 +28,8 @@
                             href="/seller/delete-product/<%- product.slug %>.<%- product._id %>">Delete</a>
                     </td>
                 </tr>
+                <% }) %>
             </tbody>
-            <% }) %>
         </table>
     </div>
 </div>

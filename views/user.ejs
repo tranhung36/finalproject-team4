@@ -1,6 +1,6 @@
 <!-- USER FORM -->
 <div class="container emp-profile">
-  <form method="post" action="/user/<%= user._id%>">
+  <form method="POST" action="/user/<%= userInfo %>">
     <div class="row">
       <div class="col-md-4"></div>
       <div class="col-md-6">
@@ -76,6 +76,7 @@
                         type="text"
                         class="form-control"
                         id="firstName"
+                        name="first_name"
                         placeholder="<%= user.first_name %>"
                       />
                     </div>
@@ -87,6 +88,7 @@
                         type="text"
                         class="form-control"
                         id="lastName"
+                        name="last_name"
                         placeholder="<%= user.last_name %>"
                       />
                     </div>

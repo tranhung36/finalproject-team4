@@ -18,16 +18,17 @@ async function changeProfile (req, res) {
     try {
         //get change input
         const {
-            firstName,
-            lastName
+            first_name,
+            last_name
         } = req.body;
 
         //filter
         const id = req.params.id;
         const filter = {_id: id}
         //change
-        const update = {first_name: firstName, last_name: lastName}
+        const update = {first_name: first_name, last_name: last_name}
         console.log(req.body);
+        console.log(update);
         //update
         await Profile.findOneAndUpdate( filter, update, {new: true});
         

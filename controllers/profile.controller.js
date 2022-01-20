@@ -14,32 +14,32 @@ async function getProfile(req, res) {
   }
 }
 
-async function changeProfile (req, res) {
-    try {
-        //get change input
-        const {
-            first_name,
-            last_name
-        } = req.body;
+async function changeProfile(req, res) {
+  try {
+    //get change input
+    const { first_name, last_name } = req.body;
 
-        //filter
-        const id = req.params.id;
-        const filter = {_id: id}
-        //change
-        const update = {first_name: first_name, last_name: last_name}
-        console.log(req.body);
-        console.log(update);
-        //update
-        await Profile.findOneAndUpdate( filter, update, {new: true});
-        
-      } catch (err) {
-        return res.json({
-          msg: err.message,
-        });
-      }
+    //filter
+    const id = req.params.id;
+    const filter = { _id: id };
+    //change
+    const update = { first_name: first_name, last_name: last_name };
+    console.log(req.body);
+    console.log(update);
+    //update
+    await Profile.findOneAndUpdate(filter, update, { new: true });
+    res.writeHead(303, {
+        Location: req.headers.referer,
+      })
+      .end();
+  } catch (err) {
+    return res.json({
+      msg: err.message,
+    });
+  }
 }
 
 module.exports = {
   getProfile,
-  changeProfile
+  changeProfile,
 };

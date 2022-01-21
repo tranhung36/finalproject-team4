@@ -41,13 +41,19 @@ async function show(req, res, next) {
   try {
     const product = await Product.findOne({
       slug: req.params.slug,
-    });
+    }).populate({
+      path: 'categoryId'
+    }).exec();
 
     const rateByUsers = await Rate.find({
       productId: product._id
     }).populate({
       path: 'userId'
     }).exec()
+
+    const productsByCategory = await Product.find({
+      categoryId: product.categoryId
+    })
 
     if (!product) {
       return res.render("error", {
@@ -59,7 +65,8 @@ async function show(req, res, next) {
     res.render("products/detail", {
       title: "Product",
       product,
-      rateByUsers
+      rateByUsers,
+      productsByCategory
     });
   } catch (error) {
     next(error);

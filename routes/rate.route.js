@@ -1,12 +1,13 @@
 const express = require('express')
 const router = express.Router()
 const {
-    myOrders
-} = require('../controllers/profile.controller')
+    ratingHandle
+} = require('../controllers/rate.controller')
 const {
     verifyToken
 } = require('../middleware/auth.middleware')
 
-//follow bill
-router.get('/', verifyToken, myOrders)
+
+router.post('/:id', verifyToken, ratingHandle)
+
 module.exports = router;

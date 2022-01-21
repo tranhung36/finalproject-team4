@@ -93,40 +93,25 @@
         <div class="p-4 p-lg-5 bg-white">
           <div class="row">
             <div class="col-lg-8">
+              <% if (rateByUsers.length) { %>
+              <% rateByUsers.forEach(user => { %>
               <div class="d-flex mb-3">
                 <div class="flex-shrink-0"><img class="rounded-circle" src="img/customer-1.png" alt="" width="50" />
                 </div>
                 <div class="ms-3 flex-shrink-1">
-                  <h6 class="mb-0 text-uppercase">Jason Doe</h6>
-                  <p class="small text-muted mb-0 text-uppercase">20 May 2020</p>
+                  <h6 class="mb-0 text-uppercase"><%= `${user.userId.first_name} ${user.userId.last_name}` %></h6>
+                  <p class="small text-muted mb-0 text-uppercase">
+                    <%= user.createdAt.toISOString().replace(/T/, ' ').replace(/\..+/, '') %></p>
                   <ul class="list-inline mb-1 text-xs">
+                    <% for(let i = 1; i <= user.star; i++) { %>
                     <li class="list-inline-item m-0"><i class="fas fa-star text-warning"></i></li>
-                    <li class="list-inline-item m-0"><i class="fas fa-star text-warning"></i></li>
-                    <li class="list-inline-item m-0"><i class="fas fa-star text-warning"></i></li>
-                    <li class="list-inline-item m-0"><i class="fas fa-star text-warning"></i></li>
-                    <li class="list-inline-item m-0"><i class="fas fa-star-half-alt text-warning"></i></li>
+                    <% } %>
                   </ul>
-                  <p class="text-sm mb-0 text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-                    eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                  <p class="text-sm mb-0 text-muted"><%= user.comment %></p>
                 </div>
               </div>
-              <div class="d-flex">
-                <div class="flex-shrink-0"><img class="rounded-circle" src="img/customer-2.png" alt="" width="50" />
-                </div>
-                <div class="ms-3 flex-shrink-1">
-                  <h6 class="mb-0 text-uppercase">Jane Doe</h6>
-                  <p class="small text-muted mb-0 text-uppercase">20 May 2020</p>
-                  <ul class="list-inline mb-1 text-xs">
-                    <li class="list-inline-item m-0"><i class="fas fa-star text-warning"></i></li>
-                    <li class="list-inline-item m-0"><i class="fas fa-star text-warning"></i></li>
-                    <li class="list-inline-item m-0"><i class="fas fa-star text-warning"></i></li>
-                    <li class="list-inline-item m-0"><i class="fas fa-star text-warning"></i></li>
-                    <li class="list-inline-item m-0"><i class="fas fa-star-half-alt text-warning"></i></li>
-                  </ul>
-                  <p class="text-sm mb-0 text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-                    eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                </div>
-              </div>
+              <% }) %>
+              <% } %>
             </div>
           </div>
         </div>

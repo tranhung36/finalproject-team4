@@ -20,6 +20,10 @@ const orderItemSchema = new Schema({
         type: Boolean,
         default: false
     },
+    isRate: {
+        type: Boolean,
+        default: false
+    },
     quantity: {
         type: Number,
         default: 1,

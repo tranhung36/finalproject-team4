@@ -9,6 +9,7 @@ const sellerRoute = require('./seller.route')
 const cart = require('../middleware/cartItem.middleware')
 const searchRoute = require('./search.route')
 const purchaseRoute = require('./purchase.route')
+const rateRoute = require('./rate.route')
 const {
     checkAuth,
     checkRole
@@ -26,6 +27,7 @@ router.use('/seller', sellerRoute)
 router.use('/purchase', purchaseRoute)
 router.use('/search', searchRoute)
 router.use('/admin', adminRoute)
+router.use('/rate', rateRoute)
 router.use('/', siteRoute)
 
 

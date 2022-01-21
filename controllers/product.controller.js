@@ -1,5 +1,6 @@
 const Product = require("../models/product.model");
 const Category = require("../models/category.model");
+const Rate = require('../models/rate.model')
 
 async function index(req, res, next) {
   try {
@@ -42,6 +43,12 @@ async function show(req, res, next) {
       slug: req.params.slug,
     });
 
+    const rateByUsers = await Rate.find({
+      productId: product._id
+    }).populate({
+      path: 'userId'
+    }).exec()
+
     if (!product) {
       return res.render("error", {
         message: "Product not found",
@@ -52,9 +59,11 @@ async function show(req, res, next) {
     res.render("products/detail", {
       title: "Product",
       product,
+      rateByUsers
     });
   } catch (error) {
     next(error);
+    console.log(error)
   }
 }
 

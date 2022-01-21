@@ -1,5 +1,6 @@
 const Profile = require("../models/user.model");
 const Order = require('../models/order.model')
+const Rate = require('../models/rate.model')
 const userInfo = require('../services/user.service')
 
 async function getProfile(req, res) {
@@ -60,8 +61,9 @@ async function changeProfile(req, res) {
 
 async function myOrders(req, res, next) {
   try {
+    const user = userInfo(req)
     const orders = await Order.find({
-      userId: userInfo(req).user_id,
+      userId: user.user_id,
       ordered: true
     }).populate({
       path: 'orderItems',
@@ -79,8 +81,14 @@ async function myOrders(req, res, next) {
         ]
       }
     }).exec()
+    const rateByUser = await Rate.aggregate([{
+      $group: {
+        _id: '$productId'
+      }
+    }]).exec()
     res.render('purchase/purchase', {
-      orders
+      orders,
+      rateByUser
     })
   } catch (error) {
     console.log(error)

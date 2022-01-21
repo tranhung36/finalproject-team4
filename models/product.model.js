@@ -39,7 +39,8 @@ const productSchema = new Schema({
     userID: {
         type: Schema.Types.ObjectId,
         ref: 'User'
-    }
+    },
+    rating: Number
 }, {
     timestamps: true
 })

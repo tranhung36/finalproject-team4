@@ -16,7 +16,7 @@
       <a href="">My Purchase</a>
     </div>
   </div>
-  <div class="w-75">
+  <div id="tabs" class="w-75">
     <ul class="nav nav-tabs" onclick="onClick()">
       <li class="nav-item col text-center">
         <a class="nav-link" aria-current="page" href="#">Tất cả</a>
@@ -36,7 +36,20 @@
       <li class="nav-item col text-center">
         <a class="nav-link" href="#">Đã Hủy</a>
       </li>
+      <li class="nav-item col text-center">
+        <a id="rateTab" class="nav-link" href="#rate-tab">Đã Đánh Giá</a>
+      </li>
     </ul>
     <%- include('./product.ejs') %>
   </div>
 </div>
+
+<script>
+  $(function () {
+    $("#tabs").tabs();
+  });
+
+  $("#rateTab").on("click", function () {
+    $("#rate-tab").load("./rating.ejs");
+  });
+</script>

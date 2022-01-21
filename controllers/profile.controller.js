@@ -29,9 +29,8 @@ async function changeProfile(req, res) {
     //update
     await Profile.findOneAndUpdate(filter, update, { new: true });
     res.writeHead(303, {
-        Location: req.headers.referer,
-      })
-      .end();
+      Location: req.headers.referer,
+    }).end();
   } catch (err) {
     return res.json({
       msg: err.message,

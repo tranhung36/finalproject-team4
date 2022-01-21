@@ -280,6 +280,7 @@ async function manageOrder(req, res, next) {
                 },
             },
         ]).exec()
+        console.log(orderItems)
         res.render('seller/manage_orders', {
             layout: 'layouts/layout_seller',
             orderItems

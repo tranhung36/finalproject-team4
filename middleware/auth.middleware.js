@@ -2,6 +2,7 @@ const {
   verifyJWT
 } = require('../utils/jwt.util');
 const decodeJWT = require('jwt-decode')
+const User = require('../models/user.model')
 
 const verifyToken = (req, res, next) => {
   const token = req.cookies['access_token']
@@ -18,19 +19,33 @@ const verifyToken = (req, res, next) => {
   next()
 };
 
-const checkAuth = (req, res, next) => {
+const checkAuth = async (req, res, next) => {
   const token = req.cookies['access_token']
   if (token) {
-    const user = decodeJWT(token)
-    res.locals.userInfo = user.user_id
+    const decoded = decodeJWT(token)
+    const user = await User.findOne({
+      _id: decoded.user_id
+    })
+    res.locals.userInfo = user
     next()
   } else {
     next()
   }
 }
 
+const checkRole = (req, res, next) => {
+  const token = req.cookies['access_token']
+  if (token) {
+    const user = decodeJWT(token)
+    res.locals.role = user.role
+    next()
+  } else {
+    next()
+  }
+}
 
 module.exports = {
   verifyToken,
-  checkAuth
+  checkAuth,
+  checkRole
 };

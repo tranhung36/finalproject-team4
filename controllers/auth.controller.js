@@ -69,7 +69,8 @@ async function login(req, res) {
     if (user && (await bcrypt.compare(password, user.password))) {
       // Create token
       const token = signJWT({
-        user_id: user._id
+        user_id: user._id,
+        role: user.role
       }, {
         expiresIn: "1h",
       });

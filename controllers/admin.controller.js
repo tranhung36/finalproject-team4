@@ -11,7 +11,11 @@ const stripe = require('stripe')(config.stripe.secretKey)
 
 async function renderManageUserPage(req, res) {
   try {
-    let userInfo = await User.find();
+    let userInfo = await User.find({
+      role: {
+        $nin: ['Admin']
+      }
+    });
 
     res.render("admin/ManageUserPage", {
       userInfo,

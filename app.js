@@ -25,8 +25,8 @@ app.set('layout', 'layouts/layout')
 app.use(expressLayouts)
 app.use(fileupload());
 app.use(methodOverride('_method'));
-// app.use(logger('dev'));
-// app.use(morgan('combined'))
+app.use(logger('dev'));
+app.use(morgan('combined'))
 app.use(express.json());
 app.use(express.urlencoded({
   extended: false

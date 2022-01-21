@@ -16,6 +16,10 @@ const orderItemSchema = new Schema({
         type: Boolean,
         default: false
     },
+    status: {
+        type: Boolean,
+        default: false
+    },
     quantity: {
         type: Number,
         default: 1,

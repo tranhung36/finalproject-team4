@@ -10,18 +10,23 @@ const cart = require('../middleware/cartItem.middleware')
 const searchRoute = require('./search.route')
 const purchaseRoute = require('./purchase.route')
 const {
-    checkAuth
+    checkAuth,
+    checkRole
 } = require('../middleware/auth.middleware')
+const adminRoute = require('./admin.route')
 
 router.use('*', checkAuth)
+router.use('*', checkRole)
 router.use('*', cart)
 router.use('/cart', cartRoute)
 router.use('/products', productRoute)
 router.use('/category', categoryRoute)
 router.use('/user', userRoute)
-router.use('/sellerPage', sellerRoute)
-router.use('/', siteRoute)
+router.use('/seller', sellerRoute)
 router.use('/purchase', purchaseRoute)
 router.use('/search', searchRoute)
+router.use('/admin', adminRoute)
+router.use('/', siteRoute)
+
 
 module.exports = router

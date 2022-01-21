@@ -1,7 +1,5 @@
-const { render } = require('ejs')
 const express = require('express')
 const router = express.Router()
-const sellerController = require('../controllers/seller.controller')
 const {
     renderSellerPage,
     renderCRUDPage,
@@ -10,18 +8,26 @@ const {
     deleteProduct,
     renderUpdateProduct,
     updateProduct,
+    manageOrder
 } = require('../controllers/seller.controller')
+const {
+    verifyToken
+} = require('../middleware/auth.middleware')
 
-router.get('/', renderSellerPage)
+// express().use(verifyToken)
 //read
-router.get('/crud-page', renderCRUDPage)
+router.get('/my-products', verifyToken, renderCRUDPage)
 //create
-router.get('/crud-page/createProduct', renderCreateProduct)
-router.post('/crud-page/createProduct', createProduct)
+router.get('/create-product', renderCreateProduct)
+router.post('/create-product', createProduct)
 //delete
-router.get('/crud-page/deleteProduct/:slug.:id', deleteProduct)
+router.get('/delete-product/:slug.:id', deleteProduct)
 //update
-router.get('/crud-page/updateProduct/:slug.:id', renderUpdateProduct)
-router.put('/crud-page/updateProduct/:slug.:id', updateProduct)
+router.get('/update-product/:slug.:id', renderUpdateProduct)
+router.put('/update-product/:slug.:id', updateProduct)
+router.get('/', renderSellerPage)
+
+router.get('/manage-orders', verifyToken, manageOrder)
+
 
 module.exports = router

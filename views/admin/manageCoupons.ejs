@@ -1,0 +1,42 @@
+<div class="col-12 col-sm-6 col-md-8 col-lg-10 py-5 px-5 content-wrapper">
+    <div class="table-responsive">
+        <a href="/admin/manageCoupons/CreateCoupon" class="btn btn-primary mb-2" style="float: right">Thêm mới</a>
+        <table class="table table-striped table-hover table-bordered paginated">
+            <thead>
+                <tr>
+                    <th scope="col">STT</th>
+                    <th scope="col">Code</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Discount</th>
+                    <th scope="col">Max</th>
+                    <th scope="col">ValidFrom</th>
+                    <th scope="col">ValidTo</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% coupons.forEach((coupon,index)=> {%>
+                <% const validFrom = new Date(coupon.validFrom) %>
+                <% const validTo = new Date(coupon.validTo) %>
+                <tr>
+                    <td><%= index + 1 %></td>
+                    <td><%= coupon.code %></td>
+                    <td><%= coupon.name %></td>
+                    <td><%= coupon.amount %></td>
+                    <td><%= coupon.maxDiscount %></td>
+                    <td><%= validFrom.toLocaleString() %></td>
+                    <td><%= validTo.toLocaleString() %></td>
+                    <td><%= coupon.active %></td>
+                    <td>
+                        <a href="/admin/manageCoupons/UpdateCoupon/<%- coupon._id  %> " class="btn btn-primary"
+                            href="">Update</a>
+                        <a href="/admin/manageCoupons/DeleteCoupon/<%- coupon._id  %> "
+                            class="btn btn-info js-delete-alert" href="">Delete</a>
+                    </td>
+                </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+</div>

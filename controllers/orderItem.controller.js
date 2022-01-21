@@ -2,6 +2,10 @@ const OrderItem = require('../models/orderItem.model')
 const Product = require('../models/product.model')
 const Order = require('../models/order.model')
 const userInfo = require('../services/user.service')
+const Coupon = require('../models/coupon.model')
+const {
+    orderInfo
+} = require('../services/order.service')
 
 async function cart(req, res, next) {
     try {
@@ -16,16 +20,86 @@ async function cart(req, res, next) {
                 model: 'Product'
             }
         }).exec()
+
         if (order) {
             const totalItem = order.orderItems.reduce((total, item) => {
                 return total += item.quantity * item.productId.price
             }, 0)
 
+            // Start p.nguyen add coupon
+            const coupons = await Coupon.find({
+                active: true
+            })
+            const findCoupon = await Coupon.find({
+                code: req.query.couponCode
+            })
+
+            let notice
+            let priceAfterDiscount
+            let discount
+            if (findCoupon.length > 0) {
+                const today = new Date()
+
+                findCoupon.map(coupon => {
+
+                    const validTo = new Date(coupon.validTo)
+                    const validFrom = new Date(coupon.validFrom)
+                    if (today >= validFrom && today <= validTo && coupon.active === true) {
+                        notice = 'Coupon Has Been Applied'
+
+                        if (coupon.byCategory == null) {
+                            discount = totalItem * coupon.amount / 100
+
+                            if (discount > coupon.maxDiscount && Number(coupon.maxDiscount) != 0) {
+
+                                discount = Number(coupon.maxDiscount)
+                                priceAfterDiscount = totalItem - discount
+
+                            } else {
+                                priceAfterDiscount = totalItem - discount
+                            }
+                        } else {
+
+                            const findDiscountProduct = order.orderItems.filter(product => product.productId.categoryId == coupon.byCategory)
+                            const findRestProduct = order.orderItems.filter(product => product.productId.categoryId != coupon.byCategory)
+
+                            const priceOfDiscountProduct = findDiscountProduct.reduce((a, b) => {
+                                return a += b.quantity * b.productId.price
+                            }, 0)
+
+                            const priceOfRestProduct = findRestProduct.reduce((a, b) => {
+                                return a += b.quantity * b.productId.price
+                            }, 0)
+
+                            discount = priceOfDiscountProduct * coupon.amount / 100
+
+                            if (discount > coupon.maxDiscount && Number(coupon.maxDiscount) != 0) {
+
+                                discount = coupon.maxDiscount
+                                priceAfterDiscount = priceOfDiscountProduct + priceOfRestProduct - discount
+
+                            } else {
+                                priceAfterDiscount = priceOfDiscountProduct + priceOfRestProduct - discount
+                            }
+                        }
+                    } else {
+                        notice = 'Invalid Coupon'
+                    }
+                })
+            }
+
+            // End add coupon
+
             res.render('products/cart', {
                 order,
                 orderItems: order.orderItems,
-                totalItem
+                totalItem,
+                coupons,
+                price: priceAfterDiscount,
+                notice,
+                discount
             })
+
         } else {
             res.render('products/cart_empty')
         }
@@ -41,11 +115,13 @@ async function addToCart(req, res, next) {
         const item = await Product.findOne({
             slug: req.params.slug
         })
+
         orderItem = await OrderItem.findOne({
             productId: item._id,
             ordered: false,
             userId: user.user_id
         })
+
         if (!orderItem) {
             orderItem = await OrderItem.create({
                 productId: item._id,
@@ -75,6 +151,7 @@ async function addToCart(req, res, next) {
                 orderItems: [orderItem]
             })
         }
+
         res.writeHead(303, {
             Location: req.headers.referer
         }).end()
@@ -148,9 +225,10 @@ async function removeItemFromCart(req, res, next) {
     }
 }
 
+
 module.exports = {
     cart,
     addToCart,
     removeItemSingleFromCart,
-    removeItemFromCart
+    removeItemFromCart,
 }

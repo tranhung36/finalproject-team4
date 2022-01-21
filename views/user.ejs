@@ -2,7 +2,9 @@
 <div class="container emp-profile">
   <form method="POST" action="/user/<%= userInfo %>">
     <div class="row">
-      <div class="col-md-4"></div>
+      <div class="col-md-4">
+
+      </div>
       <div class="col-md-6">
         <div class="profile-head">
           <h5>Hello <%= user.first_name + " " + user.last_name %></h5>
@@ -19,20 +21,14 @@
         <div class="profile-img">
           <img
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog"
-            alt=""
-          />
+            alt="" />
           <div class="file btn btn-lg btn-primary">
             Change Photo
-            <input type="file" name="file" onchange="readURL(this)"/>
+            <input type="file" name="file" />
           </div>
         </div>
         <div class="tab-content profile-tab" id="myTabContent">
-          <div
-            class="tab-pane fade show active"
-            id="home"
-            role="tabpanel"
-            aria-labelledby="home-tab"
-          >
+          <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
             <div class="row">
               <div class="col-md-6">
                 <label>Name</label>
@@ -94,16 +90,12 @@
                     </div>
                   </div>
                 </div>
+
               </div>
               <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                 <div class="form-group">
                   <label for="phone">Change Phone</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="phone"
-                    placeholder="Enter phone number"
-                  />
+                  <input type="text" class="form-control" id="phone" placeholder="Enter phone number">
                 </div>
               </div>
             </div>
@@ -114,31 +106,15 @@
               <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                 <div class="form-group">
                   <label for="address">Change Address</label>
-                  <input
-                    type="name"
-                    class="form-control"
-                    id="address"
-                    placeholder="Enter Address"
-                  />
+                  <input type="name" class="form-control" id="address" placeholder="Enter Address">
                 </div>
               </div>
             </div>
             <div class="row gutters">
               <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                 <div class="text-right">
-                  <a href="/"
-                    ><button type="button" class="btn btn-secondary">
-                      Cancel
-                    </button></a
-                  >
-                  <button
-                    type="submit"
-                    id="submit"
-                    name="submit"
-                    class="btn btn-primary"
-                  >
-                    Update
-                  </button>
+                  <a href="/"><button type="button" class="btn btn-secondary">Cancel</button></a>
+                  <button type="button" id="submit" name="submit" class="btn btn-primary">Update</button>
                 </div>
               </div>
             </div>
@@ -147,5 +123,7 @@
       </div>
     </div>
   </form>
-  <div class=""></div>
+  <div class="">
+
+  </div>
 </div>

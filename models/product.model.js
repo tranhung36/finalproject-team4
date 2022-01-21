@@ -37,13 +37,14 @@ const productSchema = new Schema({
         ref: 'category'
     },
     userID: {
-        type: String,
+        type: Schema.Types.ObjectId,
+        ref: 'User'
     }
 }, {
     timestamps: true
 })
 
-productSchema.pre('save', function(next) {
+productSchema.pre('save', function (next) {
     const slug = this.name.toLowerCase()
         .replace(/[^\w ]+/g, '')
         .replace(/ +/g, '-')

@@ -136,18 +136,7 @@ const sortProduct = (sort, searchData) => {
     })
 
 }
-
-loadSearchValue(document.querySelector('.key').innerText)
-
-// CRUD-page handle delete Button
-const btnDeleteProduct = document.querySelector('.delete-product')
-if (btnDeleteProduct) {
-    btnDeleteProduct.onclick = (e) => {
-        const result = confirm("Bạn có muốn xóa không?");
-        if (result) {
-            alert("Xóa thành công");
-        } else {
-            e.preventDefault()
-        }
-    }
+if(document.querySelector('.key')){
+    loadSearchValue(document.querySelector('.key').innerText)
 }
+

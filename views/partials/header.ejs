@@ -50,7 +50,11 @@
                             <i class="fas fa-user me-1 text-gray fw-normal"></i>
                         </a>
                         <div class="dropdown-menu mt-3 shadow-sm" aria-labelledby="pagesDropdown">
-                            <a class="dropdown-item border-0 transition-link" href="/sellerPage">Dashboard</a>
+                            <% if(role === 'User') {%>
+                            <a class="dropdown-item border-0 transition-link" href="/purchase">My Order</a>
+                            <%} else {%>
+                            <a class="dropdown-item border-0 transition-link" href="/seller">Dashboard</a>
+                            <% }%>
                             <a class="dropdown-item border-0 transition-link" href="/user/<%= userInfo %>">Edit
                                 Profile</a>
                             <a class="dropdown-item border-0 transition-link" href="/logout">Log Out</a>

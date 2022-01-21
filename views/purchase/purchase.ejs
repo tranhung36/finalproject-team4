@@ -3,16 +3,16 @@
     <div class="d-flex">
       <img src="/img/category-2.jpg" class="avartar" alt="" />
       <div class="ms-4 mt-3">
-        <span class="fw-bold">Thiên Phan</span>
+        <span class="fw-bold text-capitalize"><%= `${userInfo.first_name} ${userInfo.last_name}` %></span>
         <div>
           <i class="fas fa-pencil-alt"></i>
-          <a href="/user/<%= userInfo %>">Edit profile</a>
+          <a href="#">Edit profile</a>
         </div>
       </div>
     </div>
     <hr style="border: 1px solid yellow" />
     <div class="d-flex flex-column">
-      <a href="/user/<%= userInfo %>">My Account</a>
+      <a href="#">My Account</a>
       <a href="">My Purchase</a>
     </div>
   </div>
@@ -37,7 +37,6 @@
         <a class="nav-link" href="#">Đã Hủy</a>
       </li>
     </ul>
-    <%- include('./product.ejs') %> <%- include('./product.ejs') %> <%-
-    include('./noBill.ejs') %>
+    <%- include('./product.ejs') %>
   </div>
 </div>

@@ -5,22 +5,23 @@ const userInfo = require('../services/user.service')
 
 async function getProfile(req, res) {
   try {
-    const id = req.params.id;
+    const userId = userInfo(req)
     const user = await Profile.findOne({
-      _id: id
+      _id: userId.user_id
     });
     // console.log({user});
     const abc = {
       name: "asdfasf",
       age: 18
     }
-    res.render("user", {
+    res.render("users/user_profile", {
       user: user,
     });
   } catch (err) {
     return res.status(500).json({
       msg: err.message,
     });
+    console.log(err)
   }
 }
 

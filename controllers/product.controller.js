@@ -1,80 +1,109 @@
 const Product = require("../models/product.model");
-const Category = require("../models/category.model");
+const {
+	Category,
+	ChildCategory
+} = require('../models/category.model')
 const Rate = require('../models/rate.model')
 
 async function index(req, res, next) {
-  try {
-    let perPage = 12; // số lượng sản phẩm xuất hiện trên 1 page
-    let page = req.query.page || 1;
-    let sortType = req.query.show;
+	try {
+		let perPage = 12; // số lượng sản phẩm xuất hiện trên 1 page
+		let page = req.query.page || 1;
+		let sortType = req.query.show;
 
 
-    const url = !sortType ? "/products?" : "/products?show=" + sortType + "&";
+		const url = !sortType ? "/products?" : "/products?show=" + sortType + "&";
 
 
-    let sortBy = sortType === "priceAsc" ? "price" : sortType === "priceDesc" ? "-price" : ""
+		let sortBy = sortType === "priceAsc" ? "price" : sortType === "priceDesc" ? "-price" : ""
 
-    let products = await Product.find()
-      .skip(perPage * page - perPage)
-      .limit(perPage)
-      .sort(sortBy)
+		let products = await Product.find()
+			.skip(perPage * page - perPage)
+			.limit(perPage)
+			.sort(sortBy)
 
-    let count = await Product.countDocuments();
+		let count = await Product.countDocuments();
 
-    let categories = await Category.find();
-    res.render("products/shop", {
-      products, // sản phẩm trên một page
-      current: page, // page hiện tại
-      pages: Math.ceil(count / perPage), // tổng số các page
-      count: count, // tổng sản phẩm
-      categories: categories, // loại danh mục
-      url: url,
-    });
-  } catch (err) {
-    return res.status(500).json({
-      msg: err.message,
-    });
-  }
+		let categories = await ChildCategory.aggregate([{
+				$group: {
+					_id: '$parentCategory',
+					category: {
+						$first: '$parentCategory'
+					},
+					subCategory: {
+						$push: {
+							name: '$name',
+							slug: '$slug'
+						}
+					}
+				}
+			},
+			{
+				$lookup: {
+					from: 'categories',
+					localField: 'category',
+					foreignField: '_id',
+					as: 'category'
+				}
+			},
+			{
+				$unwind: '$category'
+			}
+		]).exec()
+
+		res.render("products/shop", {
+			products, // sản phẩm trên một page
+			current: page, // page hiện tại
+			pages: Math.ceil(count / perPage), // tổng số các page
+			count: count, // tổng sản phẩm
+			categories, // loại danh mục
+			url: url,
+		});
+	} catch (err) {
+		return res.status(500).json({
+			msg: err.message,
+		});
+	}
 }
 
 async function show(req, res, next) {
-  try {
-    const product = await Product.findOne({
-      slug: req.params.slug,
-    }).populate({
-      path: 'categoryId'
-    }).exec();
+	try {
+		const product = await Product.findOne({
+			slug: req.params.slug,
+		}).populate({
+			path: 'categoryId'
+		}).exec();
 
-    const rateByUsers = await Rate.find({
-      productId: product._id
-    }).populate({
-      path: 'userId'
-    }).exec()
+		const rateByUsers = await Rate.find({
+			productId: product._id
+		}).populate({
+			path: 'userId'
+		}).exec()
 
-    const productsByCategory = await Product.find({
-      categoryId: product.categoryId
-    })
+		const productsByCategory = await Product.find({
+			categoryId: product.categoryId
+		})
 
-    if (!product) {
-      return res.render("error", {
-        message: "Product not found",
-        title: "Not Found",
-      });
-    }
+		if (!product) {
+			return res.render("error", {
+				message: "Product not found",
+				title: "Not Found",
+			});
+		}
 
-    res.render("products/detail", {
-      title: "Product",
-      product,
-      rateByUsers,
-      productsByCategory
-    });
-  } catch (error) {
-    next(error);
-    console.log(error)
-  }
+		res.render("products/detail", {
+			title: "Product",
+			product,
+			rateByUsers,
+			productsByCategory
+		});
+	} catch (error) {
+		next(error);
+		console.log(error)
+	}
 }
 
 module.exports = {
-  index,
-  show,
+	index,
+	show,
 };

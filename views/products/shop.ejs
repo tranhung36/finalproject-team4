@@ -25,55 +25,19 @@
         <!-- SHOP SIDEBAR-->
         <div class="col-lg-3 order-2 order-lg-1">
           <h5 class="text-uppercase mb-4">Categories</h5>
+          <% categories.forEach(cat => { %>
           <div class="py-2 px-4 bg-dark text-white mb-3">
-            <strong class="small text-uppercase fw-bold">Fashion &amp; Acc</strong>
+            <strong class="small text-uppercase text-white"><%= cat.category.name %></strong>
           </div>
           <ul class="list-unstyled small text-muted ps-lg-4 font-weight-normal">
             <!-- CATEGORY-->
-            <% for(let i = 0; i < categories.length; i++) { %>
+            <% cat.subCategory.forEach(subCat => { %>
             <li class="mb-2">
-              <a class="reset-anchor" href="/products?category=<%=categories[i].slug%>"><%=categories[i].name %></a>
+              <a class="reset-anchor" href="/products?category=<%= subCat.slug %>"><%= subCat.name %></a>
             </li>
-            <% } %>
+            <% }) %>
           </ul>
-          <!-- <div class="py-2 px-4 bg-light mb-3">
-            <strong class="small text-uppercase fw-bold">Health &amp; Beauty</strong>
-          </div>
-          <ul class="list-unstyled small text-muted ps-lg-4 font-weight-normal">
-            <li class="mb-2"><a class="reset-anchor" href="#!">Shavers</a></li>
-            <li class="mb-2"><a class="reset-anchor" href="#!">bags</a></li>
-            <li class="mb-2"><a class="reset-anchor" href="#!">Cosmetic</a></li>
-            <li class="mb-2"><a class="reset-anchor" href="#!">Nail Art</a></li>
-            <li class="mb-2">
-              <a class="reset-anchor" href="#!">Skin Masks &amp; Peels</a>
-            </li>
-            <li class="mb-2">
-              <a class="reset-anchor" href="#!">Korean cosmetics</a>
-            </li>
-          </ul>
-          <div class="py-2 px-4 bg-light mb-3">
-            <strong class="small text-uppercase fw-bold">Electronics</strong>
-          </div>
-          <ul class="list-unstyled small text-muted ps-lg-4 font-weight-normal mb-5">
-            <li class="mb-2">
-              <a class="reset-anchor" href="#!">Electronics</a>
-            </li>
-            <li class="mb-2">
-              <a class="reset-anchor" href="#!">USB Flash drives</a>
-            </li>
-            <li class="mb-2">
-              <a class="reset-anchor" href="#!">Headphones</a>
-            </li>
-            <li class="mb-2">
-              <a class="reset-anchor" href="#!">Portable speakers</a>
-            </li>
-            <li class="mb-2">
-              <a class="reset-anchor" href="#!">Cell Phone bluetooth headsets</a>
-            </li>
-            <li class="mb-2">
-              <a class="reset-anchor" href="#!">Keyboards</a>
-            </li>
-          </ul> -->
+          <% }) %>
           <h6 class="text-uppercase mb-4">Price range</h6>
           <div class="price-range pt-4 mb-5">
             <div id="range"></div>

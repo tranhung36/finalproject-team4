@@ -279,6 +279,11 @@ async function manageOrder(req, res, next) {
                     }
                 },
             },
+            {
+                $sort: {
+                    _id: 1
+                }
+            }
         ]).exec()
         console.log(orderItems)
         res.render('seller/manage_orders', {

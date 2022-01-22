@@ -21,6 +21,7 @@
     "jwt-decode": "^3.1.2",
     "method-override": "^3.0.0",
     "mongoose": "^6.1.4",
+    "slugify": "^1.6.5",
     "stripe": "^8.195.0"
   },
   "devDependencies": {

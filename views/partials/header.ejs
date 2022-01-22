@@ -47,7 +47,9 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" id="pagesDropdown" href="#" data-bs-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-user me-1 text-gray fw-normal"></i>
+                            <i class="fas fa-user me-1 text-gray text-capitalize fw-normal">
+                                <%= `${userInfo.first_name} ${userInfo.last_name}` %>
+                            </i>
                         </a>
                         <div class="dropdown-menu mt-3 shadow-sm" aria-labelledby="pagesDropdown">
                             <% if(role === 'User') {%>
@@ -55,7 +57,7 @@
                             <%} else {%>
                             <a class="dropdown-item border-0 transition-link" href="/seller">Dashboard</a>
                             <% }%>
-                            <a class="dropdown-item border-0 transition-link" href="/user/<%= userInfo %>">Edit
+                            <a class="dropdown-item border-0 transition-link" href="/user/profile">Edit
                                 Profile</a>
                             <a class="dropdown-item border-0 transition-link" href="/logout">Log Out</a>
                         </div>

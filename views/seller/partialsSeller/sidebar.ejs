@@ -2,13 +2,13 @@
     <div class="sidebar__info">
         <a href="/seller">
             <img src="/../images/admin-image.jpg" alt="">
-            <p>Welcome</p>
+            <p>Welcome <%= (role === 'Admin' ? role : 'Seller')  %></p>
         </a>
     </div>
     <div class="sidebar__main">
         <div class="sidebar__admin-info">
             <img src="/../images/user-admin.png" alt="">
-            <p>Phước Nguyên</p>
+            <p class="text-capitalize"><%= `${userInfo.first_name} ${userInfo.last_name}` %></p>
         </div>
         <div class="sidebar__search">
             <div class="search-field">
@@ -34,6 +34,9 @@
                     </a></li>
                 <li><a href="/admin/manageCoupons"><i class="fas fa-tags"></i>
                         <p>Quản lý khuyến mãi</i></p>
+                    </a></li>
+                <li><a href="/admin/manage/categories"><i class="fas fa-list-alt"></i>
+                        <p>Quản lý danh mục</i></p>
                     </a></li>
                 <% } %>
                 <li class="sidebar__control__inventory">

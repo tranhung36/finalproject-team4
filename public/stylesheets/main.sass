@@ -20,122 +20,152 @@
                     color: rgba(0, 0, 0, 0.8)
 
 .main-sidebar
-    width: 250px
     position: fixed
-    top: 70px
+    top: 0
     left: 0
-    background-color: #343a40
+    right: 0
+    bottom: 0
+    background-color: rgba(0, 0, 0, 0.4);
+    display: none
+    z-index: 100
+    &:open
+        display: flex
     p
         color: rgba(255,255,255,.8)
-    .sidebar__info
-        border-bottom: 1px solid #4b545c
-        padding: 13px 8px
-        a
-            display: flex
-            justify-content: space-evenly
-            align-items: center
-            img
-                width: 33px
-                height: 33px
-                border-radius: 50%
-    .sidebar__main
-        padding: 0 8px
-        height: 100vh
-        .sidebar__admin-info
-            display: flex
-            justify-content: space-evenly
-            align-items: center
-            padding: 13px 8px
-            margin: 0px 0 16px
+    .sidebar-content
+        display: block
+        position: relative
+        top: 0
+        width: 300px
+        background-color: #343a40
+        z-index: 1000
+        .sidebar__info
             border-bottom: 1px solid #4b545c
-            img
-                width: 33px
-                height: 33px
-                border-radius: 50%
-        .sidebar__search
-            display: flex
-            align-items: center
-            justify-content: center
-            .search-field
-                height: 38px
-                width: 194px
-                input
+            padding: 13px 24px
+            a
+                display: flex
+                justify-content: flex-start
+                align-items: center
+                img
+                    width: 33px
+                    height: 33px
+                    border-radius: 50%
+                    margin-right: 16px
+        .sidebar__main
+            padding: 0 8px
+            height: 100vh
+            .sidebar__admin-info
+                display: flex
+                justify-content: flex-start
+                align-items: center
+                padding: 13px 16px
+                margin: 0px 0 16px
+                border-bottom: 1px solid #4b545c
+                img
+                    width: 33px
+                    height: 33px
+                    border-radius: 50%
+                    margin-right: 16px
+            .sidebar__search
+                display: flex
+                align-items: center
+                justify-content: center
+                .search-field
+                    height: 38px
                     width: 100%
-                    height: 100%
-                    background-color: #3f474e
-                    color: #fff
-                    margin: 0
-                    border: none !important
-                    border-top-left-radius: 4px
-                    border-bottom-left-radius: 4px
-                    padding-left: 8px
-                    outline: none
-            .search-icon
-                height: 38px
-                flex: 1
-                button
-                    height: 100%
-                    width: 40px
-                    margin: 0
-                    border: unset !important
-                    border-top-right-radius: 4px
-                    border-bottom-right-radius: 4px
-                    cursor: pointer
-        .sidebar__control
-            width: 234px
-            margin: 8px auto 0
-            > ul
-                > li
-                    margin-bottom: 2px
-                    border-radius: 4px
-                    a
-                        display: flex
-                        justify-content: flex-start
-                        align-items: center
-                        color: #fff
-                        padding: 8px 16px
-                        &:hover
-                            background-color: #494e53
-                        &:active
-                            background-color: #494e53
-                        i
-                            margin-right: 10px
-                            color: #fff
-                        p
-                            width: 100%
-                            display: flex
-                            justify-content: space-between
-                            align-items: center
-                            i
-                                font-size: 14px
-                                
-            &__inventory
-                cursor: pointer
-                position: relative
-                a
-                    i   
-                        transition: transform ease-in-out .3s 
-                ul
-                    width: 100%
-                    display: none
-                    transition: all 0.5s ease-in-out
-                    li
+                    input
                         width: 100%
-                &:hover > ul i
-                    // position: absolute
-                    // display: block    
+                        height: 100%
+                        background-color: #3f474e
+                        color: #fff
+                        margin: 0
+                        border: none !important
+                        border-top-left-radius: 4px
+                        border-bottom-left-radius: 4px
+                        padding-left: 8px
+                        outline: none
+                .search-icon
+                    height: 38px
+                    flex: 1
+                    button
+                        height: 100%
+                        width: 40px
+                        margin: 0
+                        border: unset !important
+                        border-top-right-radius: 4px
+                        border-bottom-right-radius: 4px
+                        cursor: pointer
+            .sidebar__control
+                margin: 8px auto 0
+                > ul
+                    > li
+                        margin-bottom: 2px
+                        border-radius: 4px
+                        a
+                            display: flex
+                            justify-content: flex-start
+                            align-items: center
+                            color: #fff
+                            padding: 8px 16px
+                            &:hover
+                                background-color: #494e53
+                            &:active
+                                background-color: #494e53
+                            i
+                                margin-right: 10px
+                                color: #fff
+                            p
+                                width: 100%
+                                display: flex
+                                justify-content: space-between
+                                align-items: center
+                                i
+                                    font-size: 14px
+
+
+                &__inventory
+                    cursor: pointer
+                    position: relative
+                    a
+                        i   
+                            transition: transform ease-in-out .3s 
+                    ul
+                        width: 100%
+                        display: none
+                        transition: all 0.5s ease-in-out
+                        li
+                            width: 100%
+                    &:hover > ul i 
+        .close-sidebar
+            position: absolute
+            right: 0px
+            top: 0px
+            cursor: pointer
+            z-index: 1200
+            i
+                font-size: 30px
+                color: #fff
+                padding: 10px
+
 
 .content-wrapper
     background-color: #f4f6f9
+    min-height: 100vh
+    padding-bottom: 20px
     .content-header
-        margin-left: 250px
         display: flex
         justify-content: space-between
         align-items: center
-        padding: 15px 24px
-        h1
-            font-size: 25px
-            font-weight: bold
+        padding: 15px 0
+        margin: 10px 0
+        .nav-aside
+            .btn-nav-aside
+                margin: -15px 10px -15px -15px
+                padding: 15px
+                cursor: pointer
+            h1
+                font-size: 25px
+                font-weight: bold
         ul
             display: flex
             justify-content: space-between
@@ -149,8 +179,6 @@
                     content: "/"
 
     .shop-info
-        margin-left: 250px
-        padding: 15px 24px
         display: grid
         grid-template-columns: repeat(auto-fit, minmax(170px, 1fr))
         grid-gap: 20px
@@ -202,4 +230,99 @@
                     border-radius: 50%
                     background-color: #fff
 
-            
+.search
+    width: 270px
+    display: block 
+    .search-field
+        display: flex
+        justify-content: center
+        align-items: center
+        position: relative
+        border: 1px solid #000
+        input
+            padding: 4px 8px
+            outline: none
+            width: 235px
+            border: none
+        .search-icon
+            padding: 5px 8px
+            border: none
+            border-left: 1px solid #000
+            cursor: pointer
+            width: 35px
+            text-align: center
+            outline: none
+    #search-list
+        width: 270px
+        background-color: #ffffffe7
+        position: absolute
+        z-index: 100
+        max-height: 300px
+        overflow-y: auto
+        box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.26)
+        &::-webkit-scrollbar 
+            width: 4px
+        &::-webkit-scrollbar-track 
+            background: #fff
+        &::-webkit-scrollbar-thumb 
+            background-color: #ccc
+            border-radius: 20px
+            border: 3px solid #ccc
+
+        .search-item
+            margin: 5px 3px
+            a
+                display: flex
+                justify-content: flex-start
+                align-items: center
+                &:hover
+                    background-color: #ddd
+                img
+                    width: 60px
+                    height: 60px
+                .item-info
+                    margin-left: 10px
+                    & p:first-child
+                        font-weight: bold
+                        text-transform: capitalize
+                    & p:last-child
+                        color: red
+                        font-weight: bold
+                        
+.crud-page
+    margin-left: 250px
+    min-height: 100vh
+    .table-control
+        padding-top: 50px
+        width: 100%
+        th:nth-child(1)
+            width: 5%
+            padding: auto
+        th:nth-child(2)
+            width: 90px
+
+.select-coupon
+    max-height: 60px
+    overflow-y: auto
+    overflow-x: hidden
+    background-color: #fff
+    border-radius: 8px
+    &::-webkit-scrollbar 
+        width: 4px
+    &::-webkit-scrollbar-thumb
+        border-radius: 10px
+        background-color: #555
+    &
+    li
+        cursor: pointer
+        border-radius: 8px
+        margin-bottom: 4px
+        overflow: hidden
+        span
+            padding: 5px 15px
+            &:hover
+                background: #ccc
+                color: #000 !important
+
+.btn-right
+    text-align: right

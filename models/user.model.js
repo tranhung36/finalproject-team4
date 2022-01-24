@@ -19,9 +19,35 @@ const userSchema = new Schema({
     password: {
         type: String
     },
-    token: {
-        type: String
+    role: {
+        type: String,
+        default: 'User'
     },
+}, {
+    timestamps: true
 });
 
-module.exports = mongoose.model("User", userSchema);
+const wishListSchema = new Schema({
+    user: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    },
+    product: {
+        type: Schema.Types.ObjectId,
+        ref: 'Product'
+    },
+    wish: {
+        type: Boolean,
+        default: false
+    }
+}, {
+    timestamps: true
+})
+
+const User = mongoose.model("User", userSchema)
+const WishList = mongoose.model('WishList', wishListSchema)
+
+module.exports = {
+    User,
+    WishList
+}

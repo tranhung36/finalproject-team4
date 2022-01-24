@@ -1,14 +1,14 @@
-<aside class="main-sidebar sidebar">
+<aside class="col-6 col-md-4 col-lg-2 main-sidebar sidebar">
     <div class="sidebar__info">
-        <a href="">
-            <img src="./public/img/admin-image.jpg" alt="">
-            <p>Welcome Admin</p>
+        <a href="/seller">
+            <img src="/../images/admin-image.jpg" alt="">
+            <p>Welcome <%= (role === 'Admin' ? role : 'Seller')  %></p>
         </a>
     </div>
     <div class="sidebar__main">
         <div class="sidebar__admin-info">
-            <img src="./public/img/user-admin.png" alt="">
-            <p>Phước Nguyên</p>
+            <img src="/../images/user-admin.png" alt="">
+            <p class="text-capitalize"><%= `${userInfo.first_name} ${userInfo.last_name}` %></p>
         </div>
         <div class="sidebar__search">
             <div class="search-field">
@@ -20,19 +20,29 @@
         </div>
         <div class="sidebar__control">
             <ul>
-                <li><a href="/sellerPage/crud-page/"><i class="nav-icon fas fa-th"></i>
-                        <p>Quản lý sản phẩm <i class="fas fa-chevron-left"></i></p>
+                <% if(role === 'Seller') {%>
+                <li><a href="/seller/my-products"><i class="nav-icon fas fa-th"></i>
+                        <p>Quản lý sản phẩm</i></p>
                     </a></li>
-                <li><a href=""><i class="fas fa-shopping-cart"></i>
-                        <p>Quản lý đơn hàng <i class="fas fa-chevron-left"></i></p>
+                <li><a href="/seller/manage-orders"><i class="fas fa-shopping-cart"></i>
+                        <p>Quản lý đơn hàng</i></p>
                     </a></li>
-                <li><a href=""><i class="fas fa-tags"></i>
-                        <p>Quản lý khuyến mãi <i class="fas fa-chevron-left"></i></p>
+                <% } %>
+                <% if(role === 'Admin') {%>
+                <li><a href="/admin/manageUsers"><i class="fas fa-user"></i>
+                        <p>Quản lý người dùng</i></p>
                     </a></li>
-                <li class="sidebar__control__inventory dropdown-select">
+                <li><a href="/admin/manageCoupons"><i class="fas fa-tags"></i>
+                        <p>Quản lý khuyến mãi</i></p>
+                    </a></li>
+                <li><a href="/admin/manage/categories"><i class="fas fa-list-alt"></i>
+                        <p>Quản lý danh mục</i></p>
+                    </a></li>
+                <% } %>
+                <li class="sidebar__control__inventory">
                     <a>
                         <i class="nav-icon fas fa-th"></i>
-                        <p>Thống kê<i class="fas fa-chevron-left"></i></p>
+                        <p>Thống kê</p>
                     </a>
                     <ul class="sub-sidebar__control" href="">
                         <li><a href=""><i class="far fa-circle nav-icon"></i>

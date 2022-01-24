@@ -1,7 +1,10 @@
 const {
   signJWT
 } = require('../utils/jwt.util');
-const User = require("../models/user.model");
+const {
+  User
+} = require("../models/user.model");
+const bcrypt = require('bcrypt');
 
 async function register(req, res) {
   try {
@@ -28,29 +31,20 @@ async function register(req, res) {
     }
 
     //Encrypt user password
-    encryptedPassword = await bcrypt.hash(password, 10);
+    const encryptedPassword = await bcrypt.hash(password, 10);
 
     //Create user in database
     const user = await User.create({
-      first_name,
-      last_name,
+      first_name: first_name.trim(),
+      last_name: last_name.trim(),
       email: email.toLowerCase(),
       password: encryptedPassword,
     });
 
-    //Create token
-    const token = signJWT({
-      user_id: user_id,
-      email
-    }, {
-      expiresIn: "2h",
-    });
-
-    //save user token
-    user.token = token;
-
-    //return new user
-    res.status(201).json(user);
+    if (user) {
+      return res.status(201).redirect('/login')
+    }
+    res.status(400).redirect('/register')
   } catch (err) {
     console.log(err);
   }
@@ -78,16 +72,17 @@ async function login(req, res) {
       // Create token
       const token = signJWT({
         user_id: user._id,
-        email
+        role: user.role
       }, {
-        expiresIn: "2h",
+        expiresIn: "1h",
       });
-
-      // save user token
-      user.token = token;
-
       // user
-      res.status(200).json(user);
+      res.cookie('access_token', token, {
+          maxAge: 3600 * 1000,
+          httpOnly: true,
+          secure: true
+        })
+        .redirect('/')
     }
     res.status(400).send("Invalid Credentials");
   } catch (err) {
@@ -95,7 +90,12 @@ async function login(req, res) {
   }
 }
 
+function logout(req, res, next) {
+  res.clearCookie('access_token').redirect('/login')
+}
+
 module.exports = {
   register,
-  login
+  login,
+  logout
 }

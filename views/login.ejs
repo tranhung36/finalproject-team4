@@ -1,18 +1,20 @@
-<form id="login" class="d-flex justify-content-center pt-4" action="" method="POST">
+<form id="login" class="d-flex justify-content-center pt-4" action="/login" method="POST">
     <!-- FORM LOGIN -->
     <div class="form w-75">
         <div class="container-sm py-5 d-flex ">
             <div class="left w-100 text-center">
                 <div class="container">
-                    <h3 class="text-danger py-5">Boutique</h3>
-                    <h3 class="mt-5">Welcome</h3>
-                    <p>Sign up by entering the information below</p>
+                    <h3 class="text-danger fs-1 py-5">Boutique</h3>
+                    <h3 class="mt-5 mb-3 fs-2">Welcome!</h3>
+                    <p>Sign in by entering the information below</p>
                     <div class="form-floating mb-3 my-5">
-                        <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                        <input type="email" name="email" class="form-control" id="floatingInput"
+                            placeholder="name@example.com">
                         <label for="floatingInput">Email address</label>
                     </div>
                     <div class="form-floating">
-                        <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                        <input type="password" name="password" class="form-control" id="floatingPassword"
+                            placeholder="Password">
                         <label for="floatingPassword">Password</label>
                     </div>
                     <div class="d-flex align-items-center justify-content-between mt-2">
@@ -30,7 +32,7 @@
                     <div class="mt-3 d-grid pb-5">
                         <button class="btn rounded btn-primary" type="submit">Continue</button>
                     </div>
-                    <div class="mt-3">
+                    <div class="mt-3 mb-5">
                         <p>Don't have an account? Create one <a href="/register">here</a></p>
                     </div>
                 </div>
@@ -40,5 +42,5 @@
 
             </div>
         </div>
-        </>
-        </>
+    </div>
+</form>

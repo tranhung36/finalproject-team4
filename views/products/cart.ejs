@@ -17,7 +17,7 @@
       </div>
     </div>
   </section>
-  <section class="py-5">
+  <section class="py-4">
     <h2 class="h5 text-uppercase mb-4">Shopping cart</h2>
     <div class="row">
       <div class="col-lg-8 mb-4 mb-lg-0">
@@ -34,11 +34,16 @@
               </tr>
             </thead>
             <tbody class="border-0">
+              <% if (!orderItems.length || (typeof order === null)) { %>
+              <td>
+                <p>your cart is empty</p>
+              </td>
+              <% } else { %>
               <% orderItems.forEach(item => { %>
               <tr>
                 <th class="ps-0 py-3 border-light" scope="row">
                   <div class="d-flex align-items-center"><a class="reset-anchor d-block animsition-link"
-                      href="detail.html"><img src="<%= item.productId.thumbnail %>" alt="..." width="70" /></a>
+                      href="detail.html"><img src="/images/<%= item.productId.thumbnail %>" alt="..." width="70" /></a>
                     <div class="ms-3"><strong class="h6">
                         <a class="reset-anchor animsition-link" href="detail.html"><%= item.productId.name %>
                         </a></strong></div>
@@ -47,26 +52,28 @@
                 <td class="p-3 align-middle border-light">
                   <p class="mb-0 small">$<%= item.productId.price %> </p>
                 </td>
-                <td class="p-3 align-middle border-light">
-                  <div class="selectbtn quantity">
-                    <select class=" form-control d-flex align-items-center justify-content-between px-3" id="productId"
-                      name="productItem">
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                      <option>4</option>
-                      <option>5</option>
-                    </select>
+                <td class="p-3 align-middle border-0">
+                  <div class="border d-flex align-items-center justify-content-between px-3"><span
+                      class="small text-uppercase text-gray headings-font-family">Quantity</span>
+                    <div class="quantity">
+                      <a href="/cart/remove-single-from-cart/<%= item.productId.slug %>"><button class="dec-btn p-0"><i
+                            class="fas fa-caret-left"></i></button></a>
+                      <input class="form-control form-control-sm border-0 shadow-0 p-0" type="text"
+                        value="<%= item.quantity %>" />
+                      <a href="/cart/add-to-cart/<%= item.productId.slug %>"><button class="inc-btn p-0"><i
+                            class="fas fa-caret-right"></i></button></a>
+                    </div>
                   </div>
                 </td>
                 <td class="p-3 align-middle border-light">
                   <p class="mb-0 small">$<%= item.quantity * item.productId.price %></p>
                 </td>
-                <td class="p-3 align-middle border-light"><a class="reset-anchor" href="#!"><i
+                <td class="p-3 align-middle border-light"><a class="reset-anchor"
+                    href="/cart/remove-from-cart/<%= item.productId.slug %>"><i
                       class="fas fa-trash-alt small text-muted"></i></a></td>
               </tr>
               <% }) %>
-
+              <% } %>
             </tbody>
           </table>
         </div>
@@ -74,32 +81,63 @@
         <div class="bg-light px-4 py-3">
           <div class="row align-items-center text-center">
             <div class="col-md-6 mb-3 mb-md-0 text-md-start"><a class="btn btn-link p-0 text-dark btn-sm"
-                href="shop.html"><i class="fas fa-long-arrow-alt-left me-2"> </i>Continue shopping</a></div>
-            <div class="col-md-6 text-md-end"><a class="btn btn-outline-dark btn-sm" href="checkout.html">Procceed to
+                href="/products"><i class="fas fa-long-arrow-alt-left me-2"> </i>Continue shopping</a></div>
+            <% if (orderItems.length >= 1) { %>
+            <div class="col-md-6 text-md-end"><a class="btn btn-outline-dark btn-sm"
+                href="/create-checkout-session">Procceed to
                 checkout<i class="fas fa-long-arrow-alt-right ms-2"></i></a></div>
+            <% } %>
           </div>
         </div>
       </div>
       <!-- ORDER TOTAL-->
       <div class="col-lg-4">
-        <div class="card border-0 rounded-0 p-lg-4 bg-light">
+        <div class="card border-0 rounded-0 bg-light">
           <div class="card-body">
             <h5 class="text-uppercase mb-4">Cart total</h5>
             <ul class="list-unstyled mb-0">
               <li class="d-flex align-items-center justify-content-between"><strong
                   class="text-uppercase small font-weight-bold">Subtotal</strong><span
-                  class="text-muted small">$<%= totalItem %></span></li>
+                  class="text-muted small">$<% if (totalItem || (typeof order !== 'null')) { %>
+                  <%= totalItem %>
+                  <% } else { %>
+                  0
+                  <% } %></span></li>
+              <!-- <li class="border-bottom my-2"></li>
+              <li class="d-flex align-items-start justify-content-between">
+                <strong class="">COUPON AVAILABLE</strong>
+                <ul class="select-coupon">
+                  <% coupons.map(coupon => { %>
+                  <li class="d-flex align-items-start justify-content-between"><span
+                      class="text-muted small"><%- coupon.code %></span></li>
+                  <% }) %>
+                </ul>
+              </li>
+              <li class="d-flex align-items-center justify-content-between"><strong
+                  class="text-uppercase small font-weight-bold">Discount</strong><span
+                  class="text-muted small">$<% if (discount) { %>
+                  <%= discount %>
+                  <% } else { %>
+                  0
+                  <% } %></span></li> -->
               <li class="border-bottom my-2"></li>
-              <li class="d-flex align-items-center justify-content-between mb-4"><strong
-                  class="text-uppercase small font-weight-bold">Total</strong><span>$<%= totalItem %></span></li>
+              <li class="d-flex align-items-center justify-content-between mb-2"><strong class="text-uppercase small
+                  font-weight-bold">Total</strong><span>$<% if (price) { %>
+                  <%= price %>
+                  <% } else { %>
+                  <%= totalItem %>
+                  <% } %></span></li>
               <li>
-                <form action="#">
+                <!-- <%= notice %>
+                <form action="/cart" method="get">
                   <div class="input-group mb-0">
-                    <input class="form-control" type="text" placeholder="Enter your coupon">
-                    <button class="btn btn-dark btn-sm w-100" type="submit"> <i class="fas fa-gift me-2"></i>Apply
+                    <input class="form-control" id="coupon-code" name="couponCode" type="text"
+                      placeholder="Enter your coupon" autocomplete="off">
+                    <button class="btn btn-dark btn-sm w-100 btn-add-coupon" type="submit"> <i
+                        class="fas fa-gift me-2"></i>Apply
                       coupon</button>
                   </div>
-                </form>
+                </form> -->
               </li>
             </ul>
           </div>
@@ -108,3 +146,22 @@
     </div>
   </section>
 </div>
+
+
+<script>
+  const chooseCoupon = () => {
+    const couponCodes = document.querySelectorAll('.select-coupon li')
+    const codeInput = document.querySelector('#coupon-code')
+    couponCodes.forEach(coupon => {
+      coupon.onclick = () => {
+        const codes = document.querySelectorAll('.select-coupon li span')
+        codes.forEach(code => {
+          if (coupon.contains(code)) {
+            codeInput.value = code.innerText
+          }
+        })
+      }
+    })
+  }
+  chooseCoupon()
+</script>

@@ -8,17 +8,12 @@ const expressLayouts = require('express-ejs-layouts')
 const db = require('./config/database/db')
 const fileupload = require('express-fileupload');
 const methodOverride = require('method-override')
-const auth = require("./middleware/auth.middleware");
 
 const routes = require('./routes');
-const {
-  process_params
-} = require('express/lib/router');
-
+require('dotenv').config()
 
 const app = express();
-const port = 3000
-require('dotenv').config()
+const port = 8080
 
 db.connect()
 
@@ -38,6 +33,7 @@ app.use(express.urlencoded({
 }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
 
 // routes
 app.use('/', routes);

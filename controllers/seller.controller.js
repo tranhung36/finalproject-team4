@@ -296,6 +296,9 @@ async function statistical(req, res) {
         layout: 'layouts/layout_seller',
         title: 'Statistical',
     });
+    //Start Product statistics
+    
+    //End Product statistics
 }
 
 module.exports = {

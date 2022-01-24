@@ -196,33 +196,6 @@ async function renderSearchPage(req, res) {
     }
 }
 
-//API 
-async function renderSearchBar(req, res) {
-    const product = await Product.find()
-    res.send({
-        product
-    });
-}
-
-async function searchApi(req, res) {
-    try {
-        // get key
-        const key = req.query.key.toLowerCase()
-        //get all products corresponding to key
-        const products = await Product.find()
-        const data = products.filter(value => {
-            return value.name.toLowerCase().includes(key.toLowerCase())
-        })
-        res.send({
-            data,
-            key
-        })
-    } catch (error) {
-        res.status(404).send({
-            message: error.message || "Error Occured"
-        });
-    }
-}
 
 async function manageOrder(req, res, next) {
     try {
@@ -294,6 +267,75 @@ async function manageOrder(req, res, next) {
 
 async function statistical(req, res) {
 
+    try {
+        // Start Revenue Statistics
+        const orders = await OrderItem.find({
+            ordered: true,
+        }).populate({
+            path: 'productId',
+            model: 'Product',
+        }).exec()
+
+        const total = orders.filter(order => order.productId.userID == userInfo(req).user_id)
+
+        const inDate = orders.filter(order => {
+            console.log(formatDMY(order.createdAt))
+            console.log(formatDMY(Date.now()))
+            return formatDMY(order.updatedAt) == formatDMY(Date.now()) && order.productId.userID == userInfo(req).user_id
+        })
+
+        const between = orders.filter(order => {
+            return (formatDMY(order.createdAt) >= formatDMY(req.query.startDate) && formatDMY(order.createdAt) <= formatDMY(req.query.endDate)) && order.productId.userID == userInfo(req).user_id
+        })
+
+        const totalCost = total.reduce((a, b) => a + b.quantity * b.productId.price, 0)
+
+        const costInDate = inDate.reduce((a, b) => a + b.quantity * b.productId.price, 0)
+
+        const costBetween = between.reduce((a, b) => a + b.quantity * b.productId.price, 0)
+        // End Revenue Statistics
+        res.render('seller/statistical', {
+            layout: 'layouts/layout_seller',
+            title: 'Statistical',
+            totalCost,
+            costInDate,
+            costBetween
+        });
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+//API 
+async function renderSearchBar(req, res) {
+    const product = await Product.find()
+    res.send({
+        product
+    });
+}
+
+async function searchApi(req, res) {
+    try {
+        // get key
+        const key = req.query.key.toLowerCase()
+        //get all products corresponding to key
+        const products = await Product.find()
+        const data = products.filter(value => {
+            return value.name.toLowerCase().includes(key.toLowerCase())
+        })
+        res.send({
+            data,
+            key
+        })
+    } catch (error) {
+        res.status(404).send({
+            message: error.message || "Error Occured"
+        });
+    }
+}
+
+async function statisticalApi(req, res) {
+
     // Start Revenue Statistics
     const orders = await OrderItem.find({
         ordered: true,
@@ -302,28 +344,42 @@ async function statistical(req, res) {
         model: 'Product',
     }).exec()
 
-    const total = orders.filter(order => order.productId.userID == userInfo(req).user_id)
+    const date = new Date()
+    const months = date.getMonth();
+    const dateInMonths = new Date(date.getFullYear(), months, 0).getDate()
+    const dayArray = []
 
-    const inDate = orders.filter(order => {
-        return (formatDMY(order.createdAt) == formatDMY(Date.now()) || formatDMY(order.updatedAt) == formatDMY(Date.now())) && order.productId.userID == userInfo(req).user_id
+    for (let i = 0; i < dateInMonths; i++) {
+        let dayIn = `${i + 1}/${months + 1}/${date.getFullYear()}`
+        dayArray.push(dayIn)
+    }
+    console.log(dayArray);
+
+    const revenuePerDay = dayArray.map(day => {
+        let getDay = orders.filter(order => {
+            return formatDMY(order.updatedAt) == day && order.productId.userID == userInfo(req).user_id
+        })
+        let price = getDay.reduce((a, b) => a + b.quantity * b.productId.price, 0)
+        return {
+            day,
+            price
+        }
     })
 
-    const between = orders.filter(order => {
-        return (formatDMY(order.createdAt) >= formatDMY(req.query.startDate) && formatDMY(order.createdAt) <= formatDMY(req.query.endDate)) && order.productId.userID == userInfo(req).user_id
+    const orderPerDay = dayArray.map(day => {
+        let getDay = orders.filter(order => {
+            return formatDMY(order.updatedAt) == day && order.productId.userID == userInfo(req).user_id
+        })
+        const order = getDay.length        
+        return {
+            day,
+            order
+        }
     })
-
-    const totalCost = total.reduce((a, b) => a + b.quantity * b.productId.price, 0)
-
-    const costInDate = inDate.reduce((a, b) => a + b.quantity * b.productId.price, 0)
-
-    const costBetween = between.reduce((a, b) => a + b.quantity * b.productId.price, 0)
     // End Revenue Statistics
-    res.render('seller/statistical', {
-        layout: 'layouts/layout_seller',
-        title: 'Statistical',
-        totalCost,
-        costInDate,
-        costBetween
+    res.send({
+        revenuePerDay,
+        orderPerDay
     });
 }
 
@@ -339,5 +395,6 @@ module.exports = {
     renderSearchPage,
     searchApi,
     manageOrder,
-    statistical
+    statistical,
+    statisticalApi
 }

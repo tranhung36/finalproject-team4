@@ -9,7 +9,8 @@ const {
     renderUpdateProduct,
     updateProduct,
     manageOrder, 
-    statistical
+    statistical,
+    statisticalApi
 } = require('../controllers/seller.controller')
 const {
     verifyToken
@@ -31,6 +32,7 @@ router.get('/', renderSellerPage)
 router.get('/manage-orders', verifyToken, manageOrder)
 //statistical
 router.get('/statistical', verifyToken, statistical)
+router.get('/statisticalApi', verifyToken, statisticalApi)
 
 
 module.exports = router

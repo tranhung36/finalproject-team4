@@ -28,6 +28,44 @@
   <div>
     <h5>Revenue Statistics</h5>
     <p>Present your revenue based on time</p>
-    
+    <div class="container text-center">
+      <div class="row my-4">
+        <div class="col border-end">
+          <a href="" class="text-decoration-none">
+            <p class="text-primary fs-4 fw-bold">$<%= totalCost %></p>
+            <p>Total revenue</p>
+          </a>
+        </div>
+        <div class="col border-end">
+          <a href="" class="text-decoration-none">
+            <p class="text-primary fs-4 fw-bold">$<%= costInDate %></p>
+            <p>Revenue in day</p>
+          </a>
+        </div>
+        <div class="col border-end">
+          
+          <a class="text-decoration-none">
+            <p class="text-primary fs-4 fw-bold">$<%= costBetween %></p>
+            <form action="/seller/statistical" method="GET">
+              <p>Revenue between</p>
+              <input type="date" name="startDate" class="startDate">
+              <input type="date" name="endDate" class="endDate">
+              <button type="submit" class="btn btn-info mt-2 submit-date-between">Check</button>
+            </form>
+          </a>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
+
+<script>
+  document.querySelector('.submit-date-between').onclick = (e) =>{
+    if(document.querySelector('.startDate').value > document.querySelector('.endDate').value){
+      e.preventDefault()
+      alert('Start Date must be greater than End Date ')
+    }else{
+      console.log('ddungs');
+    }
+  }
+</script>

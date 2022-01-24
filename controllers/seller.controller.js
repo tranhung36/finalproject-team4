@@ -5,6 +5,7 @@ const Order = require('../models/order.model')
 const User = require('../models/user.model')
 const mongoose = require("mongoose")
 const userInfo = require('../services/user.service')
+const formatDMY = require('../utils/formatDMY')
 const slugURL = require('../middleware/slug')
 
 function renderSellerPage(req, res) {
@@ -227,58 +228,58 @@ async function manageOrder(req, res, next) {
     try {
         const user = userInfo(req)
         const orderItems = await OrderItem.aggregate([{
-                $lookup: {
-                    from: 'products',
-                    localField: 'productId',
-                    foreignField: '_id',
-                    as: 'productId'
-                }
-            },
-            {
-                $lookup: {
-                    from: 'users',
-                    localField: 'userId',
-                    foreignField: '_id',
-                    as: 'buyer'
-                }
-            },
-            {
-                $unwind: '$productId'
-            },
-            {
-                $unwind: '$buyer'
-            },
-            {
-                $match: {
-                    'productId.userID': new mongoose.Types.ObjectId(user.user_id),
-                    'ordered': true
-                }
-            },
-            {
-                $group: {
-                    _id: '$_id',
-                    productName: {
-                        $first: '$productId.name'
-                    },
-                    status: {
-                        $first: '$status'
-                    },
-                    buyer: {
-                        $first: '$buyer'
-                    },
-                    orderedDate: {
-                        $first: '$createdAt'
-                    },
-                    totalQuantity: {
-                        $sum: '$quantity'
-                    },
-                    total: {
-                        $sum: {
-                            $multiply: ['$productId.price', '$quantity']
-                        }
-                    }
+            $lookup: {
+                from: 'products',
+                localField: 'productId',
+                foreignField: '_id',
+                as: 'productId'
+            }
+        },
+        {
+            $lookup: {
+                from: 'users',
+                localField: 'userId',
+                foreignField: '_id',
+                as: 'buyer'
+            }
+        },
+        {
+            $unwind: '$productId'
+        },
+        {
+            $unwind: '$buyer'
+        },
+        {
+            $match: {
+                'productId.userID': new mongoose.Types.ObjectId(user.user_id),
+                'ordered': true
+            }
+        },
+        {
+            $group: {
+                _id: '$_id',
+                productName: {
+                    $first: '$productId.name'
                 },
+                status: {
+                    $first: '$status'
+                },
+                buyer: {
+                    $first: '$buyer'
+                },
+                orderedDate: {
+                    $first: '$createdAt'
+                },
+                totalQuantity: {
+                    $sum: '$quantity'
+                },
+                total: {
+                    $sum: {
+                        $multiply: ['$productId.price', '$quantity']
+                    }
+                }
             },
+        },
         ]).exec()
         console.log(orderItems)
         res.render('seller/manage_orders', {
@@ -292,9 +293,37 @@ async function manageOrder(req, res, next) {
 }
 
 async function statistical(req, res) {
+
+    // Start Revenue Statistics
+    const orders = await OrderItem.find({
+        ordered: true,
+    }).populate({
+        path: 'productId',
+        model: 'Product',
+    }).exec()
+
+    const total = orders.filter(order => order.productId.userID == userInfo(req).user_id)
+
+    const inDate = orders.filter(order => {
+        return (formatDMY(order.createdAt) == formatDMY(Date.now()) || formatDMY(order.updatedAt) == formatDMY(Date.now())) && order.productId.userID == userInfo(req).user_id
+    })
+
+    const between = orders.filter(order => {
+        return (formatDMY(order.createdAt) >= formatDMY(req.query.startDate) && formatDMY(order.createdAt) <= formatDMY(req.query.endDate)) && order.productId.userID == userInfo(req).user_id
+    })
+
+    const totalCost = total.reduce((a, b) => a + b.quantity * b.productId.price, 0)
+
+    const costInDate = inDate.reduce((a, b) => a + b.quantity * b.productId.price, 0)
+
+    const costBetween = between.reduce((a, b) => a + b.quantity * b.productId.price, 0)
+    // End Revenue Statistics
     res.render('seller/statistical', {
         layout: 'layouts/layout_seller',
         title: 'Statistical',
+        totalCost,
+        costInDate,
+        costBetween
     });
 }
 

@@ -1,0 +1,26 @@
+<div
+  class="col-12 col-sm-6 col-md-8 col-lg-10 crud-page py-5 px-5 content-wrapper"
+>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Total</th>
+        <th scope="col">Already Sold</th>
+        <th scope="col">Remaining</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if(products) { %> <% products.forEach(i => { %>
+      <tr>
+        <th scope="row"></th>
+        <td><%=i.name%></td>
+        <td><%=i.stock%></td>
+        <td><%= alreadySold %></td>
+        <td><%= (i.stock - alreadySold) %></td>
+      </tr>
+      <% }) %> <% }%>
+    </tbody>
+  </table>
+</div>

@@ -8,11 +8,6 @@ async function getProfile(req, res) {
     const user = await Profile.findOne({
       _id: id
     });
-    // console.log({user});
-    const abc = {
-      name: "asdfasf",
-      age: 18
-    }
     res.render("user", {
       user: user,
     });

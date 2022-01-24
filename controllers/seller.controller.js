@@ -291,6 +291,13 @@ async function manageOrder(req, res, next) {
     }
 }
 
+async function statistical(req, res) {
+    res.render('seller/statistical', {
+        layout: 'layouts/layout_seller',
+        title: 'Statistical',
+    });
+}
+
 module.exports = {
     renderSellerPage,
     renderCRUDPage,
@@ -302,5 +309,6 @@ module.exports = {
     renderSearchBar,
     renderSearchPage,
     searchApi,
-    manageOrder
+    manageOrder,
+    statistical
 }

@@ -28,11 +28,13 @@ const showNavAside = () => {
     const mainSideBar = document.querySelector('.main-sidebar')
     const sidebarContent = document.querySelector('.sidebar-content')
     const btnCloseSideBar = document.querySelector('.close-sidebar')
-    btnNavAside.onclick = () => {
-        mainSideBar.style.display = 'flex'
-    }
-    btnCloseSideBar.onclick = () => {
-        mainSideBar.style.display = 'none'
+    if(btnNavAside){
+        btnNavAside.onclick = () => {
+            mainSideBar.style.display = 'flex'
+        }
+        btnCloseSideBar.onclick = () => {
+            mainSideBar.style.display = 'none'
+        }
     }
 }
 showNavAside()

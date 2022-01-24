@@ -153,8 +153,8 @@ async function createCoupon(req, res) {
     if (coupon.length === 0) {
       if (req.body.byCategory == '0') {
         if (req.body.maxDiscount == '') {
-          byCategory = null
-          maxDiscount = 0
+          byCategory = null,
+          maxDiscount = 0,
           description = `Up to ${req.body.amount}% on total bill`
         } else {
           byCategory = null

@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 const {
     Schema
 } = mongoose
+const slugify = require('slugify')
 
 const productSchema = new Schema({
     name: {
@@ -34,7 +35,7 @@ const productSchema = new Schema({
     },
     categoryId: {
         type: Schema.Types.ObjectId,
-        ref: 'Category'
+        ref: 'ChildCategory'
     },
     userID: {
         type: Schema.Types.ObjectId,
@@ -46,9 +47,14 @@ const productSchema = new Schema({
 })
 
 productSchema.pre('save', function (next) {
-    const slug = this.name.toLowerCase()
-        .replace(/[^\w ]+/g, '')
-        .replace(/ +/g, '-')
+    let slug = slugify(this.name, {
+        replacement: '-', // replace spaces with replacement character, defaults to `-`
+        remove: undefined, // remove characters that match regex, defaults to `undefined`
+        lower: true, // convert to lower case, defaults to `false`
+        strict: false, // strip special characters except replacement, defaults to `false`
+        locale: 'vi', // language code of the locale to use
+        trim: true // trim leading and trailing replacement chars, defaults to `true`
+    })
 
     this.slug = slug
 

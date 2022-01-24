@@ -1,7 +1,9 @@
 const {
   signJWT
 } = require('../utils/jwt.util');
-const User = require("../models/user.model");
+const {
+  User
+} = require("../models/user.model");
 const bcrypt = require('bcrypt');
 
 async function register(req, res) {

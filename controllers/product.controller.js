@@ -1,26 +1,43 @@
 const Product = require("../models/product.model");
 const {
-	Category,
 	ChildCategory
 } = require('../models/category.model')
 const Rate = require('../models/rate.model')
+const userInfo = require('../services/user.service')
+const {
+	WishList
+} = require('../models/user.model')
+const decodeJWT = require('jwt-decode')
 
 async function index(req, res, next) {
 	try {
 		let perPage = 12; // số lượng sản phẩm xuất hiện trên 1 page
 		let page = req.query.page || 1;
 		let sortType = req.query.show;
-
+		let category = req.query.category
 
 		const url = !sortType ? "/products?" : "/products?show=" + sortType + "&";
 
 
 		let sortBy = sortType === "priceAsc" ? "price" : sortType === "priceDesc" ? "-price" : ""
 
-		let products = await Product.find()
-			.skip(perPage * page - perPage)
-			.limit(perPage)
-			.sort(sortBy)
+		const categoryId = await ChildCategory.findOne({
+			slug: category
+		})
+		let products
+		if (categoryId) {
+			products = await Product.find({
+					categoryId: categoryId._id
+				})
+				.skip(perPage * page - perPage)
+				.limit(perPage)
+				.sort(sortBy)
+		} else {
+			products = await Product.find()
+				.skip(perPage * page - perPage)
+				.limit(perPage)
+				.sort(sortBy)
+		}
 
 		let count = await Product.countDocuments();
 
@@ -48,6 +65,11 @@ async function index(req, res, next) {
 			},
 			{
 				$unwind: '$category'
+			},
+			{
+				$sort: {
+					_id: 1
+				}
 			}
 		]).exec()
 
@@ -90,12 +112,22 @@ async function show(req, res, next) {
 				title: "Not Found",
 			});
 		}
+		let wishProduct
+		const accessToken = req.cookies['access_token']
+		if (accessToken) {
+			const user = decodeJWT(accessToken)
+			wishProduct = await WishList.findOne({
+				product: product._id,
+				user: user.user_id,
+			})
+		}
 
 		res.render("products/detail", {
 			title: "Product",
 			product,
 			rateByUsers,
-			productsByCategory
+			productsByCategory,
+			wishProduct
 		});
 	} catch (error) {
 		next(error);

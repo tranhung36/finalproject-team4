@@ -1,8 +1,11 @@
-const User = require("../models/user.model");
+const {
+	User
+} = require("../models/user.model")
+const slugify = require('slugify')
 const Coupons = require('../models/coupon.model')
-const randomCode = require('../utils/randomCode');
+const randomCode = require('../utils/randomCode')
 const config = require('../config/stripe/secretKey.config')
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcrypt")
 const stripe = require('stripe')(config.stripe.secretKey)
 const {
 	ChildCategory,
@@ -312,23 +315,13 @@ async function deleteCoupon(req, res) {
 //------- Manage Categories
 async function showCategories(req, res, next) {
 	try {
-		const categories = await ChildCategory.find()
+		const categories = await ChildCategory.find().populate('parentCategory').exec()
 		res.render('admin/manageCategories', {
 			categories,
 			layout: 'layouts/layout_seller',
 		})
 	} catch (error) {
 		console.log(error)
-	}
-}
-
-async function editCategory(req, res, next) {
-	try {
-		const category = await ChildCategory.findOne({
-			_id: req.params.id
-		})
-	} catch (error) {
-		console.log(category)
 	}
 }
 
@@ -346,6 +339,48 @@ async function createCategory(req, res, next) {
 		if (category) {
 			res.redirect('/admin/manage/categories')
 		}
+	} catch (error) {
+		console.log(error)
+	}
+}
+
+async function updateCategory(req, res) {
+	try {
+		const {
+			name,
+			parentCat
+		} = req.body
+		const category = await ChildCategory.findByIdAndUpdate(req.params.id, {
+			name: name,
+			parentCategory: parentCat,
+			slug: slugify(name, {
+				replacement: '-', // replace spaces with replacement character, defaults to `-`
+				remove: undefined, // remove characters that match regex, defaults to `undefined`
+				lower: true, // convert to lower case, defaults to `false`
+				strict: false, // strip special characters except replacement, defaults to `false`
+				locale: 'vi', // language code of the locale to use
+				trim: true // trim leading and trailing replacement chars, defaults to `true`
+			})
+		})
+		if (category) {
+			res.redirect('/admin/manage/categories')
+		}
+	} catch (error) {
+		console.log(error)
+	}
+}
+
+async function renderUpdateCategory(req, res) {
+	try {
+		const category = await ChildCategory.findOne({
+			_id: req.query.id
+		}).populate('parentCategory').exec()
+		const categories = await Category.find()
+		res.render('admin/updateCategory', {
+			layout: 'layouts/layout_seller',
+			category,
+			categories
+		})
 	} catch (error) {
 		console.log(error)
 	}
@@ -378,5 +413,7 @@ module.exports = {
 	updateUser,
 	showCategories,
 	createCategory,
-	renderCreateCategory
+	updateCategory,
+	renderCreateCategory,
+	renderUpdateCategory
 };

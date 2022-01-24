@@ -7,24 +7,27 @@
                     <i class="fas fa-chevron-left"></i>
                     <p class="px-1">Quay lại</p>
                 </a>
-                <form action="/admin/manage/categories" enctype="multipart/form-data" method="POST">
+                <form action="/admin/manage/categories/update/<%= category._id %>?_method=PUT"
+                    enctype="multipart/form-data" method="POST">
+                    <input type="hidden" name="_method" value="PUT">
                     <div class="input-group">
                         <div class="col-12 mt-2">
                             <label for="name" class="form-label">Tên Danh Mục</label>
-                            <input type="text" name="name" id="name" class="form-control">
+                            <input type="text" name="name" value="<%= category.name %>" id="name" class="form-control">
                         </div>
                         <div class="col-12 mt-2">
                             <label for="couponname" class="form-label">Theo danh mục</label>
                             <select class="form-select" name="parentCat" aria-label="Default select example">
-                                <option value="0" selected>Chọn danh mục</option>
+                                <option value="<%= category.parentCategory._id %>" selected>
+                                    <%= category.parentCategory.name %></option>
                                 <% categories.map(category => { %>
-                                <option value="<%- category._id  %>"><%- category.name  %></option>
+                                <option value="<%= category._id %>"><%= category.name %></option>
                                 <% }) %>
                             </select>
                         </div>
                         <div class="col-12 mt-3 btn-right">
                             <button class="btn col-xl-3 col-lg-3 col-sm-12 col-12 btn-dark" id="handleButton"
-                                type="submit">Thêm mới</button>
+                                type="submit">Cập nhật</button>
                         </div>
                     </div>
                 </form>

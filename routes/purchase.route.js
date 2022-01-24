@@ -7,6 +7,6 @@ const {
     verifyToken
 } = require('../middleware/auth.middleware')
 
-//follow bill
+
 router.get('/', verifyToken, myOrders)
 module.exports = router;

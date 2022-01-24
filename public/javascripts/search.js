@@ -2,7 +2,7 @@ const searchList = document.querySelector('#search-list')
 const searchInput = document.querySelector('#search-input')
 const serverPages = document.querySelector('.server-pg')
 const clientPage = document.querySelector('.client-pg')
-if(clientPage){
+if (clientPage) {
     clientPage.style.display = 'none'
 }
 const loadValue = async () => {
@@ -21,11 +21,11 @@ const loadValue = async () => {
             let htmlString = filterSearchValue.slice(0, 10).map(item => {
                 const price = `${item.price.toLocaleString()}`
                 return `<li class="search-item">
-                            <a href="${item._id}">
+                            <a href="/products/${item.slug}">
                                 <img src= "./../../images/${item.thumbnail}" alt="product Image" >
                                 <div class="item-info">
                                     <p>${item.name}</p>
-                                    <p>${price}đ</p>
+                                    <p>${price}$</p>
                                 </div>
                             </a>
                         </li>`
@@ -48,10 +48,12 @@ const loadSearchValue = async (key) => {
         if (e.target.value == 'priceAsc') {
             const sort = searchData.sort((a, b) => a.price > b.price ? 1 : -1)
             sortProduct(sort, searchData)
-        } if (e.target.value == 'priceDesc') {
+        }
+        if (e.target.value == 'priceDesc') {
             const sort = searchData.sort((a, b) => a.price < b.price ? 1 : -1)
             sortProduct(sort, searchData)
-        } if (e.target.value == 'dateDesc') {
+        }
+        if (e.target.value == 'dateDesc') {
             const sort = searchData.sort((a, b) => a.updatedAt < b.updatedAt ? 1 : -1)
             sortProduct(sort, searchData)
         } else {
@@ -76,7 +78,7 @@ const sortProduct = (sort, searchData) => {
     page.innerHTML = html
     const firstSelected = document.querySelector('.radio-pg')
     firstSelected.checked = true
-    if(firstSelected.checked == true){
+    if (firstSelected.checked == true) {
         const productHTML = sort.slice(8 * (1 - 1), 8 * (1)).map(s => {
             return `
             <div class="col-xl-3 col-lg-4 col-sm-6">
@@ -106,7 +108,7 @@ const sortProduct = (sort, searchData) => {
     const pageValue = document.querySelectorAll('.client-pg ul li a')
     pageValue.forEach(page => {
         page.onclick = () => {
-            let value =  Number(page.innerText) 
+            let value = Number(page.innerText)
             const productHTML = sort.slice(8 * (value - 1), 8 * (value)).map(s => {
                 return `
                 <div class="col-xl-3 col-lg-4 col-sm-6">
@@ -136,7 +138,6 @@ const sortProduct = (sort, searchData) => {
     })
 
 }
-if(document.querySelector('.key')){
+if (document.querySelector('.key')) {
     loadSearchValue(document.querySelector('.key').innerText)
 }
-

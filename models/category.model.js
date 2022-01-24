@@ -68,6 +68,7 @@ childCategorySchema.pre('save', function (next) {
     next();
 });
 
+
 const ChildCategory = mongoose.model('ChildCategory', childCategorySchema)
 
 module.exports = {

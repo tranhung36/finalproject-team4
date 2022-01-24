@@ -1,8 +1,8 @@
-const Category = require('../models/category.model')
+const {
+    ChildCategory
+} = require('../models/category.model')
 const Product = require('../models/product.model')
 const OrderItem = require('../models/orderItem.model')
-const Order = require('../models/order.model')
-const User = require('../models/user.model')
 const mongoose = require("mongoose")
 const userInfo = require('../services/user.service')
 const slugURL = require('../middleware/slug')
@@ -18,7 +18,7 @@ async function renderCRUDPage(req, res) {
     const productByUserID = await Product.find({
         userID: userInfo(req).user_id
     })
-    const categories = await Category.find()
+    const categories = await ChildCategory.find()
 
     res.render('seller/crudPage', {
         layout: 'layouts/layout_seller',
@@ -28,7 +28,7 @@ async function renderCRUDPage(req, res) {
 }
 
 async function renderCreateProduct(req, res) {
-    const categories = await Category.find()
+    const categories = await ChildCategory.find()
     res.render('seller/createProduct', {
         layout: 'layouts/layout_seller',
         categories
@@ -111,7 +111,7 @@ async function renderUpdateProduct(req, res) {
         const products = await Product.find({
             _id: req.params.id
         })
-        const categories = await Category.find()
+        const categories = await ChildCategory.find()
         res.render('seller/updateProduct', {
             layout: 'layouts/layout_seller',
             products,
@@ -183,7 +183,6 @@ async function renderSearchPage(req, res) {
         const page = Number(req.params.page)
         let pagination = data.slice(productPerPage * page, productPerPage * (1 + page))
         res.render('seller/searchPage', {
-            layout: 'layouts/layout_seller',
             pagination,
             key,
             pages

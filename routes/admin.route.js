@@ -15,7 +15,9 @@ const {
     updateUser,
     showCategories,
     createCategory,
+    updateCategory,
     renderCreateCategory,
+    renderUpdateCategory
 } = require("../controllers/admin.controller");
 
 //----------- Start Coupon Route
@@ -44,6 +46,9 @@ router.get("/manageUsers/deleteUser/:id", deleteUser);
 router.get('/manage/categories', showCategories)
 router.get('/manage/categories/create', renderCreateCategory)
 router.post('/manage/categories', createCategory)
+
+router.get('/manage/categories/update', renderUpdateCategory)
+router.put("/manage/categories/update/:id", updateCategory);
 
 router.get("/", renderManageUserPage);
 

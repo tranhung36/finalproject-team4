@@ -2,7 +2,9 @@ const {
   verifyJWT
 } = require('../utils/jwt.util');
 const decodeJWT = require('jwt-decode')
-const User = require('../models/user.model')
+const {
+  User
+} = require('../models/user.model')
 
 const verifyToken = (req, res, next) => {
   const token = req.cookies['access_token']

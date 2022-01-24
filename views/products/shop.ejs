@@ -32,7 +32,7 @@
             <!-- CATEGORY-->
             <% for(let i = 0; i < categories.length; i++) { %>
             <li class="mb-2">
-              <a class="reset-anchor" href="/products?category=<%=categories[i].slug%>"><%=categories[i].name %></a>
+              <a class="reset-anchor" href="/products/category/<%=categories[i].slug%>.<%=categories[i]._id%>"><%=categories[i].name %></a>
             </li>
             <% } %>
           </ul>

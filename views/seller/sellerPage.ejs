@@ -64,7 +64,9 @@
     </div>
 </div>
 <script>
-    let dateLable = [], revenue = [], order= []
+    let dateLable = [],
+        revenue = [],
+        order = []
 
     async function renderRevenueChart() {
         await getApiData()
@@ -118,7 +120,7 @@
 
         const getRevenue = getData.revenuePerDay.map(value => value.price)
         const getOrder = getData.orderPerDay.map(value => value.order)
-        const getDate = getData.revenuePerDay.map(value => value.day.slice(0,-5))
+        const getDate = getData.revenuePerDay.map(value => value.day.slice(0, -5))
 
         order = getOrder
         revenue = getRevenue

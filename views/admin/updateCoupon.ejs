@@ -2,11 +2,11 @@
     <div class="shop-info box-info">
         <div class="col-12">
             <div class="col-lg-10 m-auto">
-                <a class="col-2 d-flex align-items-center justify-content-between" href="/admin/manage-coupons">
+                <a class="col-2 d-flex align-items-center justify-content-between" href="/admin/manage/coupons">
                     <i class="fas fa-chevron-left"></i>
                     <p class="m-auto">Quay lại</p>
                 </a>
-                <form action="/admin/manage-coupons/update-coupon/<%- coupon._id %>?_method=PUT"
+                <form action="/admin/manage/coupons/update/<%- coupon._id %>?_method=PUT"
                     enctype="multipart/form-data" method="POST">
                     <input type="hidden" name="_method" value="PUT">
                     <div class="input-group">

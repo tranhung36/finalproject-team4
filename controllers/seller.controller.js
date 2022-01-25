@@ -201,7 +201,6 @@ async function renderSearchPage(req, res) {
     }
 }
 
-//API 
 async function renderSearchBar(req, res) {
     const product = await Product.find()
     res.send({

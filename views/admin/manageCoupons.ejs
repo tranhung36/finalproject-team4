@@ -1,6 +1,6 @@
 <div class="col-12 col-sm-6 col-md-8 col-lg-10 py-5 px-5">
     <div class="table-responsive">
-        <a href="/admin/manage-coupons/create-coupon" class="btn btn-primary mb-2" style="float: right">Thêm mới</a>
+        <a href="/admin/manage/coupons/create" class="btn btn-primary mb-2" style="float: right">Thêm mới</a>
         <table class="table table-striped table-hover table-bordered paginated">
             <thead>
                 <tr>
@@ -29,9 +29,9 @@
                     <td><%= validTo.toLocaleString() %></td>
                     <td><%= coupon.active %></td>
                     <td>
-                        <a href="/admin/manage-coupons/update-coupon/<%- coupon._id  %> " class="btn btn-primary"
+                        <a href="/admin/manage/coupons/update/<%- coupon._id  %> " class="btn btn-primary"
                             href="">Update</a>
-                        <a href="/admin/manage-coupons/delete-coupon/<%- coupon._id  %> "
+                        <a href="/admin/manage/coupons/delete/<%- coupon._id  %> "
                             class="btn btn-info js-delete-alert" href="">Delete</a>
                     </td>
                 </tr>

@@ -8,7 +8,7 @@ if (clientPage) {
 const loadValue = async () => {
     try {
         // call api
-        const searchJsonValue = await fetch('http://localhost:8080/search/searchValue')
+        const searchJsonValue = await fetch(`http://localhost:8080/search/searchValue`)
         const searchStringValue = await searchJsonValue.json()
         const productString = searchStringValue.product
         // get product 

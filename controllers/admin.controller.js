@@ -51,7 +51,7 @@ async function createUser(req, res) {
       role: role,
     });
     await user.save();
-    res.redirect("/admin/manageUsers");
+    res.redirect("/admin/manage/users");
   } catch (err) {
     return res.status(500).json({
       msg: err.message,
@@ -85,7 +85,7 @@ async function updateUser(req, res) {
     }, {
       role: role
     });
-    res.redirect("/admin/manageUsers");
+    res.redirect("/admin/manage/users");
   } catch (err) {
     return res.status(500).json({
       msg: err.message,
@@ -98,7 +98,7 @@ async function deleteUser(req, res) {
     await User.findByIdAndDelete({
       _id: id,
     });
-    res.redirect("/admin/manageUsers");
+    res.redirect("/admin/manage/users");
   } catch (err) {
     return res.status(500).json({
       msg: err.message,
@@ -206,7 +206,7 @@ async function createCoupon(req, res) {
       });
     }
 
-    res.redirect('/admin/manage-coupons')
+    res.redirect('/admin/manage/coupons')
   } catch (err) {
     return res.status(500).json({
       msg: err.message
@@ -288,7 +288,7 @@ async function updateCoupon(req, res) {
       active,
       description
     })
-    res.redirect('/admin/manage-coupons/')
+    res.redirect('/admin/manage/coupons/')
 
   } catch (err) {
     return res.status(500).json({
@@ -300,7 +300,7 @@ async function updateCoupon(req, res) {
 async function deleteCoupon(req, res) {
   try {
     await Coupons.findByIdAndDelete(req.params.id)
-    res.redirect('/admin/manage-coupons')
+    res.redirect('/admin/manage/coupons')
   } catch (err) {
     return res.status(500).json({
       msg: err.message

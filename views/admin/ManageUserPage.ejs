@@ -1,7 +1,7 @@
 <div class="col-12 col-sm-6 col-md-8 col-lg-10 py-5 px-5">
 
     <div class="table-control">
-        <a href="/admin/manageUsers/createUser" class="btn btn-primary mb-2" style="float: right">Add new user</a>
+        <a href="/admin/manage/users/create" class="btn btn-primary mb-2" style="float: right">Add new user</a>
         <table class="table table-striped table-hover table-bordered paginated">
             <thead>
                 <tr>
@@ -23,8 +23,8 @@
                     <td><%= user.role %></td>
 
                     <td>
-                        <a class="btn btn-primary" href="/admin/manageUsers/updateUser/<%- user._id %>">Update</a>
-                        <a class="btn btn-info " href="/admin/manageUsers/deleteUser/<%- user._id %>">Delete</a>
+                        <a class="btn btn-primary" href="/admin/manage/users/update/<%- user._id %>">Update</a>
+                        <a class="btn btn-info " href="/admin/manage/users/delete/<%- user._id %>">Delete</a>
                     </td>
                 </tr>
                 <% }) %>

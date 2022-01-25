@@ -106,6 +106,7 @@ async function addProductToWish(req, res, next) {
 		})
 		wishList = await WishList.findOne({
 			product: product._id,
+			user: user.user_id,
 			wish: false
 		})
 		if (wishList) {

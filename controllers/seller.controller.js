@@ -5,7 +5,7 @@ const Product = require('../models/product.model')
 const OrderItem = require('../models/orderItem.model')
 const mongoose = require("mongoose")
 const userInfo = require('../services/user.service')
-const slugURL = require('../middleware/slug')
+const slugify = require('slugify')
 
 function renderSellerPage(req, res) {
     res.render('seller/sellerPage', {
@@ -74,7 +74,6 @@ async function createProduct(req, res) {
 
             const product = new Product({
                 name: req.body.productname,
-                slug: slugURL(req.body.productname),
                 price: Number(req.body.price),
                 stock: Number(req.body.stock),
                 categoryId: req.body.category,
@@ -152,7 +151,14 @@ async function updateProduct(req, res) {
                 _id: req.params.id
             }, {
                 name: productname,
-                slug: slugURL(req.body.productname),
+                slug: slugify(req.body.productname, {
+                    replacement: '-', // replace spaces with replacement character, defaults to `-`
+                    remove: undefined, // remove characters that match regex, defaults to `undefined`
+                    lower: true, // convert to lower case, defaults to `false`
+                    strict: false, // strip special characters except replacement, defaults to `false`
+                    locale: 'vi', // language code of the locale to use
+                    trim: true // trim leading and trailing replacement chars, defaults to `true`
+                }),
                 stock,
                 price: Number(price),
                 categoryId: category,

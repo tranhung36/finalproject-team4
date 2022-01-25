@@ -1,9 +1,9 @@
 const createError = require('http-errors');
 const express = require('express');
-// const morgan = require('morgan')
+const morgan = require('morgan')
 const path = require('path');
 const cookieParser = require('cookie-parser');
-// const logger = require('morgan');
+const logger = require('morgan');
 const expressLayouts = require('express-ejs-layouts')
 const db = require('./config/database/db')
 const fileupload = require('express-fileupload');
@@ -25,8 +25,8 @@ app.set('layout', 'layouts/layout')
 app.use(expressLayouts)
 app.use(fileupload());
 app.use(methodOverride('_method'));
-// app.use(logger('dev'));
-// app.use(morgan('combined'))
+app.use(logger('dev'));
+app.use(morgan('combined'))
 app.use(express.json());
 app.use(express.urlencoded({
   extended: false

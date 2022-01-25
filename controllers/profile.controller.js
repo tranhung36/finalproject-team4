@@ -1,4 +1,6 @@
-const Profile = require("../models/user.model");
+const {
+	User
+} = require("../models/user.model");
 const Order = require('../models/order.model')
 const Rate = require('../models/rate.model')
 const userInfo = require('../services/user.service');
@@ -10,7 +12,7 @@ const {
 async function getProfile(req, res) {
 	try {
 		const userId = userInfo(req)
-		const user = await Profile.findOne({
+		const user = await User.findOne({
 			_id: userId.user_id
 		});
 		// console.log({user});
@@ -50,7 +52,7 @@ async function changeProfile(req, res) {
 		console.log(req.body);
 		console.log(update);
 		//update
-		await Profile.findOneAndUpdate(filter, update, {
+		await User.findOneAndUpdate(filter, update, {
 			new: true
 		});
 		res.writeHead(303, {
@@ -69,7 +71,7 @@ async function myOrders(req, res, next) {
 		const user = userInfo(req)
 		const orders = await Order.find({
 			userId: user.user_id,
-			ordered: true
+			ordered: true,
 		}).populate({
 			path: 'orderItems',
 			populate: {

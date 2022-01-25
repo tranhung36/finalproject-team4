@@ -201,113 +201,6 @@ async function renderSearchPage(req, res) {
     }
 }
 
-async function manageOrder(req, res, next) {
-    try {
-        const user = userInfo(req)
-        const orderItems = await OrderItem.aggregate([{
-                $lookup: {
-                    from: 'products',
-                    localField: 'productId',
-                    foreignField: '_id',
-                    as: 'productId'
-                }
-            },
-            {
-                $lookup: {
-                    from: 'users',
-                    localField: 'userId',
-                    foreignField: '_id',
-                    as: 'buyer'
-                }
-            },
-            {
-                $unwind: '$productId'
-            },
-            {
-                $unwind: '$buyer'
-            },
-            {
-                $match: {
-                    'productId.userID': new mongoose.Types.ObjectId(user.user_id),
-                    'ordered': true
-                }
-            },
-            {
-                $group: {
-                    _id: '$_id',
-                    productName: {
-                        $first: '$productId.name'
-                    },
-                    status: {
-                        $first: '$status'
-                    },
-                    buyer: {
-                        $first: '$buyer'
-                    },
-                    orderedDate: {
-                        $first: '$createdAt'
-                    },
-                    totalQuantity: {
-                        $sum: '$quantity'
-                    },
-                    total: {
-                        $sum: {
-                            $multiply: ['$productId.price', '$quantity']
-                        }
-                    }
-                },
-            },
-        ]).exec()
-        console.log(orderItems)
-        res.render('seller/manage_orders', {
-            layout: 'layouts/layout_seller',
-            orderItems
-        })
-    } catch (error) {
-        next(error)
-        console.log(error)
-    }
-}
-
-async function statistical(req, res) {
-
-    try {
-        // Start Revenue Statistics
-        const orders = await OrderItem.find({
-            ordered: true,
-        }).populate({
-            path: 'productId',
-            model: 'Product',
-        }).exec()
-
-        const total = orders.filter(order => order.productId.userID == userInfo(req).user_id)
-
-        const inDate = orders.filter(order => {
-            return formatDMY(order.updatedAt) == formatDMY(Date.now()) && order.productId.userID == userInfo(req).user_id
-        })
-
-        const between = orders.filter(order => {
-            return (formatDMY(order.createdAt) >= formatDMY(req.query.startDate) && formatDMY(order.createdAt) <= formatDMY(req.query.endDate)) && order.productId.userID == userInfo(req).user_id
-        })
-
-        const totalCost = total.reduce((a, b) => a + b.quantity * b.productId.price, 0)
-
-        const costInDate = inDate.reduce((a, b) => a + b.quantity * b.productId.price, 0)
-
-        const costBetween = between.reduce((a, b) => a + b.quantity * b.productId.price, 0)
-        // End Revenue Statistics
-        res.render('seller/statistical', {
-            layout: 'layouts/layout_seller',
-            title: 'Statistical',
-            totalCost,
-            costInDate,
-            costBetween
-        });
-    } catch (error) {
-        console.log(error);
-    }
-}
-
 //API 
 async function renderSearchBar(req, res) {
     const product = await Product.find()
@@ -398,7 +291,7 @@ async function manageOrder(req, res, next) {
                 }
             }
         ]).exec()
-        console.log(orderItems)
+
         res.render('seller/manage_orders', {
             layout: 'layouts/layout_seller',
             orderItems
@@ -406,6 +299,155 @@ async function manageOrder(req, res, next) {
     } catch (error) {
         next(error)
         console.log(error)
+    }
+}
+
+//API 
+async function renderSearchBar(req, res) {
+    const product = await Product.find();
+    res.send({
+        product,
+    });
+}
+
+async function searchApi(req, res) {
+    try {
+        // get key
+        const key = req.query.key.toLowerCase();
+        //get all products corresponding to key
+        const products = await Product.find();
+        const data = products.filter((value) => {
+            return value.name.toLowerCase().includes(key.toLowerCase());
+        });
+        res.send({
+            data,
+            key,
+        });
+    } catch (error) {
+        res.status(404).send({
+            message: error.message || "Error Occured",
+        });
+    }
+}
+
+async function statistical(req, res) {
+    // Start Revenue Statistics
+    const orders = await OrderItem.find({
+            ordered: true,
+        })
+        .populate({
+            path: "productId",
+            model: "Product",
+        })
+        .exec();
+
+    const total = orders.filter(
+        (order) => order.productId.userID == userInfo(req).user_id
+    );
+
+    const inDate = orders.filter((order) => {
+        return (
+            (formatDMY(order.createdAt) == formatDMY(Date.now()) ||
+                formatDMY(order.updatedAt) == formatDMY(Date.now())) &&
+            order.productId.userID == userInfo(req).user_id
+        );
+    });
+
+    const between = orders.filter((order) => {
+        return (
+            formatDMY(order.createdAt) >= formatDMY(req.query.startDate) &&
+            formatDMY(order.createdAt) <= formatDMY(req.query.endDate) &&
+            order.productId.userID == userInfo(req).user_id
+        );
+    });
+
+    const totalCost = total.reduce(
+        (a, b) => a + b.quantity * b.productId.price,
+        0
+    );
+
+    const costInDate = inDate.reduce(
+        (a, b) => a + b.quantity * b.productId.price,
+        0
+    );
+
+    const costBetween = between.reduce(
+        (a, b) => a + b.quantity * b.productId.price,
+        0
+    );
+    // End Revenue Statistics
+
+    //Start Product statistics
+
+    const products = await Product.find({
+        userID: userInfo(req).user_id,
+    });
+
+    const alreadySold = total.reduce((a, b) => a + b.quantity, 0);
+
+    const remaining = products.reduce((a, b) => a + b.stock, 0);
+
+    //End Product statistics
+
+    res.render("seller/statistical", {
+        layout: "layouts/layout_seller",
+        title: "Statistical",
+        totalCost,
+        costInDate,
+        costBetween,
+        alreadySold,
+        remaining,
+    });
+}
+
+async function inventoryDetails(req, res) {
+    const products = await Product.find({
+        userID: userInfo(req).user_id,
+    });
+    //   const productID = products.map((a) => a._id);
+
+    const orders = await OrderItem.find({
+            ordered: true,
+        })
+        .populate({
+            path: "productId",
+            model: "Product",
+        })
+        .exec();
+
+    const total = orders.filter(
+        (order) => order.productId.userID == userInfo(req).user_id
+    );
+
+    const alreadySold = total.reduce((a, b) => a + b.quantity, 0);
+
+    res.render("seller/inventoryDetails", {
+        layout: "layouts/layout_seller",
+        title: "Inventory Details",
+        products,
+        orders,
+        alreadySold
+    });
+}
+
+async function statisticalApi(req, res) {
+
+    // Start Revenue Statistics
+    const orders = await OrderItem.find({
+        ordered: true,
+    }).populate({
+        path: 'productId',
+        model: 'Product',
+    }).exec()
+
+    const date = new Date()
+    const months = date.getMonth();
+    const dateInMonths = new Date(date.getFullYear(), months, 0).getDate()
+    const dayArray = []
+
+    for (let i = 0; i < dateInMonths; i++) {
+        let dayIn = `${i + 1}/${months + 1}/${date.getFullYear()}`
+        dayArray.push(dayIn)
     }
 
     const revenuePerDay = dayArray.map(day => {
@@ -451,5 +493,6 @@ module.exports = {
     searchApi,
     manageOrder,
     statistical,
-    statisticalApi
-}
+    statisticalApi,
+    inventoryDetails,
+};

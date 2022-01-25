@@ -115,7 +115,7 @@
     renderOrderChart()
 
     async function getApiData() {
-        const getApi = await fetch("http://localhost:8080/seller/statisticalApi")
+        const getApi = await fetch(`${process.env.DOMAIN}/seller/statisticalApi`)
         const getData = await getApi.json()
 
         const getRevenue = getData.revenuePerDay.map(value => value.price)

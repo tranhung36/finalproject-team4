@@ -21,7 +21,7 @@ const loadValue = async () => {
             let htmlString = filterSearchValue.slice(0, 10).map(item => {
                 const price = `${item.price.toLocaleString()}`
                 return `<li class="search-item">
-                            <a href="${item._id}">
+                            <a href="/products/${item.slug}">
                                 <img src= "./../../images/${item.thumbnail}" alt="product Image" >
                                 <div class="item-info">
                                     <p>${item.name}</p>
@@ -31,7 +31,6 @@ const loadValue = async () => {
                         </li>`
             })
             searchList.innerHTML = htmlString.join(' ')
-
         }
     } catch (error) {
         console.log(error);

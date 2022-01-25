@@ -206,7 +206,7 @@ async function createCoupon(req, res) {
       });
     }
 
-    res.redirect('/admin/manageCoupons')
+    res.redirect('/admin/manage-coupons')
   } catch (err) {
     return res.status(500).json({
       msg: err.message
@@ -288,7 +288,7 @@ async function updateCoupon(req, res) {
       active,
       description
     })
-    res.redirect('/admin/manageCoupons/')
+    res.redirect('/admin/manage-coupons/')
 
   } catch (err) {
     return res.status(500).json({
@@ -300,7 +300,7 @@ async function updateCoupon(req, res) {
 async function deleteCoupon(req, res) {
   try {
     await Coupons.findByIdAndDelete(req.params.id)
-    res.redirect('/admin/manageCoupons')
+    res.redirect('/admin/manage-coupons')
   } catch (err) {
     return res.status(500).json({
       msg: err.message

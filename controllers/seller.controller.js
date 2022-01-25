@@ -184,7 +184,6 @@ async function renderSearchPage(req, res) {
         const page = Number(req.params.page)
         let pagination = data.slice(productPerPage * page, productPerPage * (1 + page))
         res.render('seller/searchPage', {
-            layout: 'layouts/layout_seller',
             pagination,
             key,
             pages
@@ -195,7 +194,6 @@ async function renderSearchPage(req, res) {
         });
     }
 }
-
 
 async function manageOrder(req, res, next) {
     try {
@@ -279,8 +277,6 @@ async function statistical(req, res) {
         const total = orders.filter(order => order.productId.userID == userInfo(req).user_id)
 
         const inDate = orders.filter(order => {
-            console.log(formatDMY(order.createdAt))
-            console.log(formatDMY(Date.now()))
             return formatDMY(order.updatedAt) == formatDMY(Date.now()) && order.productId.userID == userInfo(req).user_id
         })
 
@@ -343,7 +339,9 @@ async function statisticalApi(req, res) {
         path: 'productId',
         model: 'Product',
     }).exec()
-
+    // const orders = await OrderItem.find({
+    //     ordered: true,
+    // })
     const date = new Date()
     const months = date.getMonth();
     const dateInMonths = new Date(date.getFullYear(), months, 0).getDate()
@@ -353,16 +351,16 @@ async function statisticalApi(req, res) {
         let dayIn = `${i + 1}/${months + 1}/${date.getFullYear()}`
         dayArray.push(dayIn)
     }
-    console.log(dayArray);
 
     const revenuePerDay = dayArray.map(day => {
         let getDay = orders.filter(order => {
             return formatDMY(order.updatedAt) == day && order.productId.userID == userInfo(req).user_id
         })
+
         let price = getDay.reduce((a, b) => a + b.quantity * b.productId.price, 0)
         return {
             day,
-            price
+            price,
         }
     })
 
@@ -370,16 +368,17 @@ async function statisticalApi(req, res) {
         let getDay = orders.filter(order => {
             return formatDMY(order.updatedAt) == day && order.productId.userID == userInfo(req).user_id
         })
-        const order = getDay.length        
+        const order = getDay.reduce((a, b) => a + b.quantity, 0)
         return {
             day,
             order
         }
     })
+
     // End Revenue Statistics
     res.send({
         revenuePerDay,
-        orderPerDay
+        orderPerDay,      
     });
 }
 

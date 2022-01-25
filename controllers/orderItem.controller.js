@@ -113,8 +113,17 @@ async function addToCart(req, res, next) {
         let orderItem
         const user = userInfo(req)
         const item = await Product.findOne({
-            slug: req.params.slug
+            slug: req.params.slug,
+            userID: {
+                $nin: [user.user_id]
+            }
         })
+
+        if (!item) {
+            res.status(400).json({
+                msg: 'You can not buy your product'
+            })
+        }
 
         orderItem = await OrderItem.findOne({
             productId: item._id,

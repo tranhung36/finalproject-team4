@@ -69,7 +69,8 @@
                         <div class="dropdown-menu mt-3 shadow-sm" aria-labelledby="pagesDropdown">
                             <% if(role === 'User') {%>
                             <a class="dropdown-item border-0 transition-link" href="/purchase">My Order</a>
-                            <%} else {%>
+                            <%} else if (role === 'Seller') {%>
+                            <a class="dropdown-item border-0 transition-link" href="/purchase">My Order</a>
                             <a class="dropdown-item border-0 transition-link" href="/seller">Dashboard</a>
                             <% }%>
                             <a class="dropdown-item border-0 transition-link" href="/user/profile">Edit

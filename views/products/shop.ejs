@@ -163,10 +163,10 @@
                       <div class="col-lg-6 p-lg-0">
                         <a class="glightbox product-view d-block h-100 bg-cover bg-center"
                           style="background: url(images/<%= product.thumbnail %>)"
-                          href="images/<%= product.thumbnail %>" data-gallery="gallery1"
+                          href="/images/<%= product.thumbnail %>" data-gallery="gallery1"
                           data-glightbox="Red digital smartwatch"></a>
                         <% product.images.forEach(img => { %>
-                        <a class="glightbox d-none" href="images/<%= img %>" data-gallery="gallery1"
+                        <a class="glightbox d-none" href="/images/<%= img %>" data-gallery="gallery1"
                           data-glightbox="Red digital smartwatch">
                         </a>
                         <% }) %>
@@ -195,7 +195,7 @@
                             </div>
                             <div class="col-sm-5"><a
                                 class="btn btn-dark btn-sm w-100 h-100 d-flex align-items-center justify-content-center px-0"
-                                href="cart.html">Add to cart</a></div>
+                                href="/cart/add-to-cart/<%= product.slug %>">Add to cart</a></div>
                           </div><a class="btn btn-link text-dark text-decoration-none p-0" href="#!"><i
                               class="far fa-heart me-2"></i>Add to wish list</a>
                         </div>

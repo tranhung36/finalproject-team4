@@ -252,7 +252,6 @@ async function manageOrder(req, res, next) {
             },
         },
         ]).exec()
-        console.log(orderItems)
         res.render('seller/manage_orders', {
             layout: 'layouts/layout_seller',
             orderItems
@@ -339,9 +338,7 @@ async function statisticalApi(req, res) {
         path: 'productId',
         model: 'Product',
     }).exec()
-    // const orders = await OrderItem.find({
-    //     ordered: true,
-    // })
+
     const date = new Date()
     const months = date.getMonth();
     const dateInMonths = new Date(date.getFullYear(), months, 0).getDate()

@@ -23,118 +23,35 @@
     <h2 class="h5 text-uppercase mb-4">Billing details</h2>
     <div class="row">
       <div class="col-lg-8">
-        <form action="#">
+        <form method="POST" action="/create-checkout-session">
           <div class="row gy-3">
-            <div class="col-lg-6">
+            <!-- <div class="col-lg-6">
               <label class="form-label text-sm text-uppercase" for="firstName">First name </label>
-              <input class="form-control form-control-lg" type="text" id="firstName"
-                placeholder="Enter your first name">
+              <input class="form-control form-control-lg" name="firstName" type="text" value="<%= user.first_name %>"
+                id="firstName" placeholder="Enter your first name">
             </div>
             <div class="col-lg-6">
               <label class="form-label text-sm text-uppercase" for="lastName">Last name </label>
-              <input class="form-control form-control-lg" type="text" id="lastName" placeholder="Enter your last name">
+              <input class="form-control form-control-lg" name="lastName" type="text" value="<%= user.last_name %>"
+                id="lastName" placeholder="Enter your last name">
             </div>
             <div class="col-lg-6">
               <label class="form-label text-sm text-uppercase" for="email">Email address </label>
-              <input class="form-control form-control-lg" type="email" id="email" placeholder="e.g. Jason@example.com">
+              <input class="form-control form-control-lg" name="email" type="email" value="<%= user.email %>" id="email"
+                placeholder="e.g. Jason@example.com" disabled>
             </div>
             <div class="col-lg-6">
               <label class="form-label text-sm text-uppercase" for="phone">Phone number </label>
-              <input class="form-control form-control-lg" type="tel" id="phone" placeholder="e.g. +02 245354745">
-            </div>
-            <div class="col-lg-6">
-              <label class="form-label text-sm text-uppercase" for="company">Company name (optional) </label>
-              <input class="form-control form-control-lg" type="text" id="company" placeholder="Your company name">
-            </div>
-            <div class="col-lg-6 form-group">
-              <label class="form-label text-sm text-uppercase" for="country">Country</label>
-              <select class="country" id="country" data-customclass="form-control form-control-lg rounded-0">
-                <option value>Choose your country</option>
-              </select>
+              <input class="form-control form-control-lg" name="phoneNumber" type="tel" id="phone"
+                placeholder="e.g. +02 245354745">
             </div>
             <div class="col-lg-12">
-              <label class="form-label text-sm text-uppercase" for="address">Address line 1 </label>
-              <input class="form-control form-control-lg" type="text" id="address"
+              <label class="form-label text-sm text-uppercase" for="address">Address</label>
+              <input class="form-control form-control-lg" name="address" type="text" id="address"
                 placeholder="House number and street name">
-            </div>
-            <div class="col-lg-12">
-              <label class="form-label text-sm text-uppercase" for="addressalt">Address line 2 </label>
-              <input class="form-control form-control-lg" type="text" id="addressalt"
-                placeholder="Apartment, Suite, Unit, etc (optional)">
-            </div>
-            <div class="col-lg-6">
-              <label class="form-label text-sm text-uppercase" for="city">Town/City </label>
-              <input class="form-control form-control-lg" type="text" id="city">
-            </div>
-            <div class="col-lg-6">
-              <label class="form-label text-sm text-uppercase" for="state">State/County </label>
-              <input class="form-control form-control-lg" type="text" id="state">
-            </div>
-            <div class="col-lg-6">
-              <button class="btn btn-link text-dark p-0 shadow-0" type="button" data-bs-toggle="collapse"
-                data-bs-target="#alternateAddress">
-                <div class="form-check">
-                  <input class="form-check-input" id="alternateAddressCheckbox" type="checkbox">
-                  <label class="form-check-label" for="alternateAddressCheckbox">Alternate billing address</label>
-                </div>
-              </button>
-            </div>
-            <div class="collapse" id="alternateAddress">
-              <div class="row gy-3">
-                <div class="col-12 mt-4">
-                  <h2 class="h4 text-uppercase mb-4">Alternative billing details</h2>
-                </div>
-                <div class="col-lg-6">
-                  <label class="form-label text-sm text-uppercase" for="firstName2">First name </label>
-                  <input class="form-control form-control-lg" type="text" id="firstName2"
-                    placeholder="Enter your first name">
-                </div>
-                <div class="col-lg-6">
-                  <label class="form-label text-sm text-uppercase" for="lastName2">Last name </label>
-                  <input class="form-control form-control-lg" type="text" id="lastName2"
-                    placeholder="Enter your last name">
-                </div>
-                <div class="col-lg-6">
-                  <label class="form-label text-sm text-uppercase" for="email2">Email address </label>
-                  <input class="form-control form-control-lg" type="email" id="email2"
-                    placeholder="e.g. Jason@example.com">
-                </div>
-                <div class="col-lg-6">
-                  <label class="form-label text-sm text-uppercase" for="phone2">Phone number </label>
-                  <input class="form-control form-control-lg" type="tel" id="phone2" placeholder="e.g. +02 245354745">
-                </div>
-                <div class="col-lg-6">
-                  <label class="form-label text-sm text-uppercase" for="company2">Company name (optional) </label>
-                  <input class="form-control form-control-lg" type="text" id="company2" placeholder="Your company name">
-                </div>
-                <div class="col-lg-6 form-group">
-                  <label class="form-label text-sm text-uppercase" for="countryAlt">Country</label>
-                  <select class="country" id="countryAlt" data-customclass="form-control form-control-lg rounded-0">
-                    <option value>Choose your country</option>
-                  </select>
-                </div>
-                <div class="col-lg-12">
-                  <label class="form-label text-sm text-uppercase" for="address2">Address line 1 </label>
-                  <input class="form-control form-control-lg" type="text" id="address2"
-                    placeholder="House number and street name">
-                </div>
-                <div class="col-lg-12">
-                  <label class="form-label text-sm text-uppercase" for="addressalt2">Address line 2 </label>
-                  <input class="form-control form-control-lg" type="text" id="addressalt2"
-                    placeholder="Apartment, Suite, Unit, etc (optional)">
-                </div>
-                <div class="col-lg-6">
-                  <label class="form-label text-sm text-uppercase" for="city2">Town/City </label>
-                  <input class="form-control form-control-lg" type="text" id="city2">
-                </div>
-                <div class="col-lg-6">
-                  <label class="form-label text-sm text-uppercase" for="state2">State/County </label>
-                  <input class="form-control form-control-lg" type="text" id="state2">
-                </div>
-              </div>
-            </div>
+            </div> -->
             <div class="col-lg-12 form-group">
-              <button class="btn btn-dark" type="submit">Place order</button>
+              <button class="btn btn-dark" type="submit" id="checkout-button">Checkout</button>
             </div>
           </div>
         </form>
@@ -145,14 +62,14 @@
           <div class="card-body">
             <h5 class="text-uppercase mb-4">Your order</h5>
             <ul class="list-unstyled mb-0">
-              <li class="d-flex align-items-center justify-content-between"><strong class="small fw-bold">Red digital
-                  smartwatch</strong><span class="text-muted small">$250</span></li>
-              <li class="border-bottom my-2"></li>
-              <li class="d-flex align-items-center justify-content-between"><strong class="small fw-bold">Gray Nike
-                  running shoes</strong><span class="text-muted small">$351</span></li>
-              <li class="border-bottom my-2"></li>
+              <% order.orderItems.forEach(item => { %>
               <li class="d-flex align-items-center justify-content-between"><strong
-                  class="text-uppercase small fw-bold">Total</strong><span>$601</span></li>
+                  class="small fw-bold"><%= item.productId.name %></strong><span
+                  class="text-muted small">$<%= item.productId.price * item.quantity %></span></li>
+              <li class="border-bottom my-2"></li>
+              <% }) %>
+              <li class="d-flex align-items-center justify-content-between"><strong
+                  class="text-uppercase small fw-bold">Total</strong><span>$<%= totalItem %></span></li>
             </ul>
           </div>
         </div>

@@ -1,0 +1,34 @@
+<div class="col-12 col-sm-6 col-md-8 col-lg-10 crud-page py-5 px-5">
+    <div class="shop-info box-info">
+        <div class="col-12">
+            <div class="col-lg-10 m-auto">
+                <a class="d-flex align-items-baseline flex-wrap-nowrap text-decoration-none"
+                    href="/admin/manage/categories">
+                    <i class="fas fa-chevron-left"></i>
+                    <p class="px-1">Quay lại</p>
+                </a>
+                <form action="/admin/manage/categories" enctype="multipart/form-data" method="POST">
+                    <div class="input-group">
+                        <div class="col-12 mt-2">
+                            <label for="name" class="form-label">Tên Danh Mục</label>
+                            <input type="text" name="name" id="name" class="form-control">
+                        </div>
+                        <div class="col-12 mt-2">
+                            <label for="couponname" class="form-label">Theo danh mục</label>
+                            <select class="form-select" name="parentCat" aria-label="Default select example">
+                                <option value="0" selected>Chọn danh mục</option>
+                                <% categories.map(category => { %>
+                                <option value="<%- category._id  %>"><%- category.name  %></option>
+                                <% }) %>
+                            </select>
+                        </div>
+                        <div class="col-12 mt-3 btn-right">
+                            <button class="btn col-xl-3 col-lg-3 col-sm-12 col-12 btn-dark" id="handleButton"
+                                type="submit">Thêm mới</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

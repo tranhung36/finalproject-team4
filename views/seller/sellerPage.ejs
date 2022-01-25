@@ -1,0 +1,129 @@
+<div class="col-12 col-sm-6 col-md-8 col-lg-10 content-wrapper">
+    <div class="content-header">
+        <h1>Dashboard</h1>
+    </div>
+    <div class="shop-info box-info">
+        <div class="shop-info__block ">
+            <i class="bi bi-bag-check-fill"></i>
+            <div class="box-info__header">
+                <p>150</p>
+                <p>Orders</p>
+            </div>
+            <a class="box-info__footer">
+                <p>More info</p>
+                <i class="bi bi-arrow-right"></i>
+            </a>
+        </div>
+        <div class="shop-info__block box-info">
+            <i class="bi bi-currency-dollar"></i>
+            <div class="box-info__header">
+                <p>1500000</p>
+                <p>Revenue</p>
+            </div>
+            <a class="box-info__footer">
+                <p>More info</p>
+                <i class="bi bi-arrow-right"></i>
+            </a>
+        </div>
+        <div class="shop-info__block box-info">
+            <i class="bi bi-bar-chart"></i>
+            <div class="box-info__header">
+                <p>50%</p>
+                <p>Rates</p>
+            </div>
+            <a class="box-info__footer">
+                <p>More info</p>
+                <i class="bi bi-arrow-right"></i>
+            </a>
+        </div>
+        <div class="shop-info__block box-info">
+            <i class="bi bi-people"></i>
+            <div class="box-info__header">
+                <p>50</p>
+                <p>Visitor</p>
+            </div>
+            <a class="box-info__footer">
+                <p>More info</p>
+                <i class="bi bi-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+    <div class="shop-info box-info">
+        <div class="shop-info__block" style="background-color: white">
+            <div class="card-header">
+                <h2>Revenue Chart</h2>
+            </div>
+            <canvas id="revenueChart"></canvas>
+        </div>
+        <div class="shop-info__block" style="background-color: white">
+            <div class="card-header">
+                <h2>Order Chart</h2>
+            </div>
+            <canvas id="orderChart"></canvas>
+        </div>
+    </div>
+</div>
+<script>
+    let dateLable = [],
+        revenue = [],
+        order = []
+
+    async function renderRevenueChart() {
+        await getApiData()
+        const ctx = document.getElementById('revenueChart').getContext('2d');
+        const chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: dateLable,
+                datasets: [{
+                    label: 'Revenue',
+                    backgroundColor: 'pink',
+                    borderColor: 'red',
+                    data: revenue
+                }]
+            },
+            options: {
+                tooltips: {
+                    mode: 'index'
+                }
+            }
+        })
+    }
+    renderRevenueChart()
+
+    async function renderOrderChart() {
+        await getApiData()
+        const ctx = document.getElementById('orderChart').getContext('2d');
+        const chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: dateLable,
+                datasets: [{
+                    label: 'Ordered Product',
+                    backgroundColor: '#7575FF',
+                    borderColor: 'blue',
+                    data: order
+                }]
+            },
+            options: {
+                tooltips: {
+                    mode: 'index'
+                }
+            }
+        })
+    }
+    renderOrderChart()
+
+    async function getApiData() {
+        const getApi = await fetch("http://localhost:8080/seller/statisticalApi")
+        const getData = await getApi.json()
+
+        const getRevenue = getData.revenuePerDay.map(value => value.price)
+        const getOrder = getData.orderPerDay.map(value => value.order)
+        const getDate = getData.revenuePerDay.map(value => value.day.slice(0, -5))
+
+        order = getOrder
+        revenue = getRevenue
+        dateLable = getDate
+    }
+</script>

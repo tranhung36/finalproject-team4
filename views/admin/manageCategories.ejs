@@ -1,0 +1,31 @@
+<div class="col-12 col-sm-6 col-md-8 col-lg-10 py-5 px-5">
+
+    <div class="table-control">
+        <a href="/admin/manage/categories/create" class="btn btn-primary mb-2" style="float: right">Add new category</a>
+        <table class="table table-striped table-hover table-bordered paginated">
+            <thead>
+                <tr>
+                    <th scope="col">STT</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Slug</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% categories.forEach((cat, index) => { %>
+                <tr>
+                    <td><%= index + 1 %></td>
+                    <td><%= cat.name %> </td>
+                    <td><%= cat.slug %> </td>
+                    <td><%= cat.parentCategory.name %> </td>
+                    <td>
+                        <a class="btn btn-primary" href="/admin/manage/categories/update?id=<%= cat._id %>">Update</a>
+                        <a class="btn btn-info " href="#">Delete</a>
+                    </td>
+                </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+</div>

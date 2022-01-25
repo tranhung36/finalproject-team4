@@ -1,0 +1,53 @@
+<div class="col-12 col-sm-6 col-md-8 col-lg-10 crud-page py-5 px-5 content-wrapper">
+    <div class="content-header">
+        <h1>Dashboard</h1>
+    </div>
+    <div class="shop-info box-info">
+        <div class="col-12">
+            <a href="/seller">Quay lại</a>
+            <div class="col-lg-8">
+                <form action="/seller/create-product" enctype="multipart/form-data" method="POST">
+                    <div class="input-group">
+                        <div class="col-12">
+                            <label for="productname" class="form-label">Tên sản phẩm</label>
+                            <input type="text" name="productname" id="productname" class="form-control">
+                        </div>
+                        <div class="col-12">
+                            <label for="category">Danh mục</label>
+                            <select class="form-select form-control" name="category" aria-label="Category">
+                                <option selected>Chọn danh mục</option>
+                                <% categories.forEach(cate =>{ %>
+                                <option value="<%- cate.id %>"><%- cate.name %> </option>
+                                <% }) %>
+                            </select>
+                        </div>
+                        <div class="col-12">
+                            <label for="price" class="form-label">Giá</label>
+                            <input type="number" name="price" id="price" class="form-control">
+                        </div>
+                        <div class="col-12">
+                            <label for="stock" class="form-label">Số lượng</label>
+                            <input type="number" name="stock" id="stock" class="form-control">
+                        </div>
+                        <div class="col-12">
+                            <label for="description" class="form-label">Mô tả</label>
+                            <textarea type="text" name="description" id="description" class="form-control"></textarea>
+                        </div>
+                        <div class="col-12">
+                            <label for="thumbnail" class="form-label">Thumbnail</label>
+                            <input type="file" name="image" id="image" class="form-control" accept="image/*">
+                        </div>
+                        <div class="col-12">
+                            <label for="images" class="form-label">Images</label>
+                            <input type="file" class="form-control" multiple name="images" accept="image/*">
+                        </div>
+                        <div class="col-12 mt-3 btn-right">
+                            <button class="btn col-xl-3 col-lg-3 col-sm-12 col-12 btn-dark" id="handleButton"
+                                type="submit">Thêm mới</button>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

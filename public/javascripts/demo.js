@@ -1,23 +1,26 @@
-// ------------------------------------------------------ //
-// For demo purposes, can be deleted
-// ------------------------------------------------------ //
+function onClick() {
+  document
+    .getElementById("purchase")
+    .getElementsByTagName("ul")
+    .item(0).onclick = function (e) {
+      let el = e.target;
+      while (el != document.body && el.tagName.toLowerCase() != "li") {
+        el = el.parentNode;
+      }
+      let index = [].indexOf.call(el.parentNode.children, el);
+      for (
+        let i = 0; i < document.getElementById("purchase").getElementsByClassName("nav-item").length;
+        ++i
+      ) {
+        document
+          .getElementById("purchase")
+          .getElementsByClassName("nav-item")
+          .item(i).style.borderBottom = "none";
+      }
 
-// Asigning Alternative stylesheet & insert it in its place
-var stylesheet = document.getElementById('theme-stylesheet');
-var alternateStylesheet = document.createElement('link');
-alternateStylesheet.setAttribute('id', 'new-stylesheet');
-alternateStylesheet.setAttribute('rel', 'stylesheet');
-stylesheet.parentNode.insertBefore(alternateStylesheet, stylesheet.nextSibling);
-
-// Style Switcher
-var styleSwitcher = document.getElementById('colour');
-styleSwitcher.addEventListener('change', function () {
-	var alternateColor = styleSwitcher.value;
-	alternateStylesheet.setAttribute('href', alternateColor);
-	Cookies.set('switcherColor', alternateColor, { expires: 365, path: '/' });
-});
-
-var theCookie = Cookies.get('switcherColor');
-if (theCookie) {
-	alternateStylesheet.setAttribute('href', theCookie);
+      document
+        .getElementById("purchase")
+        .getElementsByClassName("nav-item")
+        .item(index).style.borderBottom = "2px solid black";
+    };
 }

@@ -16,6 +16,8 @@
     <link rel="stylesheet" href="/vendor/choices.js/public/assets/styles/choices.min.css">
     <!-- Swiper slider-->
     <link rel="stylesheet" href="/vendor/swiper/swiper-bundle.min.css">
+    <link rel="stylesheet" href="/vendor/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="/vendor/bootstrap/css/bootstrap.min.css">
     <!-- Google fonts-->
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@300;400;700&amp;display=swap">
@@ -30,6 +32,9 @@
     <link rel="stylesheet" href="/stylesheets/custom.css">
     <!-- Favicon-->
     <link rel="shortcut icon" href="/images/favicon.png">
+
+    <link rel="stylesheet" href="/stylesheets/main.css">
+    <link rel="stylesheet" href="/stylesheets/reset.css">
 </head>
 
 <body>
@@ -38,11 +43,10 @@
         <!-- navbar-->
         <%- include('../partials/header.ejs') %>
 
-        <!--  Modal -->
-        <%- include('../partials/modal.ejs') %>
-
         <!-- HERO SECTION-->
         <%- body %>
+
+        <%- include('../partials/footer.ejs') %>
 
     </div>
     <!-- JavaScript files-->

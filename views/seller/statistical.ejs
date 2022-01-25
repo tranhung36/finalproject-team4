@@ -1,0 +1,71 @@
+<div class="col-12 col-sm-6 col-md-8 col-lg-10 crud-page py-5 px-5 content-wrapper">
+  <div>
+    <h5>Product Statistics</h5>
+    <p>Statistics of your products</p>
+  </div>
+  <div class="container text-center">
+    <div class="row my-4">
+      <div class="col border-end">
+        <a href="" class="text-decoration-none">
+          <p class="text-primary fs-4 fw-bold"><%= alreadySold %></p>
+          <p>Already Sold</p>
+        </a>
+      </div>
+      <div class="col border-end">
+        <a href="/seller/statistical/inventory-details" class="text-decoration-none">
+          <p class="text-primary fs-4 fw-bold"><%= remaining %></p>
+          <p>Remaining</p>
+        </a>
+      </div>
+      <div class="col border-end">
+        <a href="" class="text-decoration-none">
+          <p class="text-primary fs-4 fw-bold">0</p>
+          <p>Cancelled</p>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div>
+    <h5>Revenue Statistics</h5>
+    <p>Present your revenue based on time</p>
+    <div class="container text-center">
+      <div class="row my-4">
+        <div class="col border-end">
+          <a href="" class="text-decoration-none">
+            <p class="text-primary fs-4 fw-bold">$<%= totalCost %></p>
+            <p>Total revenue</p>
+          </a>
+        </div>
+        <div class="col border-end">
+          <a href="" class="text-decoration-none">
+            <p class="text-primary fs-4 fw-bold">$<%= costInDate %></p>
+            <p>Revenue in day</p>
+          </a>
+        </div>
+        <div class="col border-end">
+          
+          <a class="text-decoration-none">
+            <p class="text-primary fs-4 fw-bold">$<%= costBetween %></p>
+            <form action="/seller/statistical" method="GET">
+              <p>Revenue between</p>
+              <input type="date" name="startDate" class="startDate">
+              <input type="date" name="endDate" class="endDate">
+              <button type="submit" class="btn btn-info mt-2 submit-date-between">Check</button>
+            </form>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.querySelector('.submit-date-between').onclick = (e) =>{
+    if(document.querySelector('.startDate').value > document.querySelector('.endDate').value){
+      e.preventDefault()
+      alert('Start Date must be greater than End Date ')
+    }else{
+      console.log('ddungs');
+    }
+  }
+</script>

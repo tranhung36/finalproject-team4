@@ -21,15 +21,15 @@ const {
 } = require("../controllers/admin.controller");
 
 //----------- Start Coupon Route
-router.get('/manageCoupons', renderManageCoupons)
+router.get('/manage-coupons', renderManageCoupons)
 //Create Coupon
-router.get('/manageCoupons/CreateCoupon', renderCreateCoupon)
-router.post('/manageCoupons/CreateCoupon', createCoupon)
+router.get('/manage-coupons/create-coupon', renderCreateCoupon)
+router.post('/manage-coupons/create-coupon', createCoupon)
 //Update Coupon
-router.get('/manageCoupons/UpdateCoupon/:id', renderUpdateCoupon)
-router.put('/manageCoupons/UpdateCoupon/:id', updateCoupon)
+router.get('/manage-coupons/update-coupon/:id', renderUpdateCoupon)
+router.put('/manage-coupons/update-coupon/:id', updateCoupon)
 //
-router.get('/manageCoupons/Deletecoupon/:id', deleteCoupon)
+router.get('/manage-coupons/delete-coupon/:id', deleteCoupon)
 //----------- End Coupon Route
 
 router.get("/manageUsers", renderManageUserPage);

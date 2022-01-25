@@ -31,7 +31,6 @@ const loadValue = async () => {
                         </li>`
             })
             searchList.innerHTML = htmlString.join(' ')
-
         }
     } catch (error) {
         console.log(error);

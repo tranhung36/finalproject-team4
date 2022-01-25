@@ -2,11 +2,11 @@
     <div class="shop-info box-info">
         <div class="col-12">
             <div class="col-lg-10 m-auto">
-                <a class="col-1 d-flex align-items-center justify-content-between" href="/admin/manageCoupons">
+                <a class="col-2 d-flex align-items-center justify-content-between" href="/admin/manage-coupons">
                     <i class="fas fa-chevron-left"></i>
-                    <p class="mr-4">Quay lại</p>
+                    <p class="m-auto">Quay lại</p>
                 </a>
-                <form action="/admin/manageCoupons/UpdateCoupon/<%- coupon._id %>?_method=PUT"
+                <form action="/admin/manage-coupons/update-coupon/<%- coupon._id %>?_method=PUT"
                     enctype="multipart/form-data" method="POST">
                     <input type="hidden" name="_method" value="PUT">
                     <div class="input-group">
@@ -44,7 +44,7 @@
                             <textarea name="description" id="description" class="form-control"
                                 disabled><%- coupon.description %></textarea>
                         </div>
-                        <div class="row align-center justify-content-between col-12 mt-2 p-0">
+                        <div class="row align-center justify-content-between col-12 mt-2">
                             <div class="col-5 p-0">
                                 <label for="validto" class="form-label">Từ ngày</label>
                                 <input type="datetime-local" value="<%- coupon.validFrom %>" name="validfrom"
@@ -70,7 +70,7 @@
                                 <% } %>
                             </select>
                         </div>
-                        <div class="col-12 mt-3 btn-right">
+                        <div class="col-12 mt-3 text-right">
                             <button class="btn col-xl-3 col-lg-3 col-sm-12 col-12 btn-dark" id="button-addon2"
                                 type="submit">Cập nhật</button>
                         </div>

@@ -6,6 +6,7 @@ const OrderItem = require('../models/orderItem.model')
 const mongoose = require("mongoose")
 const userInfo = require('../services/user.service')
 const slugify = require('slugify')
+const formatDMY = require('../utils/formatDMY')
 
 function renderSellerPage(req, res) {
     res.render('seller/sellerPage', {
@@ -200,6 +201,113 @@ async function renderSearchPage(req, res) {
     }
 }
 
+async function manageOrder(req, res, next) {
+    try {
+        const user = userInfo(req)
+        const orderItems = await OrderItem.aggregate([{
+                $lookup: {
+                    from: 'products',
+                    localField: 'productId',
+                    foreignField: '_id',
+                    as: 'productId'
+                }
+            },
+            {
+                $lookup: {
+                    from: 'users',
+                    localField: 'userId',
+                    foreignField: '_id',
+                    as: 'buyer'
+                }
+            },
+            {
+                $unwind: '$productId'
+            },
+            {
+                $unwind: '$buyer'
+            },
+            {
+                $match: {
+                    'productId.userID': new mongoose.Types.ObjectId(user.user_id),
+                    'ordered': true
+                }
+            },
+            {
+                $group: {
+                    _id: '$_id',
+                    productName: {
+                        $first: '$productId.name'
+                    },
+                    status: {
+                        $first: '$status'
+                    },
+                    buyer: {
+                        $first: '$buyer'
+                    },
+                    orderedDate: {
+                        $first: '$createdAt'
+                    },
+                    totalQuantity: {
+                        $sum: '$quantity'
+                    },
+                    total: {
+                        $sum: {
+                            $multiply: ['$productId.price', '$quantity']
+                        }
+                    }
+                },
+            },
+        ]).exec()
+        console.log(orderItems)
+        res.render('seller/manage_orders', {
+            layout: 'layouts/layout_seller',
+            orderItems
+        })
+    } catch (error) {
+        next(error)
+        console.log(error)
+    }
+}
+
+async function statistical(req, res) {
+
+    try {
+        // Start Revenue Statistics
+        const orders = await OrderItem.find({
+            ordered: true,
+        }).populate({
+            path: 'productId',
+            model: 'Product',
+        }).exec()
+
+        const total = orders.filter(order => order.productId.userID == userInfo(req).user_id)
+
+        const inDate = orders.filter(order => {
+            return formatDMY(order.updatedAt) == formatDMY(Date.now()) && order.productId.userID == userInfo(req).user_id
+        })
+
+        const between = orders.filter(order => {
+            return (formatDMY(order.createdAt) >= formatDMY(req.query.startDate) && formatDMY(order.createdAt) <= formatDMY(req.query.endDate)) && order.productId.userID == userInfo(req).user_id
+        })
+
+        const totalCost = total.reduce((a, b) => a + b.quantity * b.productId.price, 0)
+
+        const costInDate = inDate.reduce((a, b) => a + b.quantity * b.productId.price, 0)
+
+        const costBetween = between.reduce((a, b) => a + b.quantity * b.productId.price, 0)
+        // End Revenue Statistics
+        res.render('seller/statistical', {
+            layout: 'layouts/layout_seller',
+            title: 'Statistical',
+            totalCost,
+            costInDate,
+            costBetween
+        });
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 //API 
 async function renderSearchBar(req, res) {
     const product = await Product.find()
@@ -299,6 +407,35 @@ async function manageOrder(req, res, next) {
         next(error)
         console.log(error)
     }
+
+    const revenuePerDay = dayArray.map(day => {
+        let getDay = orders.filter(order => {
+            return formatDMY(order.updatedAt) == day && order.productId.userID == userInfo(req).user_id
+        })
+
+        let price = getDay.reduce((a, b) => a + b.quantity * b.productId.price, 0)
+        return {
+            day,
+            price,
+        }
+    })
+
+    const orderPerDay = dayArray.map(day => {
+        let getDay = orders.filter(order => {
+            return formatDMY(order.updatedAt) == day && order.productId.userID == userInfo(req).user_id
+        })
+        const order = getDay.reduce((a, b) => a + b.quantity, 0)
+        return {
+            day,
+            order
+        }
+    })
+
+    // End Revenue Statistics
+    res.send({
+        revenuePerDay,
+        orderPerDay,
+    });
 }
 
 module.exports = {
@@ -312,5 +449,7 @@ module.exports = {
     renderSearchBar,
     renderSearchPage,
     searchApi,
-    manageOrder
+    manageOrder,
+    statistical,
+    statisticalApi
 }

@@ -83,13 +83,13 @@ const sortProduct = (sort, searchData) => {
             <div class="col-xl-3 col-lg-4 col-sm-6">
                 <div class="product text-center">
                   <div class="position-relative mb-3">
-                    <div class="badge text-white bg-"></div><a class="d-block" href="detail.html"><img class="img-fluid w-100"
+                    <div class="badge text-white bg-"></div><a class="d-block" href="/products/${s.slug}"><img class="img-fluid w-100"
                         src="/../images/${s.thumbnail}" alt="..."></a>
                     <div class="product-overlay">
                       <ul class="mb-0 list-inline">
                         <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-outline-dark" href="#!"><i
                               class="far fa-heart"></i></a></li>
-                        <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-dark" href="/cart">Add to cart</a>
+                        <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-dark" href="/cart/add-to-cart/${s.slug}">Add to cart</a>
                         </li>
                         <li class="list-inline-item me-0"><a class="btn btn-sm btn-outline-dark" href="#productView"
                             data-bs-toggle="modal"><i class="fas fa-expand"></i></a></li>

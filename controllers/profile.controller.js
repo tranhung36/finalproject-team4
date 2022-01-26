@@ -8,6 +8,7 @@ const Product = require("../models/product.model");
 const {
 	WishList
 } = require('../models/user.model')
+const Coupon = require('../models/coupon.model')
 
 async function getProfile(req, res) {
 	try {
@@ -177,11 +178,23 @@ async function renderProductsWishList(req, res) {
 	}
 }
 
+async function renderPromotionCodes(req, res) {
+	try {
+		const coupons = await Coupon.find()
+		res.render('products/discountCodes', {
+			coupons
+		})
+	} catch (error) {
+		console.log(error)
+	}
+}
+
 module.exports = {
 	getProfile,
 	changeProfile,
 	myOrders,
 	addProductToWish,
 	renderProductsWishList,
-	removeProductFromWishList
+	removeProductFromWishList,
+	renderPromotionCodes
 };

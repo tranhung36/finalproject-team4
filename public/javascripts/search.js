@@ -8,7 +8,7 @@ if (clientPage) {
 const loadValue = async () => {
     try {
         // call api
-        const searchJsonValue = await fetch(`http://localhost:8080/search/searchValue`)
+        const searchJsonValue = await fetch(`${location.protocol}//${location.host}/search/searchValue`)
         const searchStringValue = await searchJsonValue.json()
         const productString = searchStringValue.product
         // get product 
@@ -39,7 +39,7 @@ const loadValue = async () => {
 loadValue();
 
 const loadSearchValue = async (key) => {
-    const searchValue = await fetch(`http://localhost:8080/search/searchApi?key=${key}`)
+    const searchValue = await fetch(`${location.protocol}//${location.host}/search/searchApi?key=${key}`)
     const searchStringValue = await searchValue.json()
     const searchData = searchStringValue.data
     const selections = document.querySelector('.sp-sort-by')

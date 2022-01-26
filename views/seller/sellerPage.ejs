@@ -71,7 +71,7 @@
     renderOrderChart()
 
     async function getApiData() {
-        const getApi = await fetch("http://localhost:8080/dashboard/statisticalApi")
+        const getApi = await fetch(`${location.protocol}//${location.host}/dashboard/statisticalApi`)
         const getData = await getApi.json()
 
         const getRevenue = getData.revenuePerDay.map(value => value.price)

@@ -53,7 +53,7 @@ async function changeProfile(req, res) {
 			upsert: true,
 			new: true
 		}).exec()
-		console.log(updateProfileUser)
+
 		if (updateProfileUser) {
 			res.redirect('/user/profile')
 		}

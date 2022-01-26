@@ -175,6 +175,7 @@ async function createCoupon(req, res) {
 					description = `Up to ${req.body.amount}% discount on total bill for category ${getCategoryName.name}. Maximun no more than $${req.body.maxDiscount}`
 				}
 			}
+			const expiresAt = new Date(req.body.validto)
 			const coupon = new Coupons({
 				code,
 				name: req.body.couponname,
@@ -182,9 +183,8 @@ async function createCoupon(req, res) {
 				amount: req.body.amount,
 				byCategory,
 				description,
-				validFrom: req.body.validfrom,
-				validTo: req.body.validto,
-				active: false
+				validTo: expiresAt,
+				active: true
 			});
 			await coupon.save();
 
@@ -193,19 +193,14 @@ async function createCoupon(req, res) {
 			const couponStripe = await stripe.coupons.create({
 				currency: 'usd',
 				percent_off: req.body.amount,
-				duration: 'repeating',
-				duration_in_months: 3,
+				duration: 'once',
+				name: req.body.couponname,
 			});
 
-			if (couponStripe) {
-				couponCodeStripe = await stripe.coupons.retrieve(
-					couponStripe.id
-				);
-			}
-
 			const promotionCode = await stripe.promotionCodes.create({
-				coupon: couponCodeStripe.id,
-				code: code
+				coupon: couponStripe.id,
+				code: code,
+				expires_at: expiresAt
 			});
 		}
 
@@ -276,7 +271,6 @@ async function updateCoupon(req, res) {
 			couponname,
 			amount,
 			maxDiscount,
-			validfrom,
 			validto,
 			active
 		} = req.body
@@ -286,11 +280,22 @@ async function updateCoupon(req, res) {
 			name: couponname,
 			amount: Number(amount),
 			maxDiscount,
-			validFrom: validfrom,
 			validTo: validto,
 			active,
 			description
 		})
+
+		const promotionCodes = await stripe.promotionCodes.list({
+			code: coupon.code
+		})
+
+		if (promotionCodes) {
+			const promotionCodeId = promotionCodes.data[0].id
+			const promotionCode = await stripe.promotionCodes.update(promotionCodeId, {
+				active: active
+			})
+		}
+
 		res.redirect('/admin/manage/coupons/')
 
 	} catch (err) {

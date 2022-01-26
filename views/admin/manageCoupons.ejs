@@ -9,7 +9,6 @@
                     <th scope="col">Name</th>
                     <th scope="col">Discount</th>
                     <th scope="col">Max</th>
-                    <th scope="col">ValidFrom</th>
                     <th scope="col">ValidTo</th>
                     <th scope="col">Status</th>
                     <th scope="col">Actions</th>
@@ -25,14 +24,13 @@
                     <td><%= coupon.name %></td>
                     <td><%= coupon.amount %></td>
                     <td><%= coupon.maxDiscount %></td>
-                    <td><%= validFrom.toLocaleString() %></td>
                     <td><%= validTo.toLocaleString() %></td>
                     <td><%= coupon.active %></td>
                     <td>
                         <a href="/admin/manage/coupons/update/<%- coupon._id  %> " class="btn btn-primary"
                             href="">Update</a>
-                        <a href="/admin/manage/coupons/delete/<%- coupon._id  %> "
-                            class="btn btn-info js-delete-alert" href="">Delete</a>
+                        <a href="/admin/manage/coupons/delete/<%- coupon._id  %> " class="btn btn-info js-delete-alert"
+                            href="">Delete</a>
                     </td>
                 </tr>
                 <% }) %>

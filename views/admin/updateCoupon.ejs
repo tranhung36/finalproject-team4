@@ -6,14 +6,14 @@
                     <i class="fas fa-chevron-left"></i>
                     <p class="m-auto">Quay lại</p>
                 </a>
-                <form action="/admin/manage/coupons/update/<%- coupon._id %>?_method=PUT"
-                    enctype="multipart/form-data" method="POST">
+                <form action="/admin/manage/coupons/update/<%- coupon._id %>?_method=PUT" enctype="multipart/form-data"
+                    method="POST">
                     <input type="hidden" name="_method" value="PUT">
                     <div class="input-group">
                         <div class="col-12 mt-2">
                             <label for="couponname" class="form-label">Tên chương trình</label>
                             <input type="text" value="<%- coupon.name %>" name="couponname" id="couponname"
-                                class="form-control">
+                                class="form-control" disabled>
                         </div>
                         <div class="col-12 mt-2">
                             <label for="category" class="form-label">Danh mục giảm giá</label>
@@ -32,12 +32,12 @@
                         <div class="col-12 mt-2">
                             <label for="amount" class="form-label">Phần trăm giảm giá</label>
                             <input type="number" value="<%- coupon.amount %>" name="amount" id="amount"
-                                class="form-control">
+                                class="form-control" disabled>
                         </div>
                         <div class="col-12 mt-2">
                             <label for="amount" class="form-label">Giảm giá tối đa</label>
                             <input type="number" value="<%- coupon.maxDiscount %>" name="maxDiscount" id="maxDiscount"
-                                class="form-control">
+                                class="form-control" disabled>
                         </div>
                         <div class="col-12 mt-2">
                             <label for="amount" class="form-label">Description</label>
@@ -46,14 +46,9 @@
                         </div>
                         <div class="row align-center justify-content-between col-12 mt-2">
                             <div class="col-5 p-0">
-                                <label for="validto" class="form-label">Từ ngày</label>
-                                <input type="datetime-local" value="<%- coupon.validFrom %>" name="validfrom"
-                                    id="validfrom" class="form-control"></input>
-                            </div>
-                            <div class="col-5 p-0">
-                                <label for="validto" class="form-label">Đến ngày</label>
+                                <label for="validto" class="form-label">Ngày hết hạn</label>
                                 <input type="datetime-local" value="<%- coupon.validTo %>" name="validto" id="validto"
-                                    class="form-control" accept="image/*">
+                                    class="form-control" accept="image/*" disabled>
                             </div>
                         </div>
                         <div class="col-12 mt-2">

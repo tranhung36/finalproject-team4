@@ -1,7 +1,7 @@
 const Payment = require('../models/payment.model')
 const config = require('../config/stripe/secretKey.config')
 const BillingAddress = require('../models/bill.model')
-const stripe = require('stripe')(config.stripe.secretKey);
+const stripe = require('stripe')(config.stripe.secretKey)
 const {
     orderInfo
 } = require('../services/order.service')
@@ -100,6 +100,7 @@ async function successPayment(req, res, next) {
 
         let lineAddress
         let billingAddress
+
         if (session.shipping.address.line1) {
             lineAddress = session.shipping.address.line1
         } else {

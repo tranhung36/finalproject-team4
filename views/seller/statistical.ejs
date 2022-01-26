@@ -12,7 +12,7 @@
         </a>
       </div>
       <div class="col border-end">
-        <a href="/seller/statistical/inventory-details" class="text-decoration-none">
+        <a href="/dashboard/statistical/inventory-details" class="text-decoration-none">
           <p class="text-primary fs-4 fw-bold"><%= remaining %></p>
           <p>Remaining</p>
         </a>
@@ -43,10 +43,10 @@
           </a>
         </div>
         <div class="col border-end">
-          
+
           <a class="text-decoration-none">
             <p class="text-primary fs-4 fw-bold">$<%= costBetween %></p>
-            <form action="/seller/statistical" method="GET">
+            <form action="/dashboard/statistical" method="GET">
               <p>Revenue between</p>
               <input type="date" name="startDate" class="startDate">
               <input type="date" name="endDate" class="endDate">
@@ -60,11 +60,11 @@
 </div>
 
 <script>
-  document.querySelector('.submit-date-between').onclick = (e) =>{
-    if(document.querySelector('.startDate').value > document.querySelector('.endDate').value){
+  document.querySelector('.submit-date-between').onclick = (e) => {
+    if (document.querySelector('.startDate').value > document.querySelector('.endDate').value) {
       e.preventDefault()
       alert('Start Date must be greater than End Date ')
-    }else{
+    } else {
       console.log('ddungs');
     }
   }

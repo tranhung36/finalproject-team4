@@ -94,7 +94,7 @@ async function show(req, res, next) {
 			slug: req.params.slug,
 		}).populate({
 			path: 'categoryId'
-		}).exec();
+		}).populate('userID').exec();
 
 		const rateByUsers = await Rate.find({
 			productId: product._id

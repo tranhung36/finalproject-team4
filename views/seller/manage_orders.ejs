@@ -6,6 +6,7 @@
                 <th scope="col">Mã đơn hàng</th>
                 <th scope="col">Tên sản phẩm</th>
                 <th scope="col">Người mua</th>
+                <th scope="col">Địa chỉ</th>
                 <th scope="col">Số lượng</th>
                 <th scope="col">Tổng tiền</th>
                 <th scope="col">Ngày đặt hàng</th>
@@ -19,7 +20,8 @@
             <tr class="options text-center">
                 <td><%= i._id %></td>
                 <td><%= i.productName %></td>
-                <td><%= i.buyer.first_name + ' ' + i.buyer.last_name %></td>
+                <td><%= `${i.buyer.first_name} ${i.buyer.last_name}` %></td>
+                <td><%= `${i.userAddress.address} ${i.userAddress.city}` %></td>
                 <td><%= i.totalQuantity %></td>
                 <td>$<%= i.total %></td>
                 <td><%= i.orderedDate.toISOString().replace(/T/, ' ').replace(/\..+/, '') %></td>

@@ -1,6 +1,6 @@
 <aside class="col-6 col-md-4 col-lg-2 main-sidebar sidebar">
     <div class="sidebar__info">
-        <a href="/seller">
+        <a href="/dashboard">
             <img src="/../images/admin-image.jpg" alt="">
             <p>Welcome <%= (role === 'Admin' ? role : 'Seller')  %></p>
         </a>
@@ -21,12 +21,18 @@
         <div class="sidebar__control">
             <ul>
                 <% if(role === 'Seller') {%>
-                <li><a href="/seller/my-products"><i class="nav-icon fas fa-th"></i>
+                <li><a href="/dashboard/my-products"><i class="nav-icon fas fa-th"></i>
                         <p>Quản lý sản phẩm</i></p>
                     </a></li>
-                <li><a href="/seller/manage-orders"><i class="fas fa-shopping-cart"></i>
+                <li><a href="/dashboard/manage-orders"><i class="fas fa-shopping-cart"></i>
                         <p>Quản lý đơn hàng</i></p>
                     </a></li>
+                <li class="sidebar__control__inventory">
+                    <a href="/dashboard/statistical">
+                        <i class="nav-icon fas fa-th"></i>
+                        <p>Thống kê</p>
+                    </a>
+                </li>
                 <% } %>
                 <% if(role === 'Admin') {%>
                 <li><a href="/admin/manage/users"><i class="fas fa-user"></i>
@@ -39,20 +45,6 @@
                         <p>Quản lý danh mục</i></p>
                     </a></li>
                 <% } %>
-                <li class="sidebar__control__inventory">
-                    <a href="/seller/statistical">
-                        <i class="nav-icon fas fa-th"></i>
-                        <p>Thống kê</p>
-                    </a>
-                    <ul class="sub-sidebar__control" href="">
-                        <li><a href=""><i class="far fa-circle nav-icon"></i>
-                                <p>Thống kê sản phẩm</p>
-                            </a></li>
-                        <li><a href=""><i class="far fa-circle nav-icon"></i>
-                                <p>Thống kê doanh thu</p>
-                            </a></li>
-                    </ul>
-                </li>
             </ul>
         </div>
     </div>

@@ -14,12 +14,8 @@ async function getProfile(req, res) {
 		const userId = userInfo(req)
 		const user = await User.findOne({
 			_id: userId.user_id
-		});
-		// console.log({user});
-		const abc = {
-			name: "asdfasf",
-			age: 18
-		}
+		})
+
 		res.render("users/user_profile", {
 			user: user,
 		});
@@ -27,7 +23,6 @@ async function getProfile(req, res) {
 		return res.status(500).json({
 			msg: err.message,
 		});
-		console.log(err)
 	}
 }
 
@@ -36,29 +31,32 @@ async function changeProfile(req, res) {
 		//get change input
 		const {
 			first_name,
-			last_name
+			last_name,
+			address,
+			phoneNumber
 		} = req.body;
 
+		const user = userInfo(req)
 		//filter
-		const id = req.params.id;
 		const filter = {
-			_id: id
+			_id: user.user_id
 		};
 		//change
 		const update = {
 			first_name: first_name,
-			last_name: last_name
-		};
-		console.log(req.body);
-		console.log(update);
-		//update
-		await User.findOneAndUpdate(filter, update, {
+			last_name: last_name,
+			address: address,
+			phoneNumber: phoneNumber
+		}
+
+		const updateProfileUser = await User.findOneAndUpdate(filter, update, {
+			upsert: true,
 			new: true
-		});
-		res.writeHead(303, {
-				Location: req.headers.referer,
-			})
-			.end();
+		}).exec()
+		console.log(updateProfileUser)
+		if (updateProfileUser) {
+			res.redirect('/user/profile')
+		}
 	} catch (err) {
 		return res.json({
 			msg: err.message,

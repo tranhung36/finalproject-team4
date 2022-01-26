@@ -4,10 +4,6 @@ const {
 } = mongoose
 
 const profileSchema = new Schema({
-    user: {
-        type: Schema.Types.ObjectId,
-        ref: Product,
-    },
     address: {
         type: String,
         require: true

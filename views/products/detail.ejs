@@ -81,6 +81,8 @@
           <li class="px-3 py-2 mb-1 bg-white text-muted"><strong class="text-uppercase text-dark">Category:</strong><a
               class="reset-anchor ms-2"
               href="/products?category=<%= product.categoryId.slug %>"><%= product.categoryId.name %></a></li>
+          <li class="px-3 py-2 mb-1 bg-white"><strong class="text-uppercase">User:</strong><span
+              class="ms-2 text-muted"><%= `${product.userID.first_name} ${product.userID.last_name}` %></span></li>
         </ul>
       </div>
     </div>

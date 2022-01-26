@@ -18,7 +18,7 @@ router.get("/profile", getProfile, (err) => {
 });
 
 // CHANGE users profile
-router.post('/profile', changeProfile);
+router.put('/profile/update', changeProfile);
 
 router.get('/add-product-to-wish/:slug', verifyToken, addProductToWish)
 router.get('/remove-product-from-wish/:slug', verifyToken, removeProductFromWishList)

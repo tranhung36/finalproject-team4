@@ -84,7 +84,7 @@ async function createProduct(req, res) {
                 userID: userInfo(req).user_id
             });
             await product.save();
-            res.redirect('/seller/my-products')
+            res.redirect('/dashboard/my-products')
         }
     } catch (error) {
         res.status(500).send({
@@ -98,7 +98,7 @@ async function deleteProduct(req, res) {
         await Product.findByIdAndDelete({
             _id: req.params.id
         })
-        res.redirect('/seller/my-products')
+        res.redirect('/dashboard/my-products')
     } catch (error) {
         res.status(500).send({
             message: error.message || "Error Occured"
@@ -166,7 +166,7 @@ async function updateProduct(req, res) {
                 description,
                 thumbnail: newImageName
             })
-            res.redirect('/seller/my-products')
+            res.redirect('/dashboard/my-products')
         }
     } catch (error) {
         res.status(500).send({
@@ -248,6 +248,17 @@ async function manageOrder(req, res, next) {
                 }
             },
             {
+                $lookup: {
+                    from: 'billingaddresses',
+                    localField: 'userId',
+                    foreignField: 'userId',
+                    as: 'userAddress'
+                }
+            },
+            {
+                $unwind: '$userAddress'
+            },
+            {
                 $unwind: '$productId'
             },
             {
@@ -277,6 +288,9 @@ async function manageOrder(req, res, next) {
                     totalQuantity: {
                         $sum: '$quantity'
                     },
+                    userAddress: {
+                        $first: '$userAddress'
+                    },
                     total: {
                         $sum: {
                             $multiply: ['$productId.price', '$quantity']
@@ -290,6 +304,8 @@ async function manageOrder(req, res, next) {
                 }
             }
         ]).exec()
+
+        console.log(orderItems)
 
         res.render('seller/manage_orders', {
             layout: 'layouts/layout_seller',
@@ -479,7 +495,7 @@ async function statisticalApi(req, res) {
     });
 }
 
-async function deleteProductApi(req, res){
+async function deleteProductApi(req, res) {
     try {
         const orders = await OrderItem.find({
             ordered: true,
@@ -494,7 +510,7 @@ async function deleteProductApi(req, res){
     } catch (error) {
         console.log(error)
     }
-} 
+}
 
 
 module.exports = {

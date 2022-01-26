@@ -23,6 +23,11 @@ const userSchema = new Schema({
         type: String,
         default: 'User'
     },
+    address: String,
+    phoneNumber: {
+        type: String,
+        max: 11
+    }
 }, {
     timestamps: true
 });

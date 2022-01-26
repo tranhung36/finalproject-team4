@@ -4,10 +4,10 @@
     </div>
     <div class="shop-info box-info">
         <div class="col-12">
-            <a href="/seller/my-products">Quay lại</a>
+            <a href="/dashboard/my-products">Quay lại</a>
             <div class="col-lg-8">
                 <% products.forEach(pro=>{ %>
-                <form action="/seller/update-product/<%- pro.slug %>.<%- pro._id %>?_method=PUT"
+                <form action="/dashboard/update-product/<%- pro.slug %>.<%- pro._id %>?_method=PUT"
                     enctype="multipart/form-data" method="POST">
                     <input type="hidden" name="_method" value="PUT">
                     <div class="input-group">

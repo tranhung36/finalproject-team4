@@ -86,8 +86,8 @@ async function myOrders(req, res, next) {
 						model: 'ChildCategory'
 					},
 				]
-			}
-		}).exec()
+			},
+		}).sort('-createdAt').exec()
 
 		if (orders) {
 			res.render('purchase/purchase', {

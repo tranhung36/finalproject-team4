@@ -130,7 +130,7 @@ async function successPayment(req, res, next) {
                 item.save()
             })
             order.save()
-            res.redirect('/payment-success')
+            res.redirect('/purchase')
         }
 
     } catch (error) {

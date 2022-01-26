@@ -71,7 +71,9 @@
                             <a class="dropdown-item border-0 transition-link" href="/purchase">My Order</a>
                             <%} else if (role === 'Seller') {%>
                             <a class="dropdown-item border-0 transition-link" href="/purchase">My Order</a>
-                            <a class="dropdown-item border-0 transition-link" href="/seller">Dashboard</a>
+                            <a class="dropdown-item border-0 transition-link" href="/dashboard">Dashboard</a>
+                            <% } else { %>
+                            <a class="dropdown-item border-0 transition-link" href="/dashboard">Dashboard</a>
                             <% }%>
                             <a class="dropdown-item border-0 transition-link" href="/user/profile">Edit
                                 Profile</a>

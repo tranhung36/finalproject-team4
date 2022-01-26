@@ -14,14 +14,14 @@ const {
 
 async function renderManageUserPage(req, res) {
 	try {
-		let userInfo = await User.find({
+		let users = await User.find({
 			role: {
 				$nin: ['Admin']
 			}
 		});
 
 		res.render("admin/ManageUserPage", {
-			userInfo,
+			users,
 			layout: 'layouts/layout_seller',
 		});
 	} catch (err) {

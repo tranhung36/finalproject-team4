@@ -11,7 +11,8 @@ const {
     manageOrder,
     statistical,
     statisticalApi,
-    inventoryDetails
+    inventoryDetails,
+    deleteProductApi
 } = require('../controllers/seller.controller')
 const {
     verifyToken
@@ -34,7 +35,7 @@ router.get('/manage-orders', verifyToken, manageOrder)
 //statistical
 router.get('/statistical', verifyToken, statistical)
 router.get('/statisticalApi', verifyToken, statisticalApi)
-
+router.get('/deleteProductApi', verifyToken, deleteProductApi)
 router.get('/statistical/inventory-details', verifyToken, inventoryDetails)
 
 module.exports = router

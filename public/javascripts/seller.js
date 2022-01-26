@@ -28,7 +28,7 @@ const showNavAside = () => {
     const mainSideBar = document.querySelector('.main-sidebar')
     const sidebarContent = document.querySelector('.sidebar-content')
     const btnCloseSideBar = document.querySelector('.close-sidebar')
-    if(btnNavAside){
+    if (btnNavAside) {
         btnNavAside.onclick = () => {
             mainSideBar.style.display = 'flex'
         }
@@ -56,18 +56,37 @@ const checkValueImage = () => {
         }
     }
 }
-// CRUD-page handle delete Button
-const deleteBtns = document.querySelectorAll('.js-delete-alert')
-if (deleteBtns) {
-    deleteBtns.forEach(deleteBtn => {
-        deleteBtn.onclick = (e) => {
-            const result = confirm("Bạn có muốn xóa không?");
-            if (result) {
-                alert("Xóa thành công");
-            } else {
-                e.preventDefault()
-            }
-        }
-    })
-}
 checkValueImage()
+// CRUD-page handle delete Button
+
+
+const handleDeleteProduct = async () => {
+    const api = await fetch('http://localhost:8080/seller/deleteProductApi')
+    const data = await api.json()
+    const deleteBtns = document.querySelectorAll('.js-delete-alert')
+    if (deleteBtns) {
+        deleteBtns.forEach(deleteBtn => {
+            deleteBtn.onclick = (e) => {
+                const productId = deleteBtn.getAttribute("delete");
+                const isDelete = data.orders.filter(data => {
+                    return data.productId._id == productId
+                })
+                if (isDelete.length > 0) {
+                    e.preventDefault()
+                    alert('Bạn không được xóa sản phẩm này')
+                } else {
+                    const result = confirm("Bạn có muốn xóa không?");
+                    if (result) {
+                        alert("Xóa thành công");
+                    } else {
+                        e.preventDefault()
+                    }
+                }
+            }
+        })
+    }
+}
+handleDeleteProduct()
+
+
+

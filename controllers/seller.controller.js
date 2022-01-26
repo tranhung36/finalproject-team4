@@ -479,6 +479,24 @@ async function statisticalApi(req, res) {
     });
 }
 
+async function deleteProductApi(req, res){
+    try {
+        const orders = await OrderItem.find({
+            ordered: true,
+        }).populate({
+            path: 'productId',
+            model: 'Product',
+        }).exec()
+
+        res.send({
+            orders
+        });
+    } catch (error) {
+        console.log(error)
+    }
+} 
+
+
 module.exports = {
     renderSellerPage,
     renderCRUDPage,
@@ -494,4 +512,5 @@ module.exports = {
     statistical,
     statisticalApi,
     inventoryDetails,
+    deleteProductApi
 };

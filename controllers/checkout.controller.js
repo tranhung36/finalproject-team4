@@ -36,47 +36,26 @@ async function payment(req, res, next) {
                 allowed_countries: ['US', 'CA', 'VN'],
             },
             shipping_options: [{
-                    shipping_rate_data: {
-                        type: 'fixed_amount',
-                        fixed_amount: {
-                            amount: 0,
-                            currency: 'usd',
+                shipping_rate_data: {
+                    type: 'fixed_amount',
+                    fixed_amount: {
+                        amount: 0,
+                        currency: 'usd',
+                    },
+                    display_name: 'Free shipping',
+                    //Delivers between 5 - 7 business days
+                    delivery_estimate: {
+                        minimum: {
+                            unit: 'business_day',
+                            value: 5,
                         },
-                        display_name: 'Free shipping',
-                        //Delivers between 5 - 7 business days
-                        delivery_estimate: {
-                            minimum: {
-                                unit: 'business_day',
-                                value: 5,
-                            },
-                            maximum: {
-                                unit: 'business_day',
-                                value: 7,
-                            },
-                        }
-                    }
-                },
-                {
-                    shipping_rate_data: {
-                        type: 'fixed_amount',
-                        fixed_amount: {
-                            amount: 300,
-                            currency: 'usd',
+                        maximum: {
+                            unit: 'business_day',
+                            value: 7,
                         },
-                        display_name: 'Express',
-                        delivery_estimate: {
-                            minimum: {
-                                unit: 'business_day',
-                                value: 2,
-                            },
-                            maximum: {
-                                unit: 'business_day',
-                                value: 3,
-                            },
-                        }
                     }
-                },
-            ],
+                }
+            }],
             customer_details: {},
             payment_method_types: ['card'],
             customer_email: order.userId.email,
